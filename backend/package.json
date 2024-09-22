@@ -9,8 +9,16 @@
     "dev": "ts-node src/server.ts",
     "build": "tsc"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "backend",
+    "server",
+    "node js",
+    "node",
+    "express",
+    "express ts",
+    "ts"
+  ],
+  "author": "Yehor egorkorsun7@gmail.com",
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.0",

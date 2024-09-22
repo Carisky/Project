@@ -1,9 +1,51 @@
-TS EXPRESS - Backend port 5000 <in docker>
 
+# React + Express Project
+
+That project is a web resource for some 
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/Carisky/Project
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Run Docker Compose
+
+```bash
+  docker-compose up
+```
+
+
+## Documentation
+
+Backend 
+```
 LIBS in use - [ express ]
-
-JS REACT - Frontend port 3000 <in docker>
-
+Port 5000 
+```
+Frontend 
+```
 LIBS in use - [ React, Axios ]
+Port 3000 
+```
+Data Base
+```
+DB - MySQL 
+Port 3336
+```
 
-DB MySQL - DB port 3336 <in docker>
+
+
+## Authors
+
+- [@Yehor](https://www.github.com/Carisky)
+

@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const knexConfig: { [key: string]: Knex.Config } = {
+const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'mysql2',
     connection: {
@@ -17,6 +17,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
       max: 10,
     },
     migrations: {
+      directory: '../migrations',
       tableName: 'knex_migrations',
     },
   },
@@ -34,6 +35,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
       max: 10,
     },
     migrations: {
+      directory: '../migrations',
       tableName: 'knex_migrations',
     },
   },
@@ -51,9 +53,10 @@ const knexConfig: { [key: string]: Knex.Config } = {
       max: 10,
     },
     migrations: {
+      directory: '../migrations',
       tableName: 'knex_migrations',
     },
   },
 };
 
-export default knexConfig;
+export default config;

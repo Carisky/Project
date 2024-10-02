@@ -7,6 +7,6 @@
     "strict": true, // Enable strict type checking
     "esModuleInterop": true // Allows default imports from CommonJS modules
   },
-  "include": ["src/**/*"], // Include all TypeScript files in src directory
+  "include": ["src/**/*", "src/config/knexfile.ts"], // Include all TypeScript files in src directory
   "exclude": ["dist", "node_modules"] // Exclude dist and node_modules
 }

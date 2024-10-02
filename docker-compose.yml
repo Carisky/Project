@@ -12,7 +12,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     ports:
-      - "3336:3336"
+      - "3306:3306"
     networks:
       - app-network
 
@@ -28,7 +28,6 @@ services:
       DB_NAME: mydb
     volumes:
       - ./backend:/app
-      - /app/node_modules
     ports:
       - "5000:5000"
     depends_on:
@@ -43,7 +42,6 @@ services:
     container_name: react-frontend
     volumes:
       - ./frontend:/app
-      - /app/node_modules
     ports:
       - "3000:3000"
     networks:

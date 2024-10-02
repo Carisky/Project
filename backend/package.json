@@ -6,8 +6,8 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon",
-    "migrate:latest": "knex migrate:latest --env development",
-    "migrate:rollback": "knex migrate:rollback --env development"
+    "migrate:latest": "knex migrate:latest --env development --knexfile src/config/knexfile.ts",
+    "migrate:rollback": "knex migrate:rollback --env development --knexfile src/config/knexfile.ts"
   },
   "keywords": [
     "backend",
@@ -26,7 +26,8 @@
     "knex": "^3.1.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "objection": "^3.1.5"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",

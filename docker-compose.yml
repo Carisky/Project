@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   db:
@@ -26,6 +26,9 @@ services:
       DB_USER: user
       DB_PASSWORD: userpassword
       DB_NAME: mydb
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
     ports:
       - "5000:5000"
     depends_on:
@@ -38,6 +41,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: react-frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     ports:
       - "3000:3000"
     networks:

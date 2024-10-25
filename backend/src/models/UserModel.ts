@@ -1,13 +1,16 @@
 import { Model } from 'objection';
 import knex from '../db/db';
-
-Model.knex(knex); // Настроим Objection.js на использование knex
+import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+Model.knex(knex); // Set up Objection.js to use knex
 
 interface User {
   id?: number;
   name: string;
   email: string;
   password: string;
+  role: string;
   created_at?: string;
   updated_at?: string;
 }
@@ -16,6 +19,7 @@ class UserModel extends Model implements User {
   id?: number;
   name!: string;
   email!: string;
+  role!: string;
   password!: string;
   created_at?: string;
   updated_at?: string;
@@ -23,39 +27,61 @@ class UserModel extends Model implements User {
   static get tableName() {
     return 'users';
   }
-
-  // Метод для создания пользователя
-  static async save(user: User): Promise<User> {
-    const savedUser = await UserModel.query().insert(user).returning('*');
-    return savedUser;
+  static async hashPassword(password: string): Promise<string> {
+    const saltRounds = 10;
+    return await bcrypt.hash(password, saltRounds);
   }
 
-  // Метод для поиска пользователя по email
-  static async findByEmail(email: string): Promise<User | null> {
+  static async verifyPassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+    return await bcrypt.compare(plainPassword, hashedPassword);
+  }
+  // Instance method to save a user
+  async saveUser(): Promise<UserModel> {
+    const savedUser = await UserModel.query().insert(this).returning('*');
+    Object.assign(this, savedUser);
+    return this;
+  }
+  static async authenticate(email: string, password: string): Promise<{ token: string; user: UserModel } | null> {
+    // Hash the password to compare with the stored hashed password
+    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
+    
     const user = await UserModel.query().where('email', email).first();
-    return user || null;
+    if (user && user.password === hashedPassword) {
+      const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
+      return { token, user };
+    }
+    return null; // Authentication failed
+  }
+  // Static method to find a user by email
+  static async findByEmail(email: string): Promise<UserModel | null> {
+    const user = await UserModel.query().where('email', email).first();
+    return user ? UserModel.fromJson(user) : null;
   }
 
-  // Метод для получения всех пользователей
-  static async findAll(): Promise<User[]> {
-    return await UserModel.query();
+  // Static method to get all users
+  static async findAll(): Promise<UserModel[]> {
+    const users = await UserModel.query();
+    return users.map((user) => UserModel.fromJson(user));
   }
 
-  // Метод для получения пользователя по id
-  static async findById(id: number): Promise<User | null> {
+  // Static method to get a user by id
+  static async findById(id: number): Promise<UserModel | null> {
     const user = await UserModel.query().findById(id);
-    return user || null;
+    return user ? UserModel.fromJson(user) : null;
   }
 
-  // Метод для обновления данных пользователя
-  static async update(id: number, updates: Partial<User>): Promise<User | null> {
-    const updatedUser = await UserModel.query().patchAndFetchById(id, updates);
-    return updatedUser || null;
+  // Instance method to update user data
+  async updateUser(updates: Partial<User>): Promise<UserModel> {
+    const updatedUser = await UserModel.query().patchAndFetchById(this.id as number, updates);
+    if (updatedUser) {
+      Object.assign(this, updatedUser);
+    }
+    return this;
   }
 
-  // Метод для удаления пользователя по id
-  static async delete(id: number): Promise<void> {
-    await UserModel.query().deleteById(id);
+  // Instance method to delete a user
+  async deleteUser(): Promise<void> {
+    await UserModel.query().deleteById(this.id as number);
   }
 }
 

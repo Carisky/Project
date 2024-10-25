@@ -40,7 +40,7 @@ Port 3000
 Data Base
 ```
 DB - MySQL 
-Port 3336
+Port 3306
 ```
 
 

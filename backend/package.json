@@ -7,7 +7,8 @@
     "start": "ts-node src/server.ts",
     "dev": "nodemon",
     "migrate:latest": "knex migrate:latest --env development --knexfile src/config/knexfile.ts",
-    "migrate:rollback": "knex migrate:rollback --env development --knexfile src/config/knexfile.ts"
+    "migrate:rollback": "knex migrate:rollback --env development --knexfile src/config/knexfile.ts",
+    "create:migration": "knex migrate:make"
   },
   "keywords": [
     "backend",
@@ -22,19 +23,28 @@
   "license": "ISC",
   "dependencies": {
     "@types/cors": "^2.8.17",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
     "nodemon": "^3.1.7",
-    "objection": "^3.1.5"
+    "objection": "^3.1.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.7.4",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   }

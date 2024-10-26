@@ -38,7 +38,7 @@ Run Docker Compose
 
 Backend 
 ```
-LIBS in use - [ express ]
+LIBS in use - [ express, knex, bcrypt, objection, mysql2, jwt ]
 Port 5000 
 ```
 Frontend 

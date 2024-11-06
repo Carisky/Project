@@ -11,6 +11,15 @@ Clone the project
 ```bash
   git clone https://github.com/Carisky/Project
 ```
+Install dependencies in /backend dir
+```bash
+  npm install
+```
+
+Install dependencies in /frontend dir
+```bash
+  npm install
+```
 
 Go to the project directory
 
@@ -29,7 +38,7 @@ Run Docker Compose
 
 Backend 
 ```
-LIBS in use - [ express ]
+LIBS in use - [ express, knex, bcrypt, objection, mysql2, jwt ]
 Port 5000 
 ```
 Frontend 

@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.scss';
 import axios from 'axios';
-
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AuthPage from './pages/AuthPage';
+import MainPage from './pages/MainPage';
 function App() {
 
   axios.get('http://localhost:5000/api/')
@@ -10,22 +11,12 @@ function App() {
   .catch(error => console.log(error));
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<AuthPage />} />
+      </Routes>
+    </Router>
   );
 }
 

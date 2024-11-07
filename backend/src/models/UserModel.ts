@@ -42,16 +42,14 @@ class UserModel extends Model implements User {
     return this;
   }
   static async authenticate(email: string, password: string): Promise<{ token: string; user: UserModel } | null> {
-    // Hash the password to compare with the stored hashed password
-    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
-    
     const user = await UserModel.query().where('email', email).first();
-    if (user && user.password === hashedPassword) {
+    if (user && await bcrypt.compare(password, user.password)) {
       const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
       return { token, user };
     }
     return null; // Authentication failed
   }
+  
   // Static method to find a user by email
   static async findByEmail(email: string): Promise<UserModel | null> {
     const user = await UserModel.query().where('email', email).first();

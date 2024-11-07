@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import corsMiddleware from './middlewares/corsMiddleware';
 import userRoutes from './routes/userRoutes';
+import sellerRoutes from './routes/sellerRoutes';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
 
@@ -19,15 +20,20 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'My API',
+      title: 'Seller API',
       version: '1.0.0',
-      description: 'API documentation for my project',
+      description: 'API for managing sellers and their articles',
     },
-    servers: [
-      {
-        url: `http://localhost:${port}`,
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
       },
-    ],
+    },
+    security: [{ bearerAuth: [] }],
   },
   apis: ['./src/controllers/*.ts'], // Adjust this path as needed
 };
@@ -38,6 +44,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Define routes
 app.use('/api/users', userRoutes);
+app.use('/api/sellers', sellerRoutes);
 
 app.get('/api/', (req, res) => {
   res.send('Hello, TypeScript with Express!');

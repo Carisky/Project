@@ -9,4 +9,5 @@ router.post('/login', loginUser);
 router.get('/profile', jwtMiddleware, getUserProfile);
 router.put('/profile', jwtMiddleware, updateUserProfile);
 router.delete('/profile', jwtMiddleware, deleteUserAccount);
+
 export default router;

@@ -3,7 +3,7 @@ import UserModel from '../models/UserModel';
 
 /**
  * @swagger
- * /users/register:
+ * /api/users/register:
  *   post:
  *     summary: Register a new user
  *     tags: [Users]
@@ -51,7 +51,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /users/login:
+ * /api/users/login:
  *   post:
  *     summary: Login a user
  *     tags: [Users]
@@ -94,12 +94,12 @@ export const loginUser = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /users/profile:
+ * /api/users/profile:
  *   get:
  *     summary: Get user profile
  *     tags: [Users]
  *     security:
- *       - bearerAuth: []
+ *       - bearerAuth: [] # JWT required
  *     responses:
  *       200:
  *         description: User profile retrieved successfully
@@ -130,7 +130,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /users/profile:
+ * /api/users/profile:
  *   put:
  *     summary: Update user profile
  *     tags: [Users]
@@ -185,7 +185,7 @@ export const updateUserProfile = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /users/profile:
+ * /api/users/profile:
  *   delete:
  *     summary: Delete user account
  *     tags: [Users]

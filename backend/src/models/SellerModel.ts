@@ -10,6 +10,7 @@ class SellerModel extends Model {
   email!: string;
   password!: string;
   billing_info!: string;
+  role!: string;
   created_at?: string;
   updated_at?: string;
 

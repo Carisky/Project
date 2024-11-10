@@ -243,7 +243,7 @@ export const deleteSellerAccount = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /sellers/articles:
+ * /api/sellers/articles:
  *   post:
  *     summary: Add a new article for the seller
  *     description: Creates a new article associated with the authenticated seller.
@@ -300,7 +300,7 @@ export const addArticle = async (req: Request, res: Response) => {
   
   /**
    * @swagger
-   * /sellers/articles:
+   * /api/sellers/articles:
    *   get:
    *     summary: Get all articles for the authenticated seller
    *     description: Retrieves all articles associated with the authenticated seller.

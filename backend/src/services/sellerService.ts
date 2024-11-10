@@ -7,6 +7,7 @@ export const createSellerService = async (name: string, email: string, password:
     email,
     password: await SellerModel.hashPassword(password),
     billing_info,
+    role:"seller"
   });
   return await seller.saveSeller();
 };

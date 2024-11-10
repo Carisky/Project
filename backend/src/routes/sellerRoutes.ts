@@ -8,7 +8,7 @@ import {
   addArticle,
   getSellerArticles
 } from '../controllers/sellerController';
-import jwtMiddleware from '../middlewares/jwtMiddleware';
+import jwtMiddleware, {authorizeRoles} from '../middlewares/jwtMiddleware';
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.put('/profile', jwtMiddleware, updateSellerProfile);
 router.delete('/profile', jwtMiddleware, deleteSellerAccount);
 
 // Article routes for a specific seller
-router.post('/sellers/:sellerId/articles', addArticle);
-router.get('/sellers/:sellerId/articles', getSellerArticles);
+router.post('/articles',jwtMiddleware, authorizeRoles(["seller"]), addArticle);
+router.get('/articles',jwtMiddleware, authorizeRoles(["seller"]), getSellerArticles);
 
 export default router;

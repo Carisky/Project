@@ -19,6 +19,9 @@ const config: { [key: string]: Knex.Config } = {
     migrations: {
       directory: '../migrations/',
       tableName: 'knex_migrations',
+    },
+    seeds: {
+      directory: '../seeds',
     }
   },
 
@@ -55,6 +58,9 @@ const config: { [key: string]: Knex.Config } = {
     migrations: {
       directory: '../migrations/',
       tableName: 'knex_migrations',
+    },
+    seeds: {
+      directory: '../seeds',
     }
   },
 };

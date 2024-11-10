@@ -8,7 +8,8 @@
     "dev": "nodemon",
     "migrate:latest": "knex migrate:latest --env development --knexfile src/config/knexfile.ts",
     "migrate:rollback": "knex migrate:rollback --env development --knexfile src/config/knexfile.ts",
-    "create:migration": "knex migrate:make"
+    "create:migration": "knex migrate:make --env development --knexfile src/config/knexfile.ts",
+    "seed:run": "knex seed:run --env development --knexfile src/config/knexfile.ts"
   },
   "keywords": [
     "backend",

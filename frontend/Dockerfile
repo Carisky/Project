@@ -1,5 +1,5 @@
 # Используем официальный образ Node.js для React
-FROM node:20
+FROM node:18
 
 # Устанавливаем рабочую директорию
 WORKDIR /app

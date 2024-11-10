@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon",
+    "clear:db": "ts-node -e \"import knexConfig from './src/config/knexfile'; import knex from 'knex'; const db = knex(knexConfig.development); db('articles').del().then(() => db('categories').del()).then(() => db('sellers').del()).then(() => db('users').del()).then(() => db.destroy());\"",
     "migrate:latest": "knex migrate:latest --env development --knexfile src/config/knexfile.ts",
     "migrate:rollback": "knex migrate:rollback --env development --knexfile src/config/knexfile.ts",
     "create:migration": "knex migrate:make --env development --knexfile src/config/knexfile.ts",

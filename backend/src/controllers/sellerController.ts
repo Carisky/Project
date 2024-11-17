@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { createSellerService, authenticateSellerService, getSellerByIdService, updateSellerService, deleteSellerService, addArticleService, getSellerArticlesService } from '../services/sellerService';
+import { uploadPhotos } from '../services/photoService';
 
 /**
  * @swagger
@@ -246,34 +247,49 @@ export const deleteSellerAccount = async (req: Request, res: Response) => {
  * /api/sellers/articles:
  *   post:
  *     summary: Add a new article for the seller
- *     description: Creates a new article associated with the authenticated seller.
+ *     description: Creates a new article associated with the authenticated seller and allows uploading photos.
  *     tags:
  *       - Articles
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:  # Changed to 'multipart/form-data' to support file uploads
  *           schema:
  *             type: object
  *             required:
  *               - name
  *               - amount
  *               - price
+ *               - photos
  *             properties:
  *               name:
  *                 type: string
  *               amount:
  *                 type: integer
+ *               category_id:
+ *                 type: integer
  *               price:
  *                 type: number
  *                 format: float
+ *               photos:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
  *     responses:
  *       201:
- *         description: Article created successfully
+ *         description: Article created successfully along with photos
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Article'
+ *               type: object
+ *               properties:
+ *                 article:
+ *                   $ref: '#/components/schemas/Article'
+ *                 photoUrls:
+ *                   type: array
+ *                   items:
+ *                     type: string
  *       401:
  *         description: Unauthorized
  *       500:
@@ -281,22 +297,42 @@ export const deleteSellerAccount = async (req: Request, res: Response) => {
  *     security:
  *       - bearerAuth: []
  */
+
 export const addArticle = async (req: Request, res: Response) => {
-    const sellerId = req.user?.id;
-  
-    if (!sellerId) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-  
-    const { name, amount, price } = req.body;
-  
-    try {
-      const article = await addArticleService(+sellerId, { name, amount, price });
-      res.status(201).json(article);
-    } catch (error) {
-      res.status(500).json({ message: 'Error adding article', error });
-    }
-  };
+  const sellerId = req.user?.id;
+
+  if (!sellerId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  // Получаем файлы из запроса
+  const photos = req.files as Express.Multer.File[];
+
+  if (!photos || photos.length === 0) {
+    return res.status(400).json({ message: 'Photos are required' });
+  }
+
+  try {
+    // Шаг 1: Добавляем статью в базу данных
+    const article = await addArticleService(+sellerId, {
+      name: req.body.name,
+      amount: Number(req.body.amount),
+      price: parseFloat(req.body.price),
+      category_id: Number(req.body.category_id),
+    });
+
+    // Шаг 2: Отправляем фотографии в микросервис и получаем URL
+    const photoUrls = await uploadPhotos(article.id, +sellerId, photos);
+
+    // Возвращаем результат
+    res.status(201).json({ article, photoUrls });
+  } catch (error) {
+    console.error(error);  // Логируем ошибку для отладки
+    res.status(500).json({ message: 'Error adding article', error });
+  }
+};
+
+
   
   /**
    * @swagger

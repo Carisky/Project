@@ -1,6 +1,8 @@
 import { Model } from 'objection';
 import SellerModel from './SellerModel';
-import CategoryModel from './CategoryModel'
+import CategoryModel from './CategoryModel';
+import ArticlePhotoModel from './ArticlePhotoModel'; // Импортируем ArticlePhotoModel
+
 class ArticleModel extends Model {
   id!: number;
   seller_id!: number;
@@ -8,8 +10,10 @@ class ArticleModel extends Model {
   name!: string;
   amount!: number;
   price!: number;
+  rating!: number;
   created_at?: string;
   updated_at?: string;
+  photos?: ArticlePhotoModel[];
 
   static get tableName() {
     return 'articles';
@@ -31,6 +35,14 @@ class ArticleModel extends Model {
         join: {
           from: 'articles.category_id',
           to: 'categories.id',
+        },
+      },
+      photos: {
+        relation: Model.HasManyRelation,  // Описание связи "один ко многим"
+        modelClass: ArticlePhotoModel,    // Модель фотографий
+        join: {
+          from: 'articles.id',            // Из какой таблицы
+          to: 'article_photos.article_id', // В какую таблицу
         },
       },
     };

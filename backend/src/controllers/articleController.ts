@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getArticleByIdService, getAllArticlesService, getArticlesByNameService } from '../services/articleService'
+import ArticlePhotoModel from '../models/ArticlePhotoModel';
 
 /**
  * @swagger
@@ -86,9 +87,46 @@ export const getArticlesByName = async (req: Request, res: Response) => {
   
     try {
       const articles = await getArticlesByNameService(name);
+
       res.json(articles);
     } catch (error) {
       res.status(500).json({ message: 'Error searching articles', error });
     }
   };
   
+/**
+ * @swagger
+ * /api/articles/{id}/photos:
+ *   get:
+ *     summary: Get photo URLs for an article by its ID
+ *     tags: [Articles]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Article ID
+ *     responses:
+ *       200:
+ *         description: List of photo URLs for the article
+ *       404:
+ *         description: No photos found for the article
+ *       500:
+ *         description: Error retrieving photos
+ */
+export const getArticlePhotos = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const photoUrls = await ArticlePhotoModel.getPhotosByArticle(Number(id));
+
+    if (photoUrls.length > 0) {
+      res.json(photoUrls);
+    } else {
+      res.status(404).json({ message: 'No photos found for this article' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving photos', error });
+  }
+};

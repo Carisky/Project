@@ -19,8 +19,8 @@ export default function ArticleCard() {
     >
       <Box
         sx={{
-            position:"relative",
-            display:"flex",
+          position:"relative",
+          display:"flex",
           borderRadius: "13px",
           height: "250px",
           width: "100%",

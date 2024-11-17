@@ -48,7 +48,7 @@ class SellerModel extends Model {
   static async authenticate(email: string, password: string): Promise<{ token: string; user: SellerModel } | null> {
     const user = await SellerModel.query().where('email', email).first();
     if (user && await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ id: user.id}, process.env.JWT_SECRET as string, { expiresIn: '1h' });
+      const token = jwt.sign({ id: user.id, role: user.role}, process.env.JWT_SECRET as string, { expiresIn: '1h' });
       return { token, user };
     }
     return null; // Authentication failed

@@ -1,12 +1,15 @@
 import React from "react";
 import Card from "@mui/material/Card";
 import { Box, Typography } from "@mui/material";
-import palete from "../../palete";
 import StarIcon from "@mui/icons-material/Star";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Button from "../Button/Button";
+import useTheme from "../../hooks/useTheme";
 export default function ArticleCard() {
+
+  const theme = useTheme();
+
   return (
     <Card
       sx={{
@@ -14,7 +17,8 @@ export default function ArticleCard() {
         margin: "10px",
         height: "450px",
         width: "232px",
-        boxShadow:"none"
+        boxShadow:"none",
+        backgroundColor:theme.mainColor
       }}
     >
       <Box
@@ -24,7 +28,7 @@ export default function ArticleCard() {
           borderRadius: "13px",
           height: "250px",
           width: "100%",
-          backgroundColor: palete.light.background,
+          backgroundColor: theme.background,
         }}
       >
         <FavoriteBorderIcon sx={{
@@ -52,7 +56,7 @@ export default function ArticleCard() {
         >
           <Typography
             sx={{
-              color: palete.light.mainText,
+              color: theme.mainText,
               fontSize: "24px",
             }}
           >
@@ -60,7 +64,7 @@ export default function ArticleCard() {
           </Typography>
           <Typography
             sx={{
-              color: palete.light.secondaryText,
+              color: theme.secondaryText,
               fontSize: "24px",
             }}
           >
@@ -68,7 +72,7 @@ export default function ArticleCard() {
           </Typography>
           <Typography
             sx={{
-              color: palete.light.secondaryText,
+              color: theme.secondaryText,
               fontSize: "24px",
             }}
           ></Typography>
@@ -88,7 +92,7 @@ export default function ArticleCard() {
             fontSize: "21px",
             fontWeight: "bolder",
             marginRight: "7px",
-            color: palete.light.mainText,
+            color: theme.mainText,
           }}
         >
           000$
@@ -99,7 +103,7 @@ export default function ArticleCard() {
             marginTop: "6px",
             marginRight: "7px",
             fontWeight: 400,
-            color: palete.light.secondaryText,
+            color: theme.secondaryText,
           }}
         >
           000$
@@ -109,7 +113,7 @@ export default function ArticleCard() {
             marginTop: "6px",
             fontSize: "17px",
             fontWeight: 400,
-            color: palete.light.accentText,
+            color: theme.accentText,
           }}
         >
           -34%
@@ -131,12 +135,12 @@ export default function ArticleCard() {
           <StarIcon
             sx={{
               marginRight: "3.5px",
-              color: palete.light.secondaryColor,
+              color: theme.secondaryColor,
             }}
           ></StarIcon>
           <Typography
             sx={{
-              color: palete.light.secondaryText,
+              color: theme.secondaryText,
               fontSize: "14px",
             }}
           >
@@ -154,13 +158,13 @@ export default function ArticleCard() {
               height: "20px",
               width: "20px",
               marginRight: "3.12px",
-              color: palete.light.secondaryColor,
+              color: theme.secondaryColor,
             }}
           ></ReviewsIcon>
           <Typography
             sx={{
               fontSize: "14px",
-              color: palete.light.secondaryText,
+              color: theme.secondaryText,
             }}
           >
             23 відгуки

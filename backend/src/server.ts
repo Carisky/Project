@@ -6,6 +6,7 @@ import sellerRoutes from './routes/sellerRoutes';
 import articleRoutes from './routes/articleRoutes';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
+import path from 'path';
 
 dotenv.config();
 
@@ -42,6 +43,9 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+// Serve static files from the 'storage/photos' directory
+const photosDirectory = path.join(__dirname, '..', 'storage', 'photos');
+app.use('/storage/photos', express.static(photosDirectory));
 
 // Define routes
 app.use('/api/users', userRoutes);

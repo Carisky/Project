@@ -9,6 +9,7 @@ import { LogoCart } from "../../images/LogoCart.jsx";
 import { LogoHeart } from "../../images/LogoHeart.jsx";
 import { LogoBurger } from "../../images/LogoBurger.jsx";
 import { LogoEllipse } from "../../images/LogoEllipse.jsx";
+import useTheme from "../../hooks/useTheme.js";
 
 //import Button from "../Button/Button";    
 //    display: "flex",
@@ -19,9 +20,12 @@ import { LogoEllipse } from "../../images/LogoEllipse.jsx";
 */
 
 export default function Header() {
+
+  const theme = useTheme();
+
   return (
     // Header
-      <Box justifyContent="space-between" alignItems="end" display="flex">
+      <Box sx={{width:"82%",margin:"auto"}} justifyContent="space-between" alignItems="end" display="flex">
 
         <Box>
           <Typography alignItems="end" sx={{
@@ -83,28 +87,31 @@ export default function Header() {
 {/*корзина*/}
         <Box // {/*установить количество товаров в корзине*/}
         sx={{
-          width: "60px",
+          width:"fit-content",
           marginRight: "3.12px",
+          position:"relative",
           color: palete.light.secondaryColor,
         }}>
-          <Box width="16px" height="16px">
-            <LogoCart />
-            <LogoEllipse sx={{
-              width: "16px",
-              height: "16px",
-              position:"absolute",
-              top:"16px",
-              right:"16px",
-              //cursor:"pointer",
-              zIndex:2
+          <Box sx={{
+            display:"flex",
+            justifyContent:"center",
+            position:"absolute",
+            right:"30px",
+            top:"-10px",
+            borderRadius:"50%",
+            height:"25px",
+            width:"25px",
+            backgroundColor:theme.cartNotificationFillColor,
+            opacity:1
+          }}>
+            <Typography sx={{
+              color:"#FFFFFF",
+              fontFamily:"Montserrat"
             }}>
-              <Typography
-              sx={{
-                fontSize: "8px",
-                color: palete.light.secondaryText,
-              }}>3</Typography>
-            </LogoEllipse>
+              3
+            </Typography>
           </Box>
+            <LogoCart/>
           
           <Typography
           sx={{

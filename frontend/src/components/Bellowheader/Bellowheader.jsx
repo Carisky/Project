@@ -4,7 +4,7 @@ import palete from "../../palete";
 
 export default function Bellowheader() {
     return (
-        <Box justifyContent="space-between" alignItems="end" display="flex">
+        <Box sx={{width:"82%",margin:"auto"}} justifyContent="space-between" alignItems="end" display="flex">
             <Box>
                 <Typography alignItems="end" sx={{
                     color:palete.light.secondaryText,

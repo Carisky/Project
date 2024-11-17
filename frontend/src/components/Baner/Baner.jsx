@@ -5,14 +5,14 @@ import { ViewTimeAndDate } from '../ViewTimeAndDate/ViewTimeAndDate';
 
 export default function Baner() {
     return (
-        <Box height="260px" width="100%" display="flex" sx={{
+        <Box height="260px" display="flex" sx={{
             marginTop: "10px",
             marginBottom: "10px",
+            width:"82%",
+            margin:"auto"
         }}>
             <Box height="100%" width="30%" sx={{
                 borderRadius: "13px",
-                marginLeft: "10px",
-                marginRight: "10px",
                 backgroundColor: palete.light.secondaryColor
             }}>
                 <Typography alignItems="end" sx={{
@@ -27,7 +27,6 @@ export default function Baner() {
             <Box height="100%" width="70%" display="flex" justifyContent="space-between" sx={{
                 borderRadius: "13px",
                 marginLeft: "10px",
-                marginRight: "10px",
                 backgroundColor: palete.light.secondaryColor
             }}>
                 <Box display="flex">

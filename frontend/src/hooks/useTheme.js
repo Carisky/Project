@@ -9,6 +9,7 @@ const palete = {
     mainText: "#2B2B2B",
     secondaryText: "#808080",
     accentText: "#FF2A2A",
+    cartNotificationFillColor:"#886FFB"
   },
   dark: {
     mainColor: "#3A2987",
@@ -17,6 +18,7 @@ const palete = {
     mainText: "#2B2B2B",
     secondaryText: "#808080",
     accentText: "#FF2A2A",
+    cartNotificationFillColor:"#886FFB"
   }
 };
 

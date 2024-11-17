@@ -10,21 +10,23 @@ import Container from '@mui/material/Container';
 export default function MainPage() {
   
   return (
-    <Container
+    <Box
       sx={{
         backgroundColor: "#cfe8fc",
         //height: "5vh",
         //width: "90vw",
-        marginLeft: "1vw",
-        marginRight: "1vw",
         //marginTop: "1vh"
+        width:"100%"
       }}>
 
-    <Box>
+    <Box sx={{
+
+    }}>
       <Header></Header>
       <Bellowheader></Bellowheader>
       <Baner></Baner>
       <ArticleList Title={"ТОП ТРЕНДИ"}
+      isSlider={true}
       sx={{
         backgroundColor: palete.light.mainColor
       }}
@@ -38,6 +40,6 @@ export default function MainPage() {
       <ArticleList Title={"Вау Ціни"}></ArticleList>
     </Box>
 
-    </Container>
+    </Box>
   )
 }

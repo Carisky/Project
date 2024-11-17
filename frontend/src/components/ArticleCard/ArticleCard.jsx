@@ -11,13 +11,17 @@ export default function ArticleCard() {
   const theme = useTheme();
 
   return (
+    <Box sx={{
+      margin:"10px"
+    }}>
     <Card
       sx={{
         border:"none",
-        margin: "10px",
-        height: "450px",
+
+        height: "470px",
         width: "232px",
         boxShadow:"none",
+        borderRadius:"14px",
         backgroundColor:theme.mainColor
       }}
     >
@@ -171,7 +175,9 @@ export default function ArticleCard() {
           </Typography>
         </Box>
       </Box>
-      <Button></Button>
+      
     </Card>
+    <Button></Button>
+    </Box>
   );
 }

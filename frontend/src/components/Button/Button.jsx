@@ -11,6 +11,8 @@ export default function Button() {
         width:"100%",
         borderRadius:"11px",
         height:"36px",
+        marginBottom:"10px",
+        marginTop:"8px",
       }}
     >
       <Typography sx={{

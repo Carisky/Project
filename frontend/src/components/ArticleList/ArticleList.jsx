@@ -21,7 +21,7 @@ const objects = [
   <ArticleCard></ArticleCard>
 ];
 
-export default function ArticleList({Title,articles}) {
+export default function ArticleList({Title,articles,isSlider}) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = objects.length-3;
@@ -37,7 +37,11 @@ export default function ArticleList({Title,articles}) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Box component="section" sx={{ 
-        display:"flex"
+        display:"flex",
+
+        width: isSlider ? "91%" : "82%",
+        marginLeft: isSlider ? "9%" : "auto",
+        marginRight: isSlider ? "0px" : "auto",
       }}>
         <Typography sx={{
             color:"white",
@@ -48,7 +52,8 @@ export default function ArticleList({Title,articles}) {
           {Title}
         </Typography>
         {objects[activeStep]}{objects[activeStep+1]}{objects[activeStep+2]}{objects[activeStep+3]}</Box>
-      <MobileStepper
+
+        {isSlider ? <MobileStepper
         variant="dots"
         steps={maxSteps}
         position="static"
@@ -74,7 +79,8 @@ export default function ArticleList({Title,articles}) {
                         Back
                         </Button>
                         }
-                        />
+                        /> : <></>}
+      
     </Box>
   );
 }

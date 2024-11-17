@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string("email").unique().notNullable();
     table.string("password").notNullable();
     table.string("billing_info").notNullable();
+    table.string("role").notNullable();
     table.timestamps(true, true);
   });
 }

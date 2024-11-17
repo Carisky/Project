@@ -3,6 +3,7 @@ import React from "react";
 import palete from "../../palete";
 
 export default function Button() {
+
   return (
     <ButtonBase
       sx={{

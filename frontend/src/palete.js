@@ -1,6 +1,6 @@
 const palete = {
     light : {
-        mainColor:"#886FFB",
+        mainColor:"#9283FF",
         secondaryColor:"#FE7411",
         background:"#F5F0ED",
         mainText:"#2B2B2B",

@@ -2,11 +2,11 @@ import { Button } from "@mui/material";
 import React from "react";
 import useTheme from "../../../hooks/useTheme";
 
-export default function LoginFormButton() {
+export default function LoginFormButton({onClick}) {
   const theme = useTheme();
 
   return (
-    <Button
+    <Button onClick={onClick}
       sx={{
         fontFamily:"Montserrat",
         marginTop: "10px",

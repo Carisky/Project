@@ -1,10 +1,10 @@
-import config from "../config/config";
-import axios from "axios";
-class APIhandler {
-  static async getUserToken({params}) {
-    result = await axios.post(config.GetToken);
-    return result;
-  }
-}
+import axios from 'axios';
 
-export default APIhandler;
+const apiHandler = axios.create({
+  baseURL: "http://localhost:5000/api", // Замените на ваш URL
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export default apiHandler;

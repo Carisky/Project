@@ -2,16 +2,18 @@ import React from 'react';
 import { TextField, InputAdornment, Tooltip } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 
-export default function LoginFormField({ label, error }) {
+export default function LoginFormField({ label, value, error, onChange }) {
   return (
     <TextField
       sx={{
         marginTop: '10px',
         width: '380px',
       }}
-      id="outlined-basic"
+      id={`outlined-${label.toLowerCase()}`}
       label={label}
       variant="outlined"
+      value={value} // Двойное связывание: отображение значения
+      onChange={onChange} // Передача функции напрямую
       error={Boolean(error)} // Показывает ошибку
       helperText={error || ''} // Текст ошибки
       InputProps={{
@@ -26,3 +28,4 @@ export default function LoginFormField({ label, error }) {
     />
   );
 }
+

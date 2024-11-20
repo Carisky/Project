@@ -6,6 +6,7 @@ import Baner from '../components/Baner/Baner';
 import { Box } from '@mui/material';
 import palete from "../palete";
 import Container from '@mui/material/Container';
+import Footer from '../components/Footer/Footer';
 
 export default function MainPage() {
   
@@ -39,7 +40,7 @@ export default function MainPage() {
       </Box>
       <ArticleList Title={"Вау Ціни"}></ArticleList>
     </Box>
-
+      <Footer></Footer>
     </Box>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import AutoplayList from '../components/AutoplayList/AutoplayList';
 import Header from '../components/Header/Header';
 import Bellowheader from '../components/Bellowheader/Bellowheader';
 import Baner from '../components/Baner/Baner';
@@ -10,7 +9,6 @@ import palete from "../palete";
 import Container from '@mui/material/Container';
 import Footer from '../components/Footer/Footer';
 import ArticleList from '../components/ArticleList/ArticleList';
-
 export default function MainPage() {
 
   const theme = useTheme();
@@ -33,7 +31,6 @@ export default function MainPage() {
       <Baner></Baner>
 
         <ArticleList Title={"Топ Тренди"}>
-
         </ArticleList>
 
     </Box>

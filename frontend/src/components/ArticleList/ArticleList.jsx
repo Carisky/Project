@@ -29,7 +29,14 @@ export default function ArticleList({ Title }) {
           {Title}
         </Typography>
       </Box>
-      <ArticleCarousel></ArticleCarousel>
+      <ArticleCarousel>
+          <ArticleCard></ArticleCard>
+          <ArticleCard></ArticleCard>
+          <ArticleCard></ArticleCard>
+          <ArticleCard></ArticleCard>
+          <ArticleCard></ArticleCard>
+          <ArticleCard></ArticleCard>
+      </ArticleCarousel>
     </Box>
   );
 }

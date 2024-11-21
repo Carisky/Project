@@ -7,7 +7,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Button from "../Button/Button";
 import useTheme from "../../hooks/useTheme";
 
-export default function ArticleCard() {
+export default function ArticleCard({Article}) {
 
   const theme = useTheme();
 

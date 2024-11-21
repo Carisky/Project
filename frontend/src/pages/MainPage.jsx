@@ -1,5 +1,4 @@
 import React from 'react';
-import ArticleList from '../components/ArticleList/ArticleList';
 import AutoplayList from '../components/AutoplayList/AutoplayList';
 import Header from '../components/Header/Header';
 import Bellowheader from '../components/Bellowheader/Bellowheader';
@@ -10,6 +9,7 @@ import useTheme from "../hooks/useTheme";
 import palete from "../palete";
 import Container from '@mui/material/Container';
 import Footer from '../components/Footer/Footer';
+import ArticleList from '../components/ArticleList/ArticleList';
 
 export default function MainPage() {
 
@@ -31,20 +31,11 @@ export default function MainPage() {
       <Header></Header>
       <Bellowheader></Bellowheader>
       <Baner></Baner>
-      <AutoplayList></AutoplayList>
-      <ArticleList Title={"ТОП ТРЕНДИ"}
-      isSlider={true}
-      sx={{
-        backgroundColor: theme.mainColor
-      }}
-      ></ArticleList>
-      <ArticleList Title={"Для Тебе"}></ArticleList>
-      <Box sx={{
-        backgroundColor: theme.mainColor
-      }}>
-        <ArticleList Title={"ВАУ ЦІНИ"}></ArticleList>
-      </Box>
-      <ArticleList Title={"ВАУ ЦІНИ"}></ArticleList>
+
+        <ArticleList Title={"Топ Тренди"}>
+
+        </ArticleList>
+
     </Box>
       <Footer></Footer>
     </Box>

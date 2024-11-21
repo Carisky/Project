@@ -1,13 +1,15 @@
-import { ButtonBase, Typography } from "@mui/material";
 import React from "react";
-import palete from "../../palete";
+import { ButtonBase, Typography } from "@mui/material";
+import useTheme from "../../hooks/useTheme";
 
 export default function Button() {
+    
+  const theme = useTheme();
 
   return (
     <ButtonBase
       sx={{
-        backgroundColor: palete.light.secondaryColor,
+        backgroundColor: theme.secondaryColor,
         width:"100%",
         borderRadius:"11px",
         height:"36px",

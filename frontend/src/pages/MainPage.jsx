@@ -7,6 +7,9 @@ import Baner from '../components/Baner/Baner';
 import { Box } from '@mui/material';
 import useTheme from "../hooks/useTheme";
 //import 'react-multi-carousel/lib/styles.css';
+import palete from "../palete";
+import Container from '@mui/material/Container';
+import Footer from '../components/Footer/Footer';
 
 export default function MainPage() {
 
@@ -43,7 +46,7 @@ export default function MainPage() {
       </Box>
       <ArticleList Title={"ВАУ ЦІНИ"}></ArticleList>
     </Box>
-
+      <Footer></Footer>
     </Box>
   )
 }

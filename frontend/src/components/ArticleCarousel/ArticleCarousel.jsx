@@ -31,6 +31,18 @@ export default function ArticleCarousel({ children }) {
       <ArticleCard></ArticleCard>
       <ArticleCard></ArticleCard>
       <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
+      <ArticleCard></ArticleCard>
     </Carousel>
   );
 }

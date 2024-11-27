@@ -10,8 +10,12 @@ export default function ArticleList({ Title }) {
     <Box
       sx={{
         height: "550px",
+        width:"82%",
+        margin:"auto",
         backgroundColor: theme.mainColor,
         display: "flex",
+        marginTop: "10px",
+        marginBottom: "10px",
       }}
     >
       <Box
@@ -21,6 +25,7 @@ export default function ArticleList({ Title }) {
       >
         <Typography
           sx={{
+            color: "white",
             fontFamily: "Ubuntu",
             fontSize: "52px",
             fontWeight: "500",

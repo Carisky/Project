@@ -17,8 +17,8 @@ export default function Bellowheader() {
     const theme = useTheme();
     
     return (
-        <Box sx={{width:"82%", height:"5vh", margin:"auto"}} justifyContent="space-between" alignItems="center" display="flex">
-            <Box display="flex" alignItems="center">
+        <Box sx={{width:"82%", height:"5vh", margin:"auto", marginTop: "10px", marginBottom: "10px",}} justifyContent="space-between" alignItems="center" display="flex">
+            <Box display="flex" alignItems="center" sx={{cursor:"pointer",}}>
                 <IconShares></IconShares>
                 <Typography alignItems="end" sx={{
                     color: theme.secondaryText,
@@ -27,7 +27,7 @@ export default function Bellowheader() {
                     fontFamily: "Ubuntu",
                 }}>Акції</Typography>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{cursor:"pointer",}}>
                 <IconClothing></IconClothing>
                 <Typography alignItems="end" sx={{
                     color: theme.secondaryText,
@@ -36,7 +36,7 @@ export default function Bellowheader() {
                     fontFamily: "Ubuntu",
                 }}>Одяг</Typography>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{cursor:"pointer",}}>
                 <IconShoes></IconShoes>
                 <Typography alignItems="end" sx={{
                     color: theme.secondaryText,
@@ -45,7 +45,7 @@ export default function Bellowheader() {
                     fontFamily: "Ubuntu",
                 }}>Взуття</Typography>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{cursor:"pointer",}}>
                 <IconCosmetics></IconCosmetics>
                 <Typography alignItems="end" sx={{
                     color: theme.secondaryText,
@@ -54,7 +54,7 @@ export default function Bellowheader() {
                     fontFamily: "Ubuntu",
                 }}>Косметика</Typography>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{cursor:"pointer",}}>
                 <IconForHome></IconForHome>
                 <Typography alignItems="end" sx={{
                     color: theme.secondaryText,
@@ -63,7 +63,7 @@ export default function Bellowheader() {
                     fontFamily: "Ubuntu",
                 }}>Для дому</Typography>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{cursor:"pointer",}}>
                 <IconElectronics></IconElectronics>
                 <Typography alignItems="end" sx={{
                     color: theme.secondaryText,
@@ -72,7 +72,7 @@ export default function Bellowheader() {
                     fontFamily: "Ubuntu",
                 }}>Електроніка</Typography>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{cursor:"pointer",}}>
                 <IconSportingGoods></IconSportingGoods>
                 <Typography alignItems="end" sx={{
                     color: theme.secondaryText,
@@ -81,7 +81,7 @@ export default function Bellowheader() {
                     fontFamily: "Ubuntu",
                 }}>Спорт</Typography>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{cursor:"pointer",}}>
                 <IconBabyProducts></IconBabyProducts>
                 <Typography alignItems="end" sx={{
                     color: theme.secondaryText,
@@ -90,7 +90,7 @@ export default function Bellowheader() {
                     fontFamily: "Ubuntu",
                 }}>Дитячі товари</Typography>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{cursor:"pointer",}}>
                 <IconForAnimals></IconForAnimals>
                 <Typography alignItems="end" sx={{
                     color: theme.secondaryText,
@@ -99,7 +99,7 @@ export default function Bellowheader() {
                     fontFamily: "Ubuntu",
                 }}>Для тварин</Typography>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" sx={{cursor:"pointer",}}>
                 <IconFoods></IconFoods>
                 <Typography alignItems="end" sx={{
                     color: theme.secondaryText,

@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import palete from "../../palete";
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import { LogoProfil } from "../../images/LogoProfil.jsx";
@@ -9,15 +8,26 @@ import { LogoCart } from "../../images/LogoCart.jsx";
 import { LogoHeart } from "../../images/LogoHeart.jsx";
 import { LogoBurger } from "../../images/LogoBurger.jsx";
 import useTheme from "../../hooks/useTheme.js";
-import AlignSvg from "../helpers/AlignSvg.jsx"
+import AlignSvg from "../helpers/AlignSvg.jsx";
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import AuthPage from "../../pages/AuthPage.jsx";
+import { LogoBurgerСross } from "../../images/LogoBurgerСross.jsx";
 /**/
+
 export default function Header() {
 
   const theme = useTheme();
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  
+
   return (
     // Header
-      <Box sx={{width:"82%", margin:"auto"}} display="flex" justifyContent="space-between" alignItems="center">
+      <Box sx={{width:"82%", margin:"auto", marginTop: "10px", marginBottom: "10px",}} display="flex" justifyContent="space-between" alignItems="center">
 
         <Typography alignItems="end" sx={{
             color: theme.mainText,
@@ -25,11 +35,12 @@ export default function Header() {
             fontSize: "48px",
             fontFamily: "Ubuntu",
           }}>FLOX</Typography>
-
-        <AlignSvg><LogoFlox /></AlignSvg>
-
-        <AlignSvg><LogoBurger /></AlignSvg>
-
+        <Box sx={{cursor:"pointer",}}>
+          <AlignSvg><LogoFlox /></AlignSvg>
+        </Box>
+        <Box sx={{cursor:"pointer",}}>
+          <AlignSvg><LogoBurger /></AlignSvg>
+        </Box>
         <Box sx={{
           borderRadius: "13px",
           backgroundColor: theme.background,
@@ -47,7 +58,9 @@ export default function Header() {
         </Box>
 
 {/*обране*/}
-        <Box>
+        <Box sx={{
+          cursor:"pointer",
+        }}>
           <Box display="flex" justifyContent="center">
             <LogoHeart></LogoHeart>
           </Box>
@@ -63,7 +76,10 @@ export default function Header() {
         </Box>
 
 {/*вхід*/}
-        <Box>
+        <div>
+        <Box onClick={handleOpen} sx={{
+          cursor:"pointer",
+        }}>
           <AlignSvg>
             <LogoProfil></LogoProfil>
           </AlignSvg>
@@ -75,6 +91,12 @@ export default function Header() {
             Увійти
           </Typography>
         </Box>
+        <Modal
+        open={open}
+        onClose={handleClose}>
+          <AuthPage></AuthPage>
+        </Modal>
+        </div>
 
 {/*корзина*/}
         <Box
@@ -84,6 +106,7 @@ export default function Header() {
           position:"relative",
           flexDirection: "column",
           color: theme.secondaryColor,
+          cursor:"pointer",
         }}>
           <Box sx={{
             display:"flex",

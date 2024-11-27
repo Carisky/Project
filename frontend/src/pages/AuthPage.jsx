@@ -12,6 +12,7 @@ import PasswordRecoveryField from "../components/LoginForm/PasswordRecovery/Pass
 import { loginUser, registerUser, recoverPassword } from "../API/services/userService";
 
 export default function AuthPage() {
+
   const [formType, setFormType] = useState("login");
   const [headerText, setHeaderText] = useState("Вхід");
   const [errors, setErrors] = useState({
@@ -197,11 +198,20 @@ export default function AuthPage() {
     <Box
       sx={{
         backgroundColor: palete.light.secondaryText,
-        width: "100%",
-        height: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+
       }}
     >
       <Box

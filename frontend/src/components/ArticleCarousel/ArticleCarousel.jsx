@@ -1,5 +1,4 @@
 import React from "react";
-import Box from "@mui/material/Box";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ArticleCard from "../ArticleCard/ArticleCard";
@@ -7,7 +6,6 @@ import style from "./style.module.css"
 export default function ArticleCarousel({ children }) {
   const responsive = {
     superLargeDesktop: {
-      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 5,
     },

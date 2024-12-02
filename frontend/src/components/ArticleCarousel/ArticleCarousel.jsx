@@ -5,32 +5,35 @@ import ArticleCard from "../ArticleCard/ArticleCard";
 import style from "./style.module.css"
 export default function ArticleCarousel({ children }) {
   const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
+    normalLarge: {
+      breakpoint: { max: 4000, min: 1525 },
       items: 5,
+    },
+    superLargeDesktop: {
+      breakpoint: { max: 1524, min: 1281 },
+      items: 4,
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 5,
+      breakpoint: { max: 1280, min: 1025 },
+      items: 3,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 1024, min: 781 },
       items: 2,
     },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
+    smallDesktop: {
+      breakpoint: { max: 780, min: 501 },
       items: 1,
+    },
+    mobile: {
+      breakpoint: { max: 500, min: 0 },
+      items: 2,
     },
   };
 
   return (
     <Carousel  partialVisible={false} containerClass={style.custom_carousel_container} showDots={false} arrows={false} responsive={responsive}>
-      <ArticleCard></ArticleCard>
-      <ArticleCard></ArticleCard>
-      <ArticleCard></ArticleCard>
-      <ArticleCard></ArticleCard>
-      <ArticleCard></ArticleCard>
-      <ArticleCard></ArticleCard>
+      { children }
     </Carousel>
   );
 }

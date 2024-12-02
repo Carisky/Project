@@ -9,11 +9,12 @@ import Footer from '../components/Footer/Footer';
 import ArticleList from '../components/ArticleList/ArticleList';
 import ArticlePackAdvice from '../components/ArticlePackAdvice/ArticlePackAdvice';
 import ArticleListFree from '../components/ArticleListFree/ArticleListFree';
+import { LogoBurgerСross } from '../images/LogoBurgerСross.jsx';
 
 export default function MainPage() {
 
   const theme = useTheme();
-  
+
   return (
     <Box
       sx={{
@@ -29,7 +30,7 @@ export default function MainPage() {
           }}>
             <ArticleList Title={"ТОП ТРЕНДИ"}></ArticleList>
           </Box>
-          <ArticlePackAdvice Title={"РЕКОМЕНДАЦІЇ ДЛЯ ТЕБЕ"}></ArticlePackAdvice>
+          <ArticlePackAdvice></ArticlePackAdvice>
           <Box sx={{
             backgroundColor: theme.mainColor,
           }}>

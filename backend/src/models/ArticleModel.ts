@@ -20,7 +20,8 @@ class ArticleModel extends Model {
   created_at?: string;
   updated_at?: string;
   photos?: ArticlePhotoModel[];
-
+  seller?: SellerModel; 
+  category?: CategoryModel; 
   static get tableName() {
     return "articles";
   }

@@ -3,7 +3,7 @@ import { Box, Typography, ButtonBase } from "@mui/material";
 import useTheme from "../../hooks/useTheme";
 import ArticleCard from "../ArticleCard/ArticleCard";
 
-export default function ArticleList({ Title }) {
+export default function ArticleListFree({ Title, Articles }) {
   const theme = useTheme();
   return (
     <Box
@@ -16,11 +16,9 @@ export default function ArticleList({ Title }) {
         marginBottom: "10px",
       }}>
         <Box display="flex" justifyContent="space-between">
-            <ArticleCard></ArticleCard>
-            <ArticleCard></ArticleCard>
-            <ArticleCard></ArticleCard>
-            <ArticleCard></ArticleCard>
-            <ArticleCard></ArticleCard>
+            {Articles.map((article)=>{
+              return <ArticleCard article={article}/>
+            })}
         </Box>
         <Box sx={{
             display: "flex",

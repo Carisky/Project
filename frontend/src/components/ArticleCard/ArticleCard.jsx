@@ -7,10 +7,9 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Button from "../Button/Button";
 import useTheme from "../../hooks/useTheme";
 
-export default function ArticleCard() {
+export default function ArticleCard({article}) {
   const theme = useTheme();
 
-  // Состояния для отслеживания начальной позиции курсора
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseDown = (event) => {
@@ -88,7 +87,7 @@ export default function ArticleCard() {
                 fontSize: "24px",
               }}
             >
-              Назва продукту
+              {article?.name}
             </Typography>
             <Typography
               sx={{
@@ -96,7 +95,7 @@ export default function ArticleCard() {
                 fontSize: "24px",
               }}
             >
-              Назва фірми
+              {article?.seller_name}
             </Typography>
           </Typography>
         </Box>
@@ -117,7 +116,7 @@ export default function ArticleCard() {
               color: theme.mainText,
             }}
           >
-            000$
+            {article?.price}
           </Typography>
           <Typography
             sx={{
@@ -166,7 +165,7 @@ export default function ArticleCard() {
                 fontSize: "14px",
               }}
             >
-              4.8
+              {article.rating}
             </Typography>
           </Box>
           <Box

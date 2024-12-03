@@ -51,8 +51,6 @@ const useTheme = () => {
     
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
         .matches;
-
-        console.log(prefersDark)
     const updateTheme = () => {
       setTheme(prefersDark ? 'dark' : 'light');
     };

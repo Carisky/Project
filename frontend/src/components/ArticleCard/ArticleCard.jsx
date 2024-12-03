@@ -87,7 +87,7 @@ export default function ArticleCard({article}) {
                 fontSize: "24px",
               }}
             >
-              {article.name}
+              {article?.name}
             </Typography>
             <Typography
               sx={{
@@ -95,7 +95,7 @@ export default function ArticleCard({article}) {
                 fontSize: "24px",
               }}
             >
-              {article.seller_name}
+              {article?.seller_name}
             </Typography>
           </Typography>
         </Box>
@@ -116,7 +116,7 @@ export default function ArticleCard({article}) {
               color: theme.mainText,
             }}
           >
-            {article.price}
+            {article?.price}
           </Typography>
           <Typography
             sx={{

@@ -2,16 +2,16 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import useTheme from "../../hooks/useTheme";
 import ArticleCarousel from "../ArticleCarousel/ArticleCarousel";
-import ArticleCard from "../ArticleCard/ArticleCard";
 
-export default function ArticleList({ Title }) {
+export default function ArticleList({ Title, articles }) {
   const theme = useTheme();
+
   return (
     <Box
       sx={{
         height: "550px",
-        width:"82%",
-        margin:"auto",
+        width: "82%",
+        margin: "auto",
         backgroundColor: theme.mainColor,
         display: "flex",
         marginTop: "10px",
@@ -34,14 +34,7 @@ export default function ArticleList({ Title }) {
           {Title}
         </Typography>
       </Box>
-      <ArticleCarousel>
-          <ArticleCard></ArticleCard>
-          <ArticleCard></ArticleCard>
-          <ArticleCard></ArticleCard>
-          <ArticleCard></ArticleCard>
-          <ArticleCard></ArticleCard>
-          <ArticleCard></ArticleCard>
-      </ArticleCarousel>
+      <ArticleCarousel articles={articles}></ArticleCarousel>
     </Box>
   );
 }

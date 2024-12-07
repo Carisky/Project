@@ -23,30 +23,23 @@ export const getArticlesByNameService = async (name: string) => {
 
   const articlesWithDetails = await ArticleModel.query()
     .whereIn("id", filteredArticles)
-    .withGraphFetched("[photos, tags, seller, category]"); // Include seller and category
+    .withGraphFetched("[photos, tags, seller, category]");
 
-  const result = await Promise.all(
-    articlesWithDetails.map(async (article) => {
-      const tags = await article.getTagsWithValues();
-
-      return {
-        id: article.id,
-        seller_id: article.seller_id,
-        seller_name: article.seller?.name, // Include seller's name
-        category_id: article.category_id,
-        category_name: article.category?.name, // Include category name
-        name: article.name,
-        amount: article.amount,
-        price: article.price,
-        rating: article.rating,
-        photos: article.photos?.map((photo) => photo.url),
-        tags: tags,
-      };
-    })
-  );
-
-  return result;
+  return articlesWithDetails.map((article) => ({
+    id: article.id,
+    seller_id: article.seller_id,
+    seller_name: article.seller?.name,
+    category_id: article.category_id,
+    category_name: article.category?.name,
+    name: article.name,
+    amount: article.amount,
+    price: article.price,
+    rating: article.rating,
+    photos: article.photos?.map((photo) => photo.url),
+    tags: article.tags?.map((tag) => tag.name),
+  }));
 };
+
 
 
 export const getArticleByIdService = async (id: number) => {
@@ -57,8 +50,6 @@ export const getArticleByIdService = async (id: number) => {
   if (!article) {
     return null;
   }
-
-  const tags = await article.getTagsWithValues();
 
   return {
     id: article.id,
@@ -71,32 +62,28 @@ export const getArticleByIdService = async (id: number) => {
     created_at: article.created_at,
     updated_at: article.updated_at,
     photos: article.photos?.map((photo) => photo.url),
-    tags: tags,
+    tags: article.tags?.map((tag) => tag.name), // Теги как массив строк
   };
 };
+
 
 export const getAllArticlesService = async () => {
   const articles = await ArticleModel.query().withGraphFetched(
     "[photos, tags]"
   );
 
-  return await Promise.all(
-    articles.map(async (article) => {
-      const tags = await article.getTagsWithValues();
-
-      return {
-        id: article.id,
-        seller_id: article.seller_id,
-        category_id: article.category_id,
-        name: article.name,
-        amount: article.amount,
-        price: article.price,
-        rating: article.rating,
-        created_at: article.created_at,
-        updated_at: article.updated_at,
-        photos: article.photos?.map((photo) => photo.url),
-        tags: tags,
-      };
-    })
-  );
+  return articles.map((article) => ({
+    id: article.id,
+    seller_id: article.seller_id,
+    category_id: article.category_id,
+    name: article.name,
+    amount: article.amount,
+    price: article.price,
+    rating: article.rating,
+    created_at: article.created_at,
+    updated_at: article.updated_at,
+    photos: article.photos?.map((photo) => photo.url),
+    tags: article.tags?.map((tag) => tag.name), // Теги как массив строк
+  }));
 };
+

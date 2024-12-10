@@ -2,8 +2,8 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ArticleCard from "../ArticleCard/ArticleCard";
-import style from "./style.module.css"
-export default function ArticleCarousel({ children }) {
+import style from "./style.module.css";
+export default function ArticleCarousel({ articles }) {
   const responsive = {
     normalLarge: {
       breakpoint: { max: 4000, min: 1525 },
@@ -32,8 +32,16 @@ export default function ArticleCarousel({ children }) {
   };
 
   return (
-    <Carousel  partialVisible={false} containerClass={style.custom_carousel_container} showDots={false} arrows={false} responsive={responsive}>
-      { children }
+    <Carousel
+      partialVisible={false}
+      containerClass={style.custom_carousel_container}
+      showDots={false}
+      arrows={false}
+      responsive={responsive}
+    >
+      {articles.map((article) => {
+        return <ArticleCard article={article} />;
+      })}
     </Carousel>
   );
 }

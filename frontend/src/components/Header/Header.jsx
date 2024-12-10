@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
-import TextField from '@mui/material/TextField';
-import SearchIcon from '@mui/icons-material/Search';
+import TextField from "@mui/material/TextField";
+import SearchIcon from "@mui/icons-material/Search";
 import { LogoProfil } from "../../images/LogoProfil.jsx";
 import { LogoFlox } from "../../images/LogoFlox.jsx";
 import { LogoCart } from "../../images/LogoCart.jsx";
@@ -9,25 +9,33 @@ import { LogoHeart } from "../../images/LogoHeart.jsx";
 import { LogoBurger } from "../../images/LogoBurger.jsx";
 import useTheme from "../../hooks/useTheme.js";
 import AlignSvg from "../helpers/AlignSvg.jsx";
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 import AuthPage from "../../pages/AuthPage.jsx";
 import { LogoBurgerСross } from "../../images/LogoBurgerСross.jsx";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
+import { useNavigate } from "react-router-dom";
 /**/
 
 export default function Header() {
-
   const theme = useTheme();
 
   const isMobile = useMediaQuery("(max-width: 500px)");
   const isTablet = useMediaQuery("(min-width: 500.01px)");
   const isDesktop = useMediaQuery("(min-width: 1800px)");
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const navigate = useNavigate(); // Initialize navigation
+  const [searchQuery, setSearchQuery] = useState("");
 
+  const handleSearch = (e) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      navigate(`/catalog?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+  
   return (
     <>
     {isDesktop && 
@@ -51,7 +59,11 @@ export default function Header() {
                       width: "55%",//должно біть 75
                     }}>
                       <SearchIcon alignItems="bottom" sx={{ color: 'action.active', mr: 1, my: 1.5 }} />
-                      <TextField fullWidth="true" label="Пошук товарів" variant="standard" sx={{
+                      <TextField fullWidth="true" label="Пошук товарів" variant="standard"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={handleSearch} // Handle search on Enter key press
+                      sx={{
                         '& .MuiInput-underline:before': { borderBottom: 'none', },
                         '& .MuiInput-underline:after': { borderBottom: 'none', },
                         '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottom: 'none', },
@@ -147,7 +159,11 @@ export default function Header() {
                       width: "55%",//должно біть 75
                     }}>
                       <SearchIcon alignItems="bottom" sx={{ color: 'action.active', mr: 1, my: 1.5 }} />
-                      <TextField fullWidth="true" label="Пошук товарів" variant="standard" sx={{
+                      <TextField fullWidth="true" label="Пошук товарів" variant="standard"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={handleSearch} // Handle search on Enter key press
+                      sx={{
                         '& .MuiInput-underline:before': { borderBottom: 'none', },
                         '& .MuiInput-underline:after': { borderBottom: 'none', },
                         '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottom: 'none', },
@@ -235,7 +251,11 @@ export default function Header() {
                       width: "55%",
                     }}>
                       <SearchIcon alignItems="bottom" sx={{ color: 'action.active', mr: 1, my: 1.5 }} />
-                      <TextField fullWidth="true" label="Пошук товарів" variant="standard" sx={{
+                      <TextField fullWidth="true" label="Пошук товарів" variant="standard"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={handleSearch} // Handle search on Enter key press
+                      sx={{
                         '& .MuiInput-underline:before': { borderBottom: 'none', },
                         '& .MuiInput-underline:after': { borderBottom: 'none', },
                         '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottom: 'none', },

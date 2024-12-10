@@ -23,7 +23,7 @@ export const getArticlesByNameService = async (name: string) => {
 
   const articlesWithDetails = await ArticleModel.query()
     .whereIn("id", filteredArticles)
-    .withGraphFetched("[photos, tags]");
+    .withGraphFetched("[photos, tags, seller, category]"); // Include seller and category
 
   const result = await Promise.all(
     articlesWithDetails.map(async (article) => {
@@ -32,7 +32,9 @@ export const getArticlesByNameService = async (name: string) => {
       return {
         id: article.id,
         seller_id: article.seller_id,
+        seller_name: article.seller?.name, // Include seller's name
         category_id: article.category_id,
+        category_name: article.category?.name, // Include category name
         name: article.name,
         amount: article.amount,
         price: article.price,
@@ -45,6 +47,7 @@ export const getArticlesByNameService = async (name: string) => {
 
   return result;
 };
+
 
 export const getArticleByIdService = async (id: number) => {
   const article = await ArticleModel.query()

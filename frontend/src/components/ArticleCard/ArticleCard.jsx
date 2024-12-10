@@ -8,12 +8,29 @@ import Button from "../Button/Button";
 import useTheme from "../../hooks/useTheme";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 
-export default function ArticleCard() {
+export default function ArticleCard({article}) {
   const theme = useTheme();
 
   const isMobile = useMediaQuery("(max-width: 500px)");
-  const isTablet = useMediaQuery("(min-width: 500.01px)");
-  const isDesktop = useMediaQuery("(min-width: 1800px)");
+  const isDesktop = useMediaQuery("(min-width: 500.01px)");
+  
+  const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseDown = (event) => {
+    setStartPosition({ x: event.clientX, y: event.clientY });
+  };
+
+  const handleMouseUp = (event) => {
+    const endPosition = { x: event.clientX, y: event.clientY };
+    const distance = Math.sqrt(
+      Math.pow(endPosition.x - startPosition.x, 2) +
+        Math.pow(endPosition.y - startPosition.y, 2)
+    );
+
+    if (distance <= 10) {
+      alert("click");
+    }
+  };
 
   return (
     <>
@@ -47,15 +64,14 @@ export default function ArticleCard() {
               marginTop: "8px",
               fontFamily: "Libre Franklin",
               color: theme.mainText,
-              fontSize: "24px", }}>Назва продукту</Typography>
+              fontSize: "24px", }}>{article?.name}</Typography>
             <Typography sx={{
               color: theme.secondaryText,
-              fontSize: "24px",
-            }}>Назва фірми</Typography>
+              fontSize: "24px", }}>{article?.seller_name}</Typography>
           </Box>
-                <Box
-                sx={{
-                  display: "flex",
+          <Box
+          sx={{
+            display: "flex",
             marginLeft: "15px",
             marginRight: "15px",
             marginTop: "7px",
@@ -214,8 +230,7 @@ export default function ArticleCard() {
               fontWeight: "bolder",
               marginRight: "7px",
               color: theme.mainText,
-            }}>
-            000$
+            }}>{article?.price}
           </Typography>
           <Typography
             sx={{
@@ -399,8 +414,7 @@ export default function ArticleCard() {
               sx={{
                 color: theme.secondaryText,
                 fontSize: "14px",
-              }}>
-              4.8
+              }}>{article.rating}
             </Typography>
           </Box>
           <Box

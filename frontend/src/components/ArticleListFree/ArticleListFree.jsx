@@ -4,7 +4,7 @@ import useTheme from "../../hooks/useTheme";
 import ArticleCard from "../ArticleCard/ArticleCard";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 
-export default function ArticleList({ Title }) {
+export default function ArticleListFree({ Title, Articles }) {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width: 500px)");
   const isDesktop = useMediaQuery("(min-width: 500.01px)");
@@ -55,11 +55,9 @@ export default function ArticleList({ Title }) {
         marginBottom: "10px",
       }}>
         <Box display="flex" justifyContent="space-between">
-            <ArticleCard></ArticleCard>
-            <ArticleCard></ArticleCard>
-            <ArticleCard></ArticleCard>
-            <ArticleCard></ArticleCard>
-            <ArticleCard></ArticleCard>
+            {Articles.map((article)=>{
+              return <ArticleCard article={article}/>
+            })}
         </Box>
         <Box sx={{
             display: "flex",

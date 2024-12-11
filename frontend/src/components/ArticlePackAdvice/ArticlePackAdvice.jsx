@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ArticleCard from "../ArticleCard/ArticleCard";
 import { LogoAdvice } from "../../images/LogoAdvice";
 import { LogoAdvice2 } from "../../images/LogoAdvice2";
@@ -7,10 +8,10 @@ import useTheme from "../../hooks/useTheme";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 
 export default function ArticlePackAdvice({ Title, articles }) {
+export default function ArticlePackAdvice({ Title, articles }) {
   const theme = useTheme();
 
   const isMobile = useMediaQuery("(max-width: 500px)");
-  //const isTablet = useMediaQuery("(min-width: 500.01px)");
   const isDesktop = useMediaQuery("(min-width: 500.01px)");
 
   return (

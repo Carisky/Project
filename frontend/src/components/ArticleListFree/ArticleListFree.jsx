@@ -17,12 +17,12 @@ export default function ArticleListFree({ Title, Articles }) {
         marginBottom: "10px",
       }}>
         <Box display="flex" justifyContent="space-between">
-          <ArticleCard></ArticleCard>
-          <ArticleCard></ArticleCard>
+          <ArticleCard article={Articles[0]}/>
+          <ArticleCard article={Articles[1]}/>
         </Box>
         <Box display="flex" justifyContent="space-between">
-          <ArticleCard></ArticleCard>
-          <ArticleCard></ArticleCard>
+          <ArticleCard article={Articles[2]}/>
+          <ArticleCard article={Articles[3]}/>
         </Box>
         <Box sx={{
           display: "flex",

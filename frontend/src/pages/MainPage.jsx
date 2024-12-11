@@ -5,10 +5,11 @@ import Baner from "../components/Baner/Baner";
 import BanerDown from "../components/BanerDown/BanerDown";
 import { Box } from "@mui/material";
 import useTheme from "../hooks/useTheme";
-import Footer from "../components/Footer/Footer";
-import ArticleList from "../components/ArticleList/ArticleList";
-import ArticlePackAdvice from "../components/ArticlePackAdvice/ArticlePackAdvice";
-import ArticleListFree from "../components/ArticleListFree/ArticleListFree";
+import Footer from '../components/Footer/Footer';
+import ArticleList from '../components/ArticleList/ArticleList';
+import ArticlePackAdvice from '../components/ArticlePackAdvice/ArticlePackAdvice';
+import ArticleListFree from '../components/ArticleListFree/ArticleListFree';
+import { LogoBurgerСross } from '../images/LogoBurgerСross.jsx';
 
 export default function MainPage() {
   const theme = useTheme();

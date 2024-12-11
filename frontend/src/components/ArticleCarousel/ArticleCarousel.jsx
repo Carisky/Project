@@ -5,25 +5,9 @@ import ArticleCard from "../ArticleCard/ArticleCard";
 import style from "./style.module.css";
 export default function ArticleCarousel({ articles }) {
   const responsive = {
-    normalLarge: {
-      breakpoint: { max: 4000, min: 1525 },
-      items: 5,
-    },
-    superLargeDesktop: {
-      breakpoint: { max: 1524, min: 1281 },
-      items: 4,
-    },
     desktop: {
-      breakpoint: { max: 1280, min: 1025 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 781 },
-      items: 2,
-    },
-    smallDesktop: {
-      breakpoint: { max: 780, min: 501 },
-      items: 1,
+      breakpoint: { max: 3000, min: 1024 },
+      items: 5,
     },
     mobile: {
       breakpoint: { max: 500, min: 0 },

@@ -173,7 +173,7 @@ export default function ArticleCard({article}) {
 	cursor: "pointer",
           border:"none",
           height: "470px",
-          width: "232px",
+          width: "100%",
           boxShadow:"none",
           borderRadius:"14px",
           backgroundColor: theme.mainColor,

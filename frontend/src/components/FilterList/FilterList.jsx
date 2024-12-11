@@ -54,6 +54,11 @@ export default function FilterList({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              transition: "box-shadow 0.3s ease, transform 0.3s ease",
+              "&:hover": {
+                boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.35)",
+                transform: "translateY(-2px)",
+              },
             }}
           >
             <Typography
@@ -92,6 +97,11 @@ export default function FilterList({
               padding: "15px",
               borderRadius: "10px",
               boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)",
+              transition: "box-shadow 0.3s ease, transform 0.3s ease",
+              "&:hover": {
+                boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.35)",
+                transform: "translateY(-2px)",
+              },
             }}
           >
             <Box

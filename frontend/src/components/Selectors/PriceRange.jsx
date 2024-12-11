@@ -33,6 +33,11 @@ export default function PriceRange({ range, setRange }) {
         display: "flex",
         flexDirection: "column",
         padding: "20px",
+        transition: "box-shadow 0.3s ease, transform 0.3s ease",
+        "&:hover": {
+          boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.35)",
+          transform: "translateY(-2px)",
+        },
       }}
     >
       <Typography

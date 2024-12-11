@@ -2,10 +2,19 @@ import { Box, Modal, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import AllFiltersButton from "./AllFiltersButton";
 import PriceRange from "../Selectors/PriceRange";
-import CheckBoxGroup from "../Selectors/CheckBoxGroup"; 
+import CheckBoxGroup from "../Selectors/CheckBoxGroup";
 import useTheme from "../../hooks/useTheme";
 
-export default function FilterList({ priceRange, setPriceRange, amount, categories, selectedCategories, setSelectedCategories }) {
+export default function FilterList({
+  checkBoxAutoComplete,
+  checkBoxTitle,
+  priceRange,
+  setPriceRange,
+  amount,
+  categories,
+  selectedCategories,
+  setSelectedCategories,
+}) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -69,6 +78,8 @@ export default function FilterList({ priceRange, setPriceRange, amount, categori
           <PriceRange range={priceRange} setRange={setPriceRange} />
           {/* Добавление CheckBoxGroup для фильтрации по категориям */}
           <CheckBoxGroup
+            autoComplete={checkBoxAutoComplete}
+            title={checkBoxTitle}
             values={categories}
             selectedValues={selectedCategories}
             setSelectedValues={setSelectedCategories}
@@ -83,54 +94,76 @@ export default function FilterList({ priceRange, setPriceRange, amount, categori
               boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)",
             }}
           >
-            <Box sx={{
-              display:"flex",
-              justifyContent:"center"
-            }}>
-              <Typography sx={{
-                fontSize:"13px",
-                color:theme.secondaryText,
-                fontFamily:"Montserrat",
-                fontWeight:"500"
-              }}>Знайшли {amount} товарів</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: "13px",
+                  color: theme.secondaryText,
+                  fontFamily: "Montserrat",
+                  fontWeight: "500",
+                }}
+              >
+                Знайшли {amount} товарів
+              </Typography>
             </Box>
-            <Box sx={{
-              marginTop:"10px",
-              display:"flex",
-              justifyContent:"space-between"
-            }}>
-              <Box sx={{
-                backgroundColor:"#F1F1F5",
-                width:"159px",
-                height:"36px",
-                display:"flex",
-                alignItems:"center",
-                justifyContent:"center",
-                borderRadius:"10px",
-                cursor:"pointer",
-              }}>
-                <Typography sx={{
-                  fontFamily:"Montserrat",
-                  fontWeight:"700",
-                  fontSize:"14px"
-                }}> Скинути все </Typography>
+            <Box
+              sx={{
+                marginTop: "10px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box
+                sx={{
+                  backgroundColor: "#F1F1F5",
+                  width: "159px",
+                  height: "36px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "10px",
+                  cursor: "pointer",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: "Montserrat",
+                    fontWeight: "700",
+                    fontSize: "14px",
+                  }}
+                >
+                  {" "}
+                  Скинути все{" "}
+                </Typography>
               </Box>
-              <Box sx={{
-                cursor:"pointer",
-                backgroundColor:theme.mainColor,
-                width:"159px",
-                height:"36px",
-                borderRadius:"10px",
-                display:"flex",
-                alignItems:"center",
-                justifyContent:"center"
-              }}>
-                <Typography sx={{
-                  color:"#FFFFFF",
-                  fontFamily:"Montserrat",
-                  fontWeight:"700",
-                  fontSize:"14px"
-                }}> Готово </Typography>
+              <Box
+                sx={{
+                  cursor: "pointer",
+                  backgroundColor: theme.mainColor,
+                  width: "159px",
+                  height: "36px",
+                  borderRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography
+                  sx={{
+                    color: "#FFFFFF",
+                    fontFamily: "Montserrat",
+                    fontWeight: "700",
+                    fontSize: "14px",
+                  }}
+                >
+                  {" "}
+                  Готово{" "}
+                </Typography>
               </Box>
             </Box>
           </Box>

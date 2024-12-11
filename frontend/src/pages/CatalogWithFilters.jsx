@@ -16,7 +16,11 @@ export default function CatalogWithFilters() {
   const [selectedCategories, setSelectedCategories] = useState([]); // Выбранные категории
 
   const fetchData = async () => {
-    const data = await findArticlesByName(searchQuery, priceRange, selectedCategories);
+    const data = await findArticlesByName(
+      searchQuery,
+      priceRange,
+      selectedCategories
+    );
     setArticles(data);
 
     const uniqueCategories = [
@@ -25,8 +29,14 @@ export default function CatalogWithFilters() {
     setCategories(uniqueCategories);
 
     if (data.length > 0) {
-      const minPrice = data.reduce((min, item) => Math.min(min, item.price), data[0].price);
-      const maxPrice = data.reduce((max, item) => Math.max(max, item.price), data[0].price);
+      const minPrice = data.reduce(
+        (min, item) => Math.min(min, item.price),
+        data[0].price
+      );
+      const maxPrice = data.reduce(
+        (max, item) => Math.max(max, item.price),
+        data[0].price
+      );
 
       const range = { min: minPrice, max: maxPrice };
       setPriceRange(range);
@@ -47,6 +57,8 @@ export default function CatalogWithFilters() {
         <strong>{searchQuery}</strong>
       </Typography>
       <FilterList
+        checkBoxAutoComplete={true}
+        checkBoxTitle={"Категорія"}
         amount={articles.length}
         priceRange={priceRange}
         setPriceRange={setPriceRange}

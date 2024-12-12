@@ -5,7 +5,10 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import ArticleListFree from "../components/ArticleListFree/ArticleListFree";
 import FilterList from "../components/FilterList/FilterList";
-import { findArticlesByName } from "../API/services/articleService";
+import {
+  filterArticles,
+  findArticlesByName,
+} from "../API/services/articleService";
 
 export default function CatalogWithFilters() {
   const [searchParams] = useSearchParams();
@@ -15,19 +18,18 @@ export default function CatalogWithFilters() {
   const [categories, setCategories] = useState([]); // Состояние для категорий
   const [selectedCategories, setSelectedCategories] = useState([]); // Выбранные категории
 
-  const fetchData = async () => {
-    const data = await findArticlesByName(
+  const applyFilters = async () => {
+    const data = await filterArticles({
       searchQuery,
       priceRange,
-      selectedCategories
-    );
+      selectedCategories,
+    });
     setArticles(data);
+  };
 
-    const uniqueCategories = [
-      ...new Set(data.map((article) => article.category_name)),
-    ];
-    setCategories(uniqueCategories);
-
+  const dropFilters = async () => {
+    const data = await findArticlesByName(searchQuery)
+    setArticles(data);
     if (data.length > 0) {
       const minPrice = data.reduce(
         (min, item) => Math.min(min, item.price),
@@ -37,7 +39,40 @@ export default function CatalogWithFilters() {
         (max, item) => Math.max(max, item.price),
         data[0].price
       );
+  
+      const range = { min: minPrice, max: maxPrice };
+      setPriceRange(range);
+    } else {
+      console.log("Данные отсутствуют");
+    }
+    setSelectedCategories([])
+  };
 
+  const fetchData = async () => {
+    const data = await findArticlesByName(searchQuery);
+    setArticles(data);
+  
+    const uniqueCategories = [
+      ...new Set(data.map((article) => article.category_id)), // Используем category_id, а не name
+    ];
+  
+    const categoriesWithIds = uniqueCategories.map((categoryId) => ({
+      id: categoryId,
+      name: data.find((article) => article.category_id === categoryId).category_name,
+    }));
+    
+    setCategories(categoriesWithIds); // Передаем объекты с ID
+  
+    if (data.length > 0) {
+      const minPrice = data.reduce(
+        (min, item) => Math.min(min, item.price),
+        data[0].price
+      );
+      const maxPrice = data.reduce(
+        (max, item) => Math.max(max, item.price),
+        data[0].price
+      );
+  
       const range = { min: minPrice, max: maxPrice };
       setPriceRange(range);
     } else {
@@ -47,8 +82,7 @@ export default function CatalogWithFilters() {
 
   useEffect(() => {
     fetchData();
-    console.log(selectedCategories); // Для проверки выбранных категорий
-  }, [selectedCategories]); // Зависимости: при изменении категорий или ценового диапазона
+  }, []);
 
   return (
     <Box>
@@ -65,6 +99,8 @@ export default function CatalogWithFilters() {
         categories={categories} // Передаем список категорий
         selectedCategories={selectedCategories} // Передаем выбранные категории
         setSelectedCategories={setSelectedCategories} // Функция для обновления выбранных категорий
+        applyFilters={applyFilters}
+        dropFilters={dropFilters}
       />
       <ArticleListFree Articles={articles} />
       <Footer />

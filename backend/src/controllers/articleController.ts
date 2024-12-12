@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getArticleByIdService, getAllArticlesService, getArticlesByNameService } from '../services/articleService'
+import { getArticleByIdService, getAllArticlesService, getArticlesByNameService, filterArticlesService } from '../services/articleService'
 import ArticlePhotoModel from '../models/ArticlePhotoModel';
 
 /**
@@ -94,6 +94,37 @@ export const getArticlesByName = async (req: Request, res: Response) => {
     }
   };
   
+
+  export const filterArticles = async (req: Request, res: Response) => {
+    const { name = "", priceRange = [], categories = [] } = req.body;
+  
+    // Проверка на корректность диапазона цен
+    if (
+      !Array.isArray(priceRange) ||
+      priceRange.length !== 2 ||
+      priceRange.some((v) => isNaN(Number(v)))
+    ) {
+      return res.status(400).json({ message: "Invalid price range" });
+    }
+  
+    // Проверка на корректность категорий
+    if (!Array.isArray(categories)) {
+      return res.status(400).json({ message: "Categories must be an array" });
+    }
+  
+    // Приведение priceRange к типу [number, number]
+    const validPriceRange: [number, number] = [Number(priceRange[0]), Number(priceRange[1])];
+  
+    try {
+      const filteredArticles = await filterArticlesService(name, validPriceRange, categories);
+      res.json(filteredArticles);
+    } catch (error) {
+      res.status(500).json({ message: "Error filtering articles", error });
+    }
+  };
+  
+  
+
 /**
  * @swagger
  * /api/articles/{id}/photos:

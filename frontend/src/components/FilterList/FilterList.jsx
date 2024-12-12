@@ -14,6 +14,8 @@ export default function FilterList({
   categories,
   selectedCategories,
   setSelectedCategories,
+  applyFilters,
+  dropFilters
 }) {
   const [open, setOpen] = useState(false);
 
@@ -33,7 +35,7 @@ export default function FilterList({
         <Box
           sx={{
             width: "432px",
-            height: "600px",
+            height: "700px",
             backgroundColor: "#FFFFFF",
             display: "flex",
             flexDirection: "column",
@@ -85,7 +87,10 @@ export default function FilterList({
           <CheckBoxGroup
             autoComplete={checkBoxAutoComplete}
             title={checkBoxTitle}
-            values={categories}
+            values={categories.map((category) => ({
+              id: category.id,
+              name: category.name,
+            }))}
             selectedValues={selectedCategories}
             setSelectedValues={setSelectedCategories}
           />
@@ -140,16 +145,22 @@ export default function FilterList({
                   cursor: "pointer",
                 }}
               >
-                <Typography
-                  sx={{
-                    fontFamily: "Montserrat",
-                    fontWeight: "700",
-                    fontSize: "14px",
+                <Box
+                  onClick={() => {
+                    dropFilters();
                   }}
                 >
-                  {" "}
-                  Скинути все{" "}
-                </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: "Montserrat",
+                      fontWeight: "700",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {" "}
+                    Скинути все{" "}
+                  </Typography>
+                </Box>
               </Box>
               <Box
                 sx={{
@@ -163,17 +174,23 @@ export default function FilterList({
                   justifyContent: "center",
                 }}
               >
-                <Typography
-                  sx={{
-                    color: "#FFFFFF",
-                    fontFamily: "Montserrat",
-                    fontWeight: "700",
-                    fontSize: "14px",
+                <Box
+                  onClick={() => {
+                    applyFilters();
                   }}
                 >
-                  {" "}
-                  Готово{" "}
-                </Typography>
+                  <Typography
+                    sx={{
+                      color: "#FFFFFF",
+                      fontFamily: "Montserrat",
+                      fontWeight: "700",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {" "}
+                    Готово{" "}
+                  </Typography>
+                </Box>
               </Box>
             </Box>
           </Box>

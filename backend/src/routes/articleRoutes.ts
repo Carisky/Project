@@ -3,12 +3,14 @@ import {
   getArticleById, 
   getAllArticles, 
   getArticlesByName, 
-  getArticlePhotos
+  getArticlePhotos,
+  filterArticles
 } from '../controllers/articleController';
 
 const router = Router();
 
 // Article routes
+router.post("/filter", filterArticles); // Фильтр товаров
 router.get('/search', getArticlesByName);   // Search articles by name with fuzzy matching
 router.get('/:id', getArticleById);         // Get article by ID
 router.get('/', getAllArticles);            // Get all articles

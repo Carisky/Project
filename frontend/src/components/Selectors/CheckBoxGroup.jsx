@@ -11,7 +11,7 @@ import useTheme from "../../hooks/useTheme";
 
 export default function CheckBoxGroup({
   title,
-  values,
+  values, // Массив объектов {id, name}
   selectedValues,
   setSelectedValues,
   autoComplete,
@@ -19,26 +19,26 @@ export default function CheckBoxGroup({
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [searchText, setSearchText] = useState(""); // State for the search input
+  const [searchText, setSearchText] = useState(""); 
 
   const handleOpenList = () => {
     setOpen(!open);
   };
 
   const handleToggle = (value) => {
-    setSelectedValues((prev) =>
-      prev.includes(value)
-        ? prev.filter((item) => item !== value) // Uncheck the value
-        : [...prev, value] // Check the value
+    setSelectedValues(
+      (prev) =>
+        prev.includes(value.id)
+          ? prev.filter((item) => item !== value.id)
+          : [...prev, value.id]
     );
   };
 
   const filteredValues = values.filter((value) =>
-    value.toLowerCase().includes(searchText.toLowerCase())
-  ); // Filter options based on the search text
+    value.name.toLowerCase().includes(searchText.toLowerCase())
+  ); 
 
   useEffect(() => {
-    // Sync state with parent when `selectedValues` changes
     console.log(selectedValues);
   }, [selectedValues]);
 
@@ -105,9 +105,7 @@ export default function CheckBoxGroup({
               backgroundColor: isFocused ? "#FFFFFF" : "#F1F1F5",
               paddingLeft: "10px",
               borderRadius: "10px",
-              border: isFocused
-                ? "2px solid #FE7411"
-                : "1px solid transparent",
+              border: isFocused ? "2px solid #FE7411" : "1px solid transparent",
               transition: "border 0.3s ease, background-color 0.3s ease",
             }}
           />
@@ -115,9 +113,29 @@ export default function CheckBoxGroup({
       )}
       <FormGroup
         sx={{
+          flexWrap: "nowrap",
+          display: "flex",
+          flexDirection: "column",
           height: open ? "auto" : "0px",
-          overflow: "hidden",
+          overflow: open ? "auto" : "hidden", 
           transition: "height 0.3s ease",
+          maxHeight: filteredValues.length > 5 ? "200px" : "auto", 
+          paddingRight: filteredValues.length > 5 ? "10px" : "0", 
+
+          "&::-webkit-scrollbar": {
+            width: "8px", 
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#F1F1F5", 
+            borderRadius: "4px", 
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            backgroundColor: theme.secondaryText, 
+          },
+          "&::-webkit-scrollbar-track": {
+            backgroundColor: "#FFFFFF", 
+            borderRadius: "4px", 
+          },
         }}
       >
         {filteredValues.map((value, index) => (
@@ -125,7 +143,7 @@ export default function CheckBoxGroup({
             key={index}
             control={
               <Checkbox
-                checked={selectedValues.includes(value)}
+              checked={selectedValues.includes(value.id)}
                 onChange={() => handleToggle(value)}
                 sx={{
                   borderRadius: "6px",
@@ -141,7 +159,7 @@ export default function CheckBoxGroup({
                 }}
               />
             }
-            label={value}
+            label={value.name}
           />
         ))}
       </FormGroup>

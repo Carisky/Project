@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import QuestionList from "./QuestionList";
-import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
+import { useMediaQuery } from "../../../../hooks/useMediaQuery";
 
 export default function FAQ() {
   const questions1 = ["Увійти", "Кошик", "Обране"];

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import useTheme from "../../hooks/useTheme";
+import useTheme from "../../../hooks/useTheme.js";
 import {
   IconShares,
   IconFoods,
@@ -12,11 +12,11 @@ import {
   IconForAnimals,
   IconShoes,
   IconCosmetics,
-} from "../../icons/icons.jsx";
+} from "../../../icons/icons.jsx";
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useMediaQuery } from "../../hooks/useMediaQuery.js";
+import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
 
 const responsive = {
   superLargeDesktop: {
@@ -50,7 +50,7 @@ const categories = [
   { icon: IconFoods, label: "Продукти харчування" },
 ];
 
-export default function Bellowheader() {
+export default function HeaderCategories() {
   const theme = useTheme();
 
   const isMobile = useMediaQuery("(max-width: 500px)");
@@ -129,7 +129,13 @@ export default function Bellowheader() {
           justifyContent="space-between"
           alignItems="center"
           display="flex"
-        ></Box>
+        >
+            {categories.map((category, index) => (
+              <Box key={index} sx={{ padding: "10px" }}>
+                {renderCategory(category)}
+              </Box>
+            ))}
+        </Box>
       )}
     </>
   );

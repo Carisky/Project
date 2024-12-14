@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Box, Typography, TextField, Button, Modal } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import AlignSvg from "../helpers/AlignSvg.jsx";
-import AuthPage from "../../pages/AuthPage.jsx";
+import AuthPage from "../../../pages/AuthPage.jsx";
 import {
   LogoFlox,
   LogoProfil,
   LogoCart,
   LogoHeart,
   LogoBurger,
-} from "../../icons/icons.jsx";
-import useTheme from "../../hooks/useTheme.js";
-import { useMediaQuery } from "../../hooks/useMediaQuery.js";
+} from "../../../icons/icons.jsx";
+import useTheme from "../../../hooks/useTheme.js";
+import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
 import { useNavigate } from "react-router-dom";
+import Bellowheader from "./HeaderCategories.jsx";
 
 export default function Header() {
   const theme = useTheme();
@@ -26,6 +26,12 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
+
+  const AlignSvg = ({ children }) => (
+      <Box display="flex" justifyContent="center" alignItems="center">
+        {children}
+      </Box>
+  );
 
   const handleAuthModal = () => setOpenAuth(!openAuth);
   const handleSearch = (e) => {
@@ -76,87 +82,92 @@ export default function Header() {
   );
 
   const renderDesktopHeader = () => (
-    <Box
-      sx={{
-        marginLeft: "9%",
-        marginRight: "9%",
-        marginTop: "10px",
-        width: "82%",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      {/* Логотип */}
-      <Box display="flex" alignItems="center" gap="10px">
-        <Typography
-          sx={{
-            color: theme.mainText,
-            fontWeight: "bold",
-            fontSize: "36px",
-            fontFamily: "Ubuntu",
-          }}
-        >
-          FLOX
-        </Typography>
-        <AlignSvg>
-          <LogoFlox />
-        </AlignSvg>
-      </Box>
-
-      {/* Бургер-меню */}
-      <Box sx={{
-        marginLeft:"10px",
-        marginRight:"10px",
-      }}>
-        <AlignSvg>
-          <LogoBurger />
-        </AlignSvg>
-      </Box>
-
-      {/* Поисковая строка */}
+    <Box>
       <Box
         sx={{
-          flexGrow: 1,
+          marginLeft: "9%",
+          marginRight: "9%",
+          marginTop: "10px",
+          width: "82%",
+          display: "flex",
+          alignItems: "center",
         }}
       >
-        {renderSearchBar()}
-      </Box>
-
-      {/* Иконки */}
-      <Box display="flex" alignItems="center" gap="20px">
-        {renderIconWithText(LogoHeart, "Обране")}
-        <Box onClick={handleAuthModal} sx={{ cursor: "pointer" }}>
-          {renderIconWithText(LogoProfil, "Увійти")}
-        </Box>
-        <Modal open={openAuth} onClose={handleAuthModal}>
-          <AuthPage />
-        </Modal>
-        <Box
-          sx={{
-            position: "relative",
-            cursor: "pointer",
-          }}
-        >
-          <Box
+        {/* Логотип */}
+        <Box display="flex" alignItems="center" gap="10px">
+          <Typography
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              position: "absolute",
-              right: "10px",
-              top: "-10px",
-              borderRadius: "50%",
-              height: "25px",
-              width: "25px",
-              backgroundColor: theme.cartNotificationFillColor,
+              color: theme.mainText,
+              fontWeight: "bold",
+              fontSize: "36px",
+              fontFamily: "Ubuntu",
             }}
           >
-            <Typography sx={{ color: "#FFFFFF", fontFamily: "Montserrat" }}>
-              3
-            </Typography>
+            FLOX
+          </Typography>
+          <AlignSvg>
+            <LogoFlox />
+          </AlignSvg>
+        </Box>
+
+        {/* Бургер-меню */}
+        <Box
+          sx={{
+            marginLeft: "10px",
+            marginRight: "10px",
+          }}
+        >
+          <AlignSvg>
+            <LogoBurger />
+          </AlignSvg>
+        </Box>
+
+        {/* Поисковая строка */}
+        <Box
+          sx={{
+            flexGrow: 1,
+          }}
+        >
+          {renderSearchBar()}
+        </Box>
+
+        {/* Иконки */}
+        <Box display="flex" alignItems="center" gap="20px">
+          {renderIconWithText(LogoHeart, "Обране")}
+          <Box onClick={handleAuthModal} sx={{ cursor: "pointer" }}>
+            {renderIconWithText(LogoProfil, "Увійти")}
           </Box>
-          {renderIconWithText(LogoCart, "Корзина")}
+          <Modal open={openAuth} onClose={handleAuthModal}>
+            <AuthPage />
+          </Modal>
+          <Box
+            sx={{
+              position: "relative",
+              cursor: "pointer",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                position: "absolute",
+                right: "10px",
+                top: "-10px",
+                borderRadius: "50%",
+                height: "25px",
+                width: "25px",
+                backgroundColor: theme.cartNotificationFillColor,
+              }}
+            >
+              <Typography sx={{ color: "#FFFFFF", fontFamily: "Montserrat" }}>
+                3
+              </Typography>
+            </Box>
+            {renderIconWithText(LogoCart, "Корзина")}
+          </Box>
         </Box>
       </Box>
+      <Bellowheader /> {/* Добавляем Bellowheader сюда */}
     </Box>
   );
 
@@ -212,6 +223,7 @@ export default function Header() {
           {renderIconWithText(LogoCart, "Корзина")}
         </Box>
       </Box>
+      <Bellowheader></Bellowheader>
     </Box>
   );
 

@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import useTheme from "../../../hooks/useTheme";
-import QRcode from "./QRcode";
-import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
+import useTheme from "../../../../hooks/useTheme.js";
+import QRcode from "./QRcode.jsx";
+import { useMediaQuery } from "../../../../hooks/useMediaQuery.js";
 
 export default function SocialMedia() {
   const theme = useTheme();

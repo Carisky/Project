@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import React from "react";
-import useTheme from "../../hooks/useTheme";
-import SocialMedia from "./SocialMedia/SocialMedia";
+import useTheme from "../../../hooks/useTheme.js";
+import SocialMedia from "./SocialMedia/SocialMedia.jsx";
 import FAQ from "./FAQ/FAQ";
-import { useMediaQuery } from "../../hooks/useMediaQuery.js";
+import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
 
 export default function Footer() {
   const theme = useTheme();

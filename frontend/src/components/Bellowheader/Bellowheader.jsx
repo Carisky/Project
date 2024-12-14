@@ -13,7 +13,29 @@ import {
   IconShoes,
   IconCosmetics,
 } from "../../icons/icons.jsx";
+
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
+
+const responsive = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 1801 },
+    items: 5,
+  },
+  desktop: {
+    breakpoint: { max: 1800, min: 1025 },
+    items: 4,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 501 },
+    items: 3,
+  },
+  mobile: {
+    breakpoint: { max: 500, min: 0 },
+    items: 4,
+  },
+};
 
 const categories = [
   { icon: IconShares, label: "Акції" },
@@ -33,14 +55,23 @@ export default function Bellowheader() {
 
   const isMobile = useMediaQuery("(max-width: 500px)");
   const isTablet = useMediaQuery("(min-width: 500.01px)");
-  const isDesktop = useMediaQuery("(min-width: 1800px)");
+  const isDesktop = useMediaQuery("(min-width: 1200px)");
 
   const renderCategory = ({ icon: Icon, label }) => (
-    <Box display="flex" alignItems="center" sx={{ cursor: "pointer" }} key={label}>
+    <Box
+      display="flex"
+      alignItems="center"
+      sx={{ cursor: "pointer" }}
+      key={label}
+    >
       <Icon />
       <Typography
         alignItems="end"
         sx={{
+            whiteSpace: "nowrap", // Prevent text from wrapping
+          overflow: "hidden",   // Hide overflowing text
+          textOverflow: "ellipsis", // Add ellipsis for overflowed text
+            width:"100%",
           color: theme.secondaryText,
           fontSize: "16px",
           fontFamily: "Ubuntu",
@@ -51,17 +82,6 @@ export default function Bellowheader() {
     </Box>
   );
 
-  const getCategoryLayout = (cols) => {
-    const rows = [];
-    for (let i = 0; i < categories.length; i += cols) {
-      rows.push(
-        <Box display="flex" justifyContent="space-between" key={`row-${i}`}>
-          {categories.slice(i, i + cols).map(renderCategory)}
-        </Box>
-      );
-    }
-    return rows;
-  };
 
   return (
     <>
@@ -76,7 +96,25 @@ export default function Bellowheader() {
           justifyContent="space-between"
           alignItems="center"
         >
-          {getCategoryLayout(4)}
+<Carousel
+            responsive={responsive}
+            autoPlay={false} // Автоматическая прокрутка
+            draggable={true} // Позволяет свайпы
+            swipeable={true} // Перетаскивание пользователем
+            showDots={false} // Без индикаторов
+            arrows={false} // Без кнопок
+            keyBoardControl={true} // Управление с клавиатуры
+            customTransition="transform 0.5s ease-in-out" // Плавный переход
+            containerClass="carousel-container"
+            itemClass="carousel-item-padding-10-px"
+            partialVisible={true} // Активация отображения частичных элементов
+          >
+            {categories.map((category, index) => (
+              <Box key={index} sx={{ padding: "10px" }}>
+                {renderCategory(category)}
+              </Box>
+            ))}
+          </Carousel>
         </Box>
       )}
       {(isTablet || isDesktop) && (
@@ -91,9 +129,7 @@ export default function Bellowheader() {
           justifyContent="space-between"
           alignItems="center"
           display="flex"
-        >
-          {categories.map(renderCategory)}
-        </Box>
+        ></Box>
       )}
     </>
   );

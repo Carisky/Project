@@ -4,6 +4,7 @@ import AllFiltersButton from "./AllFiltersButton";
 import PriceRange from "../Selectors/PriceRange";
 import CheckBoxGroup from "../Selectors/CheckBoxGroup";
 import useTheme from "../../hooks/useTheme";
+import Filter from "./Filter";
 
 export default function FilterList({
   checkBoxAutoComplete,
@@ -31,6 +32,10 @@ export default function FilterList({
       }}
     >
       <AllFiltersButton onClick={handleOpen}></AllFiltersButton>
+      <Filter Text={"За Популярністю"} onClick={handleOpen}></Filter>
+      <Filter Text={"Термін Доставки"} onClick={handleOpen}></Filter>
+      <Filter Text={"Ціна $"} onClick={handleOpen}></Filter>
+      <Filter Text={"Категорія"} onClick={handleOpen}></Filter>
       <Modal open={open} onClose={handleClose}>
         <Box
           sx={{

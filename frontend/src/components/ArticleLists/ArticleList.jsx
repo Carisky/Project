@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import useTheme from "../../hooks/useTheme";
-import ArticleCarousel from "../ArticleCarousel/ArticleCarousel";
+import useTheme from "../../hooks/useTheme.js";
+import ArticleCarousel from "./ArticleCarousel/ArticleCarousel.jsx";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 
 export default function ArticleList({ Title, articles }) {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, ButtonBase } from "@mui/material";
-import useTheme from "../../hooks/useTheme";
-import ArticleCard from "../ArticleCard/ArticleCard";
+import useTheme from "../../hooks/useTheme.js";
+import ArticleCard from "../ArticleCard/ArticleCard.jsx";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 
 export default function ArticleListFree({ Title, Articles }) {

@@ -1,7 +1,7 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import ArticleCard from "../ArticleCard/ArticleCard";
+import ArticleCard from "../../ArticleCard/ArticleCard";
 import style from "./style.module.css";
 export default function ArticleCarousel({ articles }) {
   const responsive = {

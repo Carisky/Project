@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import ArticleCard from "../ArticleCard/ArticleCard";
+import ArticleCard from "../ArticleCard/ArticleCard.jsx";
 import { LogoAdvice, LogoAdvice2 } from "../../icons/icons.jsx";
-import useTheme from "../../hooks/useTheme";
+import useTheme from "../../hooks/useTheme.js";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 
 export default function ArticlePackAdvice({ Title, articles }) {

@@ -24,7 +24,7 @@ export default function ArticleCarousel({ articles }) {
       responsive={responsive}
     >
       {articles.map((article) => {
-        return <ArticleCard article={article} />;
+        return <ArticleCard isCarousel={true} article={article} />;
       })}
     </Carousel>
   );

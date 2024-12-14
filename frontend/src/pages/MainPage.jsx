@@ -1,16 +1,15 @@
 import React from "react";
-import Header from "../components/Header/Header";
-import Bellowheader from "../components/Bellowheader/Bellowheader";
-import Baner from "../components/Baner/Baner";
-import BanerDown from "../components/BanerDown/BanerDown";
-import { Box } from "@mui/material";
+import Header from "../components/PageModules/Header/Header";
+import TwoBanerGroup from "../components/TwoBanerGroup/TwoBanerGroup";
+import { Box, Typography } from "@mui/material";
 import useTheme from "../hooks/useTheme";
-import Footer from '../components/Footer/Footer';
-import ArticleList from '../components/ArticleList/ArticleList';
-import ArticlePackAdvice from '../components/ArticlePackAdvice/ArticlePackAdvice';
-import ArticleListFree from '../components/ArticleListFree/ArticleListFree';
+import Footer from "../components/PageModules/Footer/Footer";
+import ArticleList from "../components/ArticleLists/ArticleList";
+import ArticlePackAdvice from "../components/ArticleLists/ArticlePackAdvice";
+import ArticleListFree from "../components/ArticleLists/ArticleListFree";
 
 export default function MainPage() {
+
   const theme = useTheme();
   const articles = [
     {
@@ -65,7 +64,47 @@ export default function MainPage() {
     },
   ];
 
-  
+  const ViewTimeAndDate = () => {
+    const locale = "uk";
+    const today = new Date();
+
+    const day = today.toLocaleDateString(locale, { weekday: "long" });
+    const hour = today.getHours();
+
+    const time = today.toLocaleTimeString(locale, {
+      hour: "numeric",
+      hour12: true,
+      minute: "numeric",
+    });
+
+    return (
+      <Box>
+        <span>
+          {day} : {hour} : {time}
+        </span>
+      </Box>
+    );
+  };
+
+  const renderTopBannerBigContainerContent = () => {
+    return (
+      <Typography
+        alignItems="end"
+        sx={{
+          marginLeft: "20px",
+          marginRight: "20px",
+          marginTop: "10px",
+          color: "white",
+          fontWeight: "bold",
+          fontSize: "20px",
+          fontFamily: "Montserrat",
+        }}
+      >
+        {ViewTimeAndDate()}
+      </Typography>
+    );
+  };
+
   return (
     <Box
       sx={{
@@ -75,8 +114,11 @@ export default function MainPage() {
     >
       <Box marginBottom="10px">
         <Header></Header>
-        <Bellowheader></Bellowheader>
-        <Baner Title={"РОЗПРОДАЖ"} Title2={"ОСТАННІ ЗНИЖКИ%"}></Baner>
+        <TwoBanerGroup
+          bigContainerContent={renderTopBannerBigContainerContent()}
+          smallContainerTitle={"РОЗПРОДАЖ"}
+          bigContainerTitle={"ОСТАННІ ЗНИЖКИ%"}
+        />
         <Box
           sx={{
             backgroundColor: theme.mainColor,
@@ -84,7 +126,7 @@ export default function MainPage() {
         >
           <ArticleList articles={articles} Title={"ТОП ТРЕНДИ"}></ArticleList>
         </Box>
-        <ArticlePackAdvice articles={articles} ></ArticlePackAdvice>
+        <ArticlePackAdvice articles={articles}></ArticlePackAdvice>
         <Box
           sx={{
             backgroundColor: theme.mainColor,
@@ -92,7 +134,11 @@ export default function MainPage() {
         >
           <ArticleList articles={articles} Title={"ВАУ ЦІНИ"}></ArticleList>
         </Box>
-        <BanerDown Title={"ПОПУЛЯРНІ ТОВАРИ"} Title2={"НОВИНКИ"}></BanerDown>
+        <TwoBanerGroup
+          align="right"
+          smallContainerTitle={"ПОПУЛЯРНІ ТОВАРИ"}
+          bigContainerTitle={"НОВИНКИ"}
+        />
         <ArticleListFree Articles={articles}></ArticleListFree>
       </Box>
       <Footer></Footer>

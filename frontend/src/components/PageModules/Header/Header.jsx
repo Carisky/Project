@@ -12,9 +12,9 @@ import {
 import useTheme from "../../../hooks/useTheme.js";
 import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
 import { useNavigate } from "react-router-dom";
-import Bellowheader from "./HeaderCategories.jsx";
+import HeaderCategories from "./HeaderCategories.jsx";
 
-export default function Header() {
+export default function Header({ ShowCategories = true }) {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width: 500px)");
   const isTablet = useMediaQuery(
@@ -28,9 +28,9 @@ export default function Header() {
   const navigate = useNavigate();
 
   const AlignSvg = ({ children }) => (
-      <Box display="flex" justifyContent="center" alignItems="center">
-        {children}
-      </Box>
+    <Box display="flex" justifyContent="center" alignItems="center">
+      {children}
+    </Box>
   );
 
   const handleAuthModal = () => setOpenAuth(!openAuth);
@@ -51,10 +51,10 @@ export default function Header() {
         alignItems: "center",
       }}
     >
-      <SearchIcon sx={{ color: "action.active", mr: 1, my: 1.5 }} />
+      <SearchIcon sx={{ marginLeft:"10px",color: "action.active", mr: 1, my: 1.5 }} />
       <TextField
         fullWidth
-        label="Пошук товарів"
+
         variant="standard"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
@@ -126,6 +126,8 @@ export default function Header() {
         <Box
           sx={{
             flexGrow: 1,
+            marginRight:"20px",
+            marginLeft:"20px",
           }}
         >
           {renderSearchBar()}
@@ -167,7 +169,7 @@ export default function Header() {
           </Box>
         </Box>
       </Box>
-      <Bellowheader /> {/* Добавляем Bellowheader сюда */}
+      {ShowCategories ? <HeaderCategories /> : <></>}
     </Box>
   );
 
@@ -223,7 +225,7 @@ export default function Header() {
           {renderIconWithText(LogoCart, "Корзина")}
         </Box>
       </Box>
-      <Bellowheader></Bellowheader>
+      {ShowCategories ? <HeaderCategories /> : <></>}
     </Box>
   );
 

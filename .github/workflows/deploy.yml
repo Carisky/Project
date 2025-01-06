@@ -31,6 +31,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.SERVER_HOST }}
+          port: ${{ secrets.SERVER_PORT }} # Используем указанный порт
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
@@ -40,3 +41,4 @@ jobs:
             docker-compose up -d
             # Применяем миграции базы данных
             docker exec node-backend npm run migrate:latest
+

@@ -38,3 +38,5 @@ jobs:
             git pull origin main
             docker-compose down
             docker-compose up -d
+            # Применяем миграции базы данных
+            docker exec node-backend npm run migrate:latest

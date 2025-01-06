@@ -14,20 +14,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Шаг 2: Логин в DockerHub
+      # Шаг 2: Установка Docker Compose
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
+      # Шаг 3: Логин в DockerHub
       - name: Log in to DockerHub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v2
         with:
           username: "${{ vars.DOCKER_USERNAME }}"
           password: "${{ vars.DOCKER_PASSWORD }}"
 
-      # Шаг 3: Сборка и публикация Docker образов
+      # Шаг 4: Сборка и публикация Docker образов
       - name: Build and push Docker images
         run: |
           docker-compose build
           docker-compose push
 
-      # Шаг 4: Деплой на сервер через SSH
+      # Шаг 5: Деплой на сервер через SSH
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.5
         with:

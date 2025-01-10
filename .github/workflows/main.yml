@@ -56,45 +56,36 @@ jobs:
                   - "3306:3306"
                 networks:
                   - app-network
-
+            
               backend:
-                build:
-                  context: ./backend
-                  dockerfile: Dockerfile
+                image: your-dockerhub-username/node-backend:latest
                 container_name: node-backend
                 environment:
                   DB_HOST: db
                   DB_USER: user
                   DB_PASSWORD: userpassword
                   DB_NAME: mydb
-                volumes:
-                  - ./backend:/app
                 ports:
                   - "5000:5000"
                 depends_on:
                   - db
                 networks:
                   - app-network
-
+            
               frontend:
-                build:
-                  context: ./frontend
-                  dockerfile: Dockerfile
+                image: your-dockerhub-username/react-frontend:latest
                 container_name: react-frontend
-                volumes:
-                  - ./frontend:/app
                 ports:
                   - "3000:3000"
                 networks:
                   - app-network
-
+            
             networks:
               app-network:
                 driver: bridge
-
+            
             volumes:
               db-data:
-              photo-storage-data:
             EOF
 
       # Шаг 5: Удаление старых сборок

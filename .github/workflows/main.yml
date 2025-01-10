@@ -58,7 +58,7 @@ jobs:
                   - app-network
             
               backend:
-                image: your-dockerhub-username/node-backend:latest
+                image: ${{ vars.DOCKER_USERNAME }}/node-backend:latest
                 container_name: node-backend
                 environment:
                   DB_HOST: db
@@ -73,7 +73,7 @@ jobs:
                   - app-network
             
               frontend:
-                image: your-dockerhub-username/react-frontend:latest
+                image: ${{ vars.DOCKER_USERNAME }}/react-frontend:latest
                 container_name: react-frontend
                 ports:
                   - "3000:3000"

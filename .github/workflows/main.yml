@@ -28,13 +28,96 @@ jobs:
           username: "${{ vars.DOCKER_USERNAME }}"
           password: "${{ vars.DOCKER_PASSWORD }}"
 
-      # Шаг 5: Сборка и публикация Docker образов
+      # Шаг 4: Создание docker-compose.yml на сервере
+      - name: Create docker-compose.yml on server
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ vars.SERVER_HOST }}
+          port: ${{ vars.SERVER_PORT }}
+          username: ${{ vars.SERVER_USER }}
+          key: ${{ vars.SERVER_SSH_KEY }}
+          script: |
+            mkdir -p /home/${{ vars.SERVER_USER }}/project
+            cat <<EOF > /home/${{ vars.SERVER_USER }}/project/docker-compose.yml
+            version: "3"
+
+            services:
+              db:
+                image: mysql:8
+                container_name: mysql-db
+                environment:
+                  MYSQL_ROOT_PASSWORD: rootpassword
+                  MYSQL_DATABASE: mydb
+                  MYSQL_USER: user
+                  MYSQL_PASSWORD: userpassword
+                volumes:
+                  - db-data:/var/lib/mysql
+                ports:
+                  - "3306:3306"
+                networks:
+                  - app-network
+
+              backend:
+                build:
+                  context: ./backend
+                  dockerfile: Dockerfile
+                container_name: node-backend
+                environment:
+                  DB_HOST: db
+                  DB_USER: user
+                  DB_PASSWORD: userpassword
+                  DB_NAME: mydb
+                volumes:
+                  - ./backend:/app
+                ports:
+                  - "5000:5000"
+                depends_on:
+                  - db
+                networks:
+                  - app-network
+
+              frontend:
+                build:
+                  context: ./frontend
+                  dockerfile: Dockerfile
+                container_name: react-frontend
+                volumes:
+                  - ./frontend:/app
+                ports:
+                  - "3000:3000"
+                networks:
+                  - app-network
+
+            networks:
+              app-network:
+                driver: bridge
+
+            volumes:
+              db-data:
+              photo-storage-data:
+            EOF
+
+      # Шаг 5: Удаление старых сборок
+      - name: Remove old Docker containers and images
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ vars.SERVER_HOST }}
+          port: ${{ vars.SERVER_PORT }}
+          username: ${{ vars.SERVER_USER }}
+          key: ${{ vars.SERVER_SSH_KEY }}
+          script: |
+            cd /home/${{ vars.SERVER_USER }}/project
+            sudo docker-compose down
+            sudo docker container prune -f
+            sudo docker image prune -a -f
+
+      # Шаг 6: Сборка и публикация Docker образов
       - name: Build and push Docker images
         run: |
           docker-compose build
           docker-compose push
 
-      # Шаг 6: Деплой на сервер через SSH
+      # Шаг 7: Деплой на сервер
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.5
         with:
@@ -43,6 +126,6 @@ jobs:
           username: ${{ vars.SERVER_USER }}
           key: ${{ vars.SERVER_SSH_KEY }}
           script: |
+            cd /home/${{ vars.SERVER_USER }}/project
             sudo docker-compose up -d
             sudo docker exec node-backend npm run migrate:latest
-

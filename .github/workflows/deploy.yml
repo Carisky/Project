@@ -28,21 +28,6 @@ jobs:
           username: "${{ vars.DOCKER_USERNAME }}"
           password: "${{ vars.DOCKER_PASSWORD }}"
 
-      # Шаг 4: Удаление старых сборок
-      - name: Remove old Docker containers and images
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ vars.SERVER_HOST }}
-          port: ${{ vars.SERVER_PORT }}
-          username: ${{ vars.SERVER_USER }}
-          key: ${{ vars.SERVER_SSH_KEY }}
-          script: |
-            # Остановка и удаление старых контейнеров
-            docker-compose down
-            docker container prune -f
-            # Удаление старых образов
-            docker image prune -a -f
-
       # Шаг 5: Сборка и публикация Docker образов
       - name: Build and push Docker images
         run: |

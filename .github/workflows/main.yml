@@ -43,6 +43,6 @@ jobs:
           username: ${{ vars.SERVER_USER }}
           key: ${{ vars.SERVER_SSH_KEY }}
           script: |
-            docker-compose up -d
-            docker exec node-backend npm run migrate:latest
+            sudo docker-compose up -d
+            sudo docker exec node-backend npm run migrate:latest
 

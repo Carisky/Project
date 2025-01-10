@@ -43,7 +43,6 @@ jobs:
           username: ${{ vars.SERVER_USER }}
           key: ${{ vars.SERVER_SSH_KEY }}
           script: |
-            cd /var/www/project
             git pull origin main
             docker-compose up -d
             docker exec node-backend npm run migrate:latest

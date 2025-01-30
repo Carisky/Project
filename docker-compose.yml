@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    image: mysql:8
+    image: zopinkirill/mysql-db:latest # Specify the image for Docker Hub
     container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -20,6 +20,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    image: zopinkirill/node-backend:latest # Specify the image for Docker Hub
     container_name: node-backend
     environment:
       DB_HOST: db
@@ -39,6 +40,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    image: zopinkirill/react-frontend:latest # Specify the image for Docker Hub
     container_name: react-frontend
     volumes:
       - ./frontend:/app
@@ -46,7 +48,6 @@ services:
       - "3000:3000"
     networks:
       - app-network
-
 
 networks:
   app-network:

@@ -6,6 +6,7 @@ const palete = {
         mainText:"#2B2B2B",
         secondaryText:"#808080",
         accentText:"#FF2A2A",
+        backgroundText: "lightgray",
     },
     dark : {
         mainColor:"#3A2987",
@@ -14,6 +15,7 @@ const palete = {
         mainText:"#2B2B2B",
         secondaryText:"#808080",
         accentText:"#FF2A2A",
+        backgroundText: "#2E2A6E",
     }
 }
 

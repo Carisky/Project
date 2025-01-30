@@ -5,6 +5,7 @@ import { LogoAdvice, LogoAdvice2 } from "../../icons/icons.jsx";
 import useTheme from "../../hooks/useTheme.js";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 
+
 export default function ArticlePackAdvice({ Title, articles }) {
   const theme = useTheme();
 
@@ -67,10 +68,10 @@ export default function ArticlePackAdvice({ Title, articles }) {
           <Typography
             sx={{
               fontFamily: "Ubuntu",
-              fontSize: "32px",
+              fontSize: "28px",
               fontWeight: "700",
-              marginTop: "5px",
-              marginLeft: "15px",
+              marginTop: "10px",
+              marginLeft: "30px",
             }}
           >РЕКОМЕНДАЦІЇ</Typography>
           <Typography
@@ -80,18 +81,18 @@ export default function ArticlePackAdvice({ Title, articles }) {
               fontSize: "32px",
               fontWeight: "700",
               marginTop: "-15px",
-              marginLeft: "15px",
+              marginLeft: "60px",
             }}
           >ДЛЯ ТЕБЕ</Typography>
         </Box>
       </Box>
       <Box display="flex" justifyContent="space-between">
-        <ArticleCard></ArticleCard>
-        <ArticleCard></ArticleCard>
+        <ArticleCard article={articles[0]}/>
+        <ArticleCard article={articles[1]}/>
       </Box>
       <Box display="flex" justifyContent="space-between">
-        <ArticleCard></ArticleCard>
-        <ArticleCard></ArticleCard>
+        <ArticleCard article={articles[2]}/>
+        <ArticleCard article={articles[3]}/>
       </Box>
     </Box>}
     {isDesktop &&

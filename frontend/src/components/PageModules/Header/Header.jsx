@@ -14,6 +14,7 @@ import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
 import { useNavigate } from "react-router-dom";
 import HeaderCategories from "./HeaderCategories.jsx";
 import Cart from "../../ShoppingCart/Cart.jsx";
+import MenuList from "../../MenuList/MenuList.jsx";
 
 export default function Header({ ShowCategories = true }) {
 
@@ -72,12 +73,11 @@ export default function Header({ ShowCategories = true }) {
   
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width: 500px)");
-  const isTablet = useMediaQuery(
-    "(min-width: 500.01px) and (max-width: 1200px)"
-  );
+  const isTablet = useMediaQuery("(min-width: 500.01px) and (max-width: 1200px)");
   const isDesktop = useMediaQuery("(min-width: 1200px)");
 
   const [openAuth, setOpenAuth] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
@@ -89,6 +89,7 @@ export default function Header({ ShowCategories = true }) {
   );
 
   const handleAuthModal = () => setOpenAuth(!openAuth);
+  const handleMenuModal = () => setOpenMenu(!openMenu);
   const handleSearch = (e) => {
     if (e.key === "Enter" && searchQuery.trim()) {
       navigate(`/catalog?search=${encodeURIComponent(searchQuery.trim())}`);
@@ -172,9 +173,14 @@ export default function Header({ ShowCategories = true }) {
             marginRight: "10px",
           }}
         >
-          <AlignSvg>
-            <LogoBurger />
-          </AlignSvg>
+          <Box onClick={handleMenuModal} sx={{ cursor: "pointer" }}>
+            <AlignSvg>
+              <LogoBurger />
+            </AlignSvg>            
+          </Box>
+          <Modal open={openMenu} onClose={handleMenuModal}>
+            <MenuList />
+          </Modal>
         </Box>
 
         {/* Поисковая строка */}

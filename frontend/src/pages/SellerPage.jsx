@@ -1,16 +1,18 @@
 import React from "react";
 import Header from "../components/PageModules/Header/Header";
-import TwoBanerGroup from "../components/TwoBanerGroup/TwoBanerGroup";
 import { Box, Typography } from "@mui/material";
 import useTheme from "../hooks/useTheme";
 import Footer from "../components/PageModules/Footer/Footer";
-import ArticleList from "../components/ArticleLists/ArticleList";
-import ArticlePackAdvice from "../components/ArticleLists/ArticlePackAdvice";
-import ArticleListFree from "../components/ArticleLists/ArticleListFree";
+import { useMediaQuery } from "../hooks/useMediaQuery.js";
+import SellerMenu from "../components/ForSellerPage/SellerMenu.jsx";
 
-export default function MainPage() {
+export default function SellerPage() {
 
   const theme = useTheme();
+
+  const isMobile = useMediaQuery("(max-width: 500px)");
+  const isDesktop = useMediaQuery("(min-width: 500.01px)");
+
   const articles = [
     {
       id: 1,
@@ -114,47 +116,6 @@ export default function MainPage() {
     },
   ];
 
-  const ViewTimeAndDate = () => {
-    const locale = "uk";
-    const today = new Date();
-
-    const day = today.toLocaleDateString(locale, { weekday: "long" });
-    const hour = today.getHours();
-
-    const time = today.toLocaleTimeString(locale, {
-      hour: "numeric",
-      hour12: true,
-      minute: "numeric",
-    });
-
-    return (
-      <Box>
-        <span>
-          {day} : {hour} : {time}
-        </span>
-      </Box>
-    );
-  };
-
-  const renderTopBannerBigContainerContent = () => {
-    return (
-      <Typography
-        alignItems="end"
-        sx={{
-          marginLeft: "20px",
-          marginRight: "20px",
-          marginTop: "10px",
-          color: "white",
-          fontWeight: "bold",
-          fontSize: "20px",
-          fontFamily: "Montserrat",
-        }}
-      >
-        {ViewTimeAndDate()}
-      </Typography>
-    );
-  };
-
   return (
     <Box
       sx={{
@@ -162,35 +123,8 @@ export default function MainPage() {
         width: "100%",
       }}
     >
-      <Box marginBottom="10px">
-        <Header></Header>
-        <TwoBanerGroup
-          bigContainerContent={renderTopBannerBigContainerContent()}
-          smallContainerTitle={"РОЗПРОДАЖ"}
-          bigContainerTitle={"ОСТАННІ ЗНИЖКИ%"}
-        />
-        <Box
-          sx={{
-            backgroundColor: theme.mainColor,
-          }}
-        >
-          <ArticleList articles={articles} Title={"ТОП ТРЕНДИ"}></ArticleList>
-        </Box>
-        <ArticlePackAdvice articles={articles}></ArticlePackAdvice>
-        <Box
-          sx={{
-            backgroundColor: theme.mainColor,
-          }}
-        >
-          <ArticleList articles={articles} Title={"ВАУ ЦІНИ"}></ArticleList>
-        </Box>
-        <TwoBanerGroup
-          align="right"
-          smallContainerTitle={"ПОПУЛЯРНІ ТОВАРИ"}
-          bigContainerTitle={"НОВИНКИ"}
-        />
-        <ArticleListFree Articles={articles}></ArticleListFree>
-      </Box>
+      <Box marginBottom="10px"><Header></Header></Box>
+      <SellerMenu/>
       <Footer></Footer>
     </Box>
   );

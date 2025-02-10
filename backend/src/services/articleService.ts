@@ -114,6 +114,7 @@ export const getArticleByIdService = async (id: number) => {
     name: article.name,
     seller_id: article.seller_id,
     category_id: article.category_id,
+    category_name: article.category?.name,
     amount: article.amount,
     price: article.price,
     rating: article.rating,

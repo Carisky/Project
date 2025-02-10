@@ -1,5 +1,82 @@
 import React from 'react';
 
+export const LogoLiner1 = ( { width = 183, height = 10 } ) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 183 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="183" height="10" rx="5" fill="#F1F1F5"/>
+            <rect width="75" height="10" rx="5" fill="#FE7411"/>
+        </svg>
+    )
+}
+
+export const LogoLiner2 = ( { width = 183, height = 10 } ) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 183 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="183" height="10" rx="5" fill="#F1F1F5"/>
+            <rect width="35" height="10" rx="5" fill="#FE7411"/>
+        </svg>
+    )
+}
+
+export const LogoLiner3 = ( { width = 183, height = 10 } ) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 183 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="183" height="10" rx="5" fill="#F1F1F5"/>
+            <rect width="51" height="10" rx="5" fill="#FE7411"/>
+        </svg>
+    )
+}
+
+export const LogoLiner4 = ( { width = 183, height = 10 } ) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 183 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="183" height="10" rx="5" fill="#F1F1F5"/>
+            <rect width="123" height="10" rx="5" fill="#FE7411"/>
+        </svg>
+    )
+}
+
+export const LogoLiner5 = ( { width = 183, height = 10 } ) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 183 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="183" height="10" rx="5" fill="#F1F1F5"/>
+            <rect width="148" height="10" rx="5" fill="#FE7411"/>
+        </svg>
+    )
+}
+
+export const LogoAva = ( { width = 27, height = 27 } ) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path opacity="0.4" fill-rule="evenodd" clip-rule="evenodd" d="M13.5 1.48329e-10C15.2728 -8.31008e-06 17.0283 0.349172 18.6662 1.02761C20.3041 1.70604 21.7923 2.70044 23.0459 3.95403C24.2995 5.20762 25.2939 6.69584 25.9724 8.33374C26.6508 9.97164 27 11.7271 27 13.5C27 20.9558 20.9558 27 13.5 27C6.04418 27 0 20.9558 0 13.5C0 6.04418 6.04418 1.48329e-10 13.5 1.48329e-10ZM14.85 14.85H12.15C8.80779 14.85 5.93843 16.8742 4.70084 19.7637C6.65902 22.5095 9.87041 24.3 13.5 24.3C17.1295 24.3 20.3409 22.5095 22.2992 19.7635C21.0616 16.8742 18.1922 14.85 14.85 14.85ZM13.5 4.05C11.2632 4.05 9.44997 5.86326 9.44997 8.09999C9.44997 10.3367 11.2632 12.15 13.5 12.15C15.7367 12.15 17.55 10.3367 17.55 8.09999C17.55 5.86326 15.7368 4.05 13.5 4.05Z" fill="#1E1E1E"/>
+        </svg>
+    )
+}
+
+export const LogoStar4smile = ( { width = 17, height = 16 } ) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.5013 12.8084L13.6513 15.9167L12.2846 10.0584L16.8346 6.11671L10.843 5.60837L8.5013 0.083374L6.15963 5.60837L0.167969 6.11671L4.71797 10.0584L3.3513 15.9167L8.5013 12.8084Z" fill="#FE7411"/>
+        </svg>
+    )
+}
+
+export const LogoUp = ( { width = 24, height = 24 } ) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L22 11.8776M12 2L2 11.8776M12 2V22" stroke="#86B942" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    )
+}
+
+export const LogoStar3 = ( { width = 33, height = 33 } ) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.5009 26.3906L8.71961 31.0781C8.37586 31.2969 8.01649 31.3906 7.64149 31.3594C7.26649 31.3281 6.93836 31.2031 6.65711 30.9844C6.37586 30.7656 6.15711 30.4925 6.00086 30.165C5.84461 29.8375 5.81336 29.47 5.90711 29.0625L7.96961 20.2031L1.07899 14.25C0.766486 13.9688 0.571486 13.6481 0.493986 13.2881C0.416486 12.9281 0.439611 12.5769 0.563361 12.2344C0.687111 11.8919 0.874611 11.6106 1.12586 11.3906C1.37711 11.1706 1.72086 11.03 2.15711 10.9688L11.2509 10.1719L14.7665 1.82813C14.9227 1.45313 15.1652 1.17187 15.494 0.984375C15.8227 0.796875 16.1584 0.703125 16.5009 0.703125C16.8434 0.703125 17.179 0.796875 17.5077 0.984375C17.8365 1.17187 18.079 1.45313 18.2352 1.82813L21.7509 10.1719L30.8446 10.9688C31.2821 11.0312 31.6259 11.1719 31.8759 11.3906C32.1259 11.6094 32.3134 11.8906 32.4384 12.2344C32.5634 12.5781 32.5871 12.93 32.5096 13.29C32.4321 13.65 32.2365 13.97 31.9227 14.25L25.0321 20.2031L27.0946 29.0625C27.1884 29.4688 27.1571 29.8362 27.0009 30.165C26.8446 30.4937 26.6259 30.7669 26.3446 30.9844C26.0634 31.2019 25.7352 31.3269 25.3602 31.3594C24.9852 31.3919 24.6259 31.2981 24.2821 31.0781L16.5009 26.3906Z" fill="#FE7411"/>
+        </svg>
+    )
+}
+
 export const LogoLamp = ( { width = 26, height = 26 } ) => {
     return (
         <svg width={width} height={height} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">

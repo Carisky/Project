@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Modal } from "@mui/material";
 import useTheme from "../../hooks/useTheme";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 import { RevieStarS, RevieStar, LogoMyHeart, LogoCar, LogoKur, LogoGeoDot, LogoUser, LogoObrane, LogoMyShop } from "../../icons/icons.jsx";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import style from "../ArticleLists/ArticleCarousel/style.module.css";
+import AllCharacter from "./AllCharacter.jsx";
+import AllDescription from "./AllDescription.jsx";
 
 export default function ProductCardPage() {
     const theme = useTheme();
@@ -13,6 +15,17 @@ export default function ProductCardPage() {
     const isMobile = useMediaQuery("(max-width: 500px)");
   
     const isDesktop = useMediaQuery("(min-width: 500.01px)");
+
+    const articl = {
+        id: 1,
+        name: "Wireless Headphones",
+        seller_name: "Audio World",
+        price: "199.99",
+        rating: 4.5,
+        discount: "20%",
+        reviews_count: 120,
+        image: "./images/pexels1.jpg",
+    };
   
     const AlignSvg = ({ children }) => (
         <Box display="flex" justifyContent="center" alignItems="center">
@@ -20,8 +33,18 @@ export default function ProductCardPage() {
         </Box>
     );
     
-    const textDescription = "Відомий дім TUSKANI та його спадкоємці Сім'я Роберто Джіованні ствердилися як варти італійської майстерності. Їхнє прізвище стало символом неперевершеної якості протягом багатьох десятиліть.\nЦя кава має ідеальне поєднання аромату, насиченого смаку і багатого тіла: соковиті акценти ягід і шоколаду переносять вас у довгий, неповторний післясмак.";
-//для відображення "з нового рядка" отримати масив рядків з БД - ?
+    const [allCharacter, setallCharacter] = useState(false);
+    const allCharacterModal = () => setallCharacter(!allCharacter);
+    const [allDescription, setallDescription] = useState(false);
+    const allDescriptionModal = () => setallDescription(!allDescription);
+
+    const textDescription = [
+        "Відомий дім TUSKANI та його спадкоємці Сім'я Роберто Джіованні ствердилися як варти італійської майстерності. Їхнє прізвище стало символом неперевершеної якості протягом багатьох десятиліть.",
+        "Ця кава має ідеальне поєднання аромату, насиченого смаку і багатого тіла: соковиті акценти ягід і шоколаду переносять вас у довгий, неповторний післясмак.",
+        "Унікальна упаковка має презентабельний зовнішній вигляд являючи собою комбінацію джутвого мішечка з сургучною печаткою та спеціальною оболонкою всередені, яка збереже чудовий аромат.",
+        "Завдяки прямим поставкам з Італії, які здійснюються двічі на місяць, ви отримуєте кавові зерна свіжого обсмаження.",
+        "TUSKANI - це не масовий продукт, це рідкість, вишукування та неповторний смак.",
+    ];
 
     const textOneStyles = {
         color: theme.mainText,
@@ -30,116 +53,44 @@ export default function ProductCardPage() {
         fontFamily: "Montserrat",
     };
 
-    const Characteristick = () => (
+    const characteristics = [
+        { type: "Тип кави", value: "У зернах" },
+        { type: "Вага", value: "1 кг" },
+        { type: "Сорт кави", value: "Арабіка" },
+        { type: "Ступінь обсмаження", value: "Темна" },
+        { type: "Пакування", value: "Пакет з клапаном" },
+        { type: "Місце вирощення зерна", value: "SHG (вирощена у горах)" },
+        { type: "Твердість зерна", value: "SHB (дуже тверде)" },
+        { type: "Якість зерна", value: "AA - найкраща кава" },
+        { type: "Метод підготовки", value: "AP (Американська підготовка)" },
+    ];
+
+    const keyStyle = {
+        color: theme.mainText,
+        fontSize: "24px",
+        fontWeight: "bold",
+        fontFamily: "Montserrat",
+    };
+    const valueStyle = {
+        marginLeft: "5px",
+        color: theme.secondaryColor,
+        fontSize: "24px",
+        fontWeight: "bold",
+        fontFamily: "Montserrat",
+    };
+
+    const Characteristick = ({type, value}) => (
         <>
-        <Box sx={{
-            width: "90%",
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "10px",
-            marginLeft: "30px",
-            marginBottom: "10px",
-            marginRight: "30px",
-        }}>
-            <Box><Typography sx={{
-                color: theme.mainText,
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Montserrat",
-            }}>Тип кави</Typography></Box>
             <Box borderBottom={1} sx={{
-                width: "60%",
-                marginLeft: "2px",
-                marginRight: "2px",
-            }}></Box>
-            <Box><Typography sx={{
-                color: theme.secondaryColor,
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Montserrat",
-            }}>У зернах</Typography></Box>
-        </Box>
-        <Box sx={{
-            width: "90%",
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "10px",
-            marginLeft: "30px",
-            marginBottom: "10px",
-            marginRight: "30px",
-        }}>
-            <Box><Typography sx={{
-                color: theme.mainText,
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Montserrat",
-            }}>Вага</Typography></Box>
-            <Box borderBottom={1} sx={{
-                width: "80%",
-                marginLeft: "2px",
-                marginRight: "2px",
-            }}></Box>
-            <Box><Typography sx={{
-                color: theme.secondaryColor,
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Montserrat",
-            }}>1 кг</Typography></Box>
-        </Box>
-        <Box sx={{
-            width: "90%",
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "10px",
-            marginLeft: "30px",
-            marginBottom: "10px",
-            marginRight: "30px",
-        }}>
-            <Box><Typography sx={{
-                color: theme.mainText,
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Montserrat",
-            }}>Сорт кави</Typography></Box>
-            <Box borderBottom={1} sx={{
-                width: "60%",
-                marginLeft: "2px",
-                marginRight: "2px",
-            }}></Box>
-            <Box><Typography sx={{
-                color: theme.secondaryColor,
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Montserrat",
-            }}>Арабіка</Typography></Box>
-        </Box>
-        <Box sx={{
-            width: "90%",
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "10px",
-            marginLeft: "30px",
-            marginBottom: "10px",
-            marginRight: "30px",
-        }}>
-            <Box><Typography sx={{
-                color: theme.mainText,
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Montserrat",
-            }}>Ступінь обсмаження</Typography></Box>
-            <Box borderBottom={1} sx={{
-                width: "40%",
-                marginLeft: "2px",
-                marginRight: "2px",
-            }}></Box>
-            <Box><Typography sx={{
-                color: theme.secondaryColor,
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Montserrat",
-            }}>Темна</Typography></Box>
-        </Box>
+                alignItems: "end",
+                width: "90%",
+                display: "flex",
+                justifyContent: "space-between",
+                margin: "20px 30px 10px 30px",
+            }}>
+                <Typography sx={keyStyle}>{type}</Typography>
+                <Typography sx={valueStyle}>{value}</Typography>
+            </Box>
         </>
     )
   
@@ -188,7 +139,7 @@ export default function ProductCardPage() {
 
     const ImageGallery = ({ mainImage, similarImages }) => {
         const [selectedImage, setSelectedImage] = useState(mainImage);
-      
+        
         return (
             <Box>
                 <Box sx={{
@@ -508,8 +459,18 @@ export default function ProductCardPage() {
                         marginLeft: "30px",
                         marginBottom: "10px",
                         marginRight: "30px",
-                    }}>{textDescription}</Typography>
+                    }}>{textDescription[0]}</Typography>
                     <Typography sx={{
+                        color: theme.mainText,
+                        fontSize: "24px",
+                        fontWeight: "medium",
+                        fontFamily: "Montserrat",
+                        marginTop: "10px",
+                        marginLeft: "30px",
+                        marginBottom: "10px",
+                        marginRight: "30px",
+                    }}>{textDescription[1]}</Typography>
+                    <Typography onClick={allDescriptionModal} sx={{
                         color: theme.secondaryColor,
                         fontSize: "32px",
                         fontWeight: "medium",
@@ -519,7 +480,11 @@ export default function ProductCardPage() {
                         marginBottom: "10px",
                         marginRight: "30px",
                         textDecorationLine: "underline",
-                    }}>Посилання Дивитись повністю</Typography>
+                        cursor: "pointer",
+                    }}>Дивитись повністю</Typography>
+                    <Modal open={allDescription} onClose={allDescriptionModal}>
+                        <AllDescription description={textDescription} product={articl} onClose={allDescription}/>
+                    </Modal>
                 </Box>
                 <Box sx={{
                     height: "100%",
@@ -537,18 +502,26 @@ export default function ProductCardPage() {
                         marginBottom: "10px",
                         marginRight: "30px",
                     }}>Характеристики</Typography>
-                    <Characteristick/>
-                    <Typography sx={{
+                    {Characteristick(characteristics[0])}
+                    {Characteristick(characteristics[1])}
+                    {Characteristick(characteristics[2])}
+                    {Characteristick(characteristics[3])}
+                                        
+                    <Typography onClick={allCharacterModal} sx={{
                         color: theme.secondaryColor,
                         fontSize: "32px",
-                        //fontWeight: "bold",
+                        fontWeight: "medium",
                         fontFamily: "Montserrat",
                         marginTop: "10px",
                         marginLeft: "30px",
                         marginBottom: "10px",
                         marginRight: "30px",
                         textDecorationLine: "underline",
-                    }}>Посилання Всі характеристики</Typography>
+                        cursor: "pointer",
+                    }}>Всі характеристики</Typography>
+                    <Modal open={allCharacter} onClose={allCharacterModal}>
+                        <AllCharacter characteristick={characteristics} product={articl} onClose={allCharacter}/>
+                    </Modal>
                 </Box>
             </Box>
         </>

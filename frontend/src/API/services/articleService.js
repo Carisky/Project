@@ -6,6 +6,10 @@ export const findArticlesByName = async (name) => {
   });
   return response.data;
 };
+export const getAllArticles = async () => {
+  const response = await apiHandler.get(`/articles/`)
+  return response.data;
+};
 export const filterArticles = async (filters) => {
   const { searchQuery, priceRange, selectedCategories } = filters;
   const payload = {

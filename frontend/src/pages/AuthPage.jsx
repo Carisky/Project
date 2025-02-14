@@ -40,8 +40,12 @@ export default function AuthPage() {
         email: formData.email,
         password: formData.password,
       });
+  
+      const token = result.token; // Получаем токен из ответа бэка
+      localStorage.setItem("authToken", token); // Сохраняем в localStorage
+  
       console.log("Logged in:", result);
-      // Дальнейшие действия: сохранение токена, редирект и т. д.
+      // Можно сделать редирект или обновление состояния
     } catch (error) {
       const errorData = error.response?.data || {};
       setErrors({
@@ -51,6 +55,7 @@ export default function AuthPage() {
       console.error("Login failed:", errorData);
     }
   };
+  
 
   const handleRegister = async () => {
     try {

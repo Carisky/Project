@@ -72,7 +72,7 @@ export default function ArticleListFree({ showMore = true, Title, Articles }) {
           }}
         >
           <Box display="flex" justifyContent="space-between">
-            {Articles.map((article) => {
+            {Articles.slice(0, 4).map((article) => {
               return <ArticleCard article={article} />;
             })}
           </Box>

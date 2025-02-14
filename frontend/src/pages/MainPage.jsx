@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/PageModules/Header/Header";
 import TwoBanerGroup from "../components/TwoBanerGroup/TwoBanerGroup";
 import { Box, Typography } from "@mui/material";
@@ -7,117 +7,28 @@ import Footer from "../components/PageModules/Footer/Footer";
 import ArticleList from "../components/ArticleLists/ArticleList";
 import ArticlePackAdvice from "../components/ArticleLists/ArticlePackAdvice";
 import ArticleListFree from "../components/ArticleLists/ArticleListFree";
+import { getAllArticles } from "../API/services/articleService";
 
 export default function MainPage() {
-
   const theme = useTheme();
-  const articles = [
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      seller_name: "Audio World",
-      price: "199.99",
-      rating: 4.5,
-      discount: "20%",
-      reviews_count: 120,
-      image: "headphones.jpg",
-    },
-    {
-      id: 2,
-      name: "Smartphone Pro Max",
-      seller_name: "Gadget Hub",
-      price: "999.99",
-      rating: 4.8,
-      discount: "15%",
-      reviews_count: 450,
-      image: "smartphone.jpg",
-    },
-    {
-      id: 3,
-      name: "Gaming Laptop",
-      seller_name: "Tech Store",
-      price: "1299.99",
-      rating: 4.6,
-      discount: "10%",
-      reviews_count: 230,
-      image: "laptop.jpg",
-    },
-    {
-      id: 4,
-      name: "Sports Watch",
-      seller_name: "Outdoor Gear",
-      price: "249.99",
-      rating: 4.2,
-      discount: "25%",
-      reviews_count: 85,
-      image: "watch.jpg",
-    },
-    {
-      id: 5,
-      name: "Electric Scooter",
-      seller_name: "Eco Riders",
-      price: "499.99",
-      rating: 4.7,
-      discount: "30%",
-      reviews_count: 340,
-      image: "scooter.jpg",
-    },
-    {
-      id: 6,
-      name: "dWireless Headphones",
-      seller_name: "Audio World",
-      price: "199.99",
-      rating: 4.5,
-      discount: "20%",
-      reviews_count: 120,
-      image: "headphones.jpg",
-    },
-    {
-      id: 7,
-      name: "dSmartphone Pro Max",
-      seller_name: "Gadget Hub",
-      price: "999.99",
-      rating: 4.8,
-      discount: "15%",
-      reviews_count: 450,
-      image: "smartphone.jpg",
-    },
-    {
-      id: 8,
-      name: "dGaming Laptop",
-      seller_name: "Tech Store",
-      price: "1299.99",
-      rating: 4.6,
-      discount: "10%",
-      reviews_count: 230,
-      image: "laptop.jpg",
-    },
-    {
-      id: 9,
-      name: "dSports Watch",
-      seller_name: "Outdoor Gear",
-      price: "249.99",
-      rating: 4.2,
-      discount: "25%",
-      reviews_count: 85,
-      image: "watch.jpg",
-    },
-    {
-      id: 10,
-      name: "dElectric Scooter",
-      seller_name: "Eco Riders",
-      price: "499.99",
-      rating: 4.7,
-      discount: "30%",
-      reviews_count: 340,
-      image: "scooter.jpg",
-    },
-  ];
+  const [articles, setArticles] = useState([]); // State for storing articles
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const fetchedArticles = await getAllArticles();
+        setArticles(fetchedArticles); // Update state with fetched articles
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      }
+    };
+
+    fetchArticles(); // Call the function when component mounts
+  }, []); // Empty dependency array to run only once
 
   const ViewTimeAndDate = () => {
     const locale = "uk";
-    var today = new Date();
-    today.setDate(today.getDate()+1);
+    const today = new Date();
 
     const day = today.toLocaleDateString(locale, { weekday: "long" });
     const hour = today.getHours();
@@ -164,7 +75,7 @@ export default function MainPage() {
       }}
     >
       <Box marginBottom="10px">
-        <Header></Header>
+        <Header />
         <TwoBanerGroup
           bigContainerContent={renderTopBannerBigContainerContent()}
           smallContainerTitle={"РОЗПРОДАЖ"}
@@ -172,21 +83,20 @@ export default function MainPage() {
           smallContainerImage={"/images/11.jpg"}
           bigContainerImage={"/images/12.jpg"}
         />
-        
         <Box
           sx={{
             backgroundColor: theme.mainColor,
           }}
         >
-          <ArticleList articles={articles} Title={"ТОП ТРЕНДИ"}></ArticleList>
+          <ArticleList articles={articles} Title={"ТОП ТРЕНДИ"} />
         </Box>
-        <ArticlePackAdvice articles={articles}></ArticlePackAdvice>
+        <ArticlePackAdvice articles={articles} />
         <Box
           sx={{
             backgroundColor: theme.mainColor,
           }}
         >
-          <ArticleList articles={articles} Title={"ВАУ ЦІНИ"}></ArticleList>
+          <ArticleList articles={articles} Title={"ВАУ ЦІНИ"} />
         </Box>
         <TwoBanerGroup
           align="right"
@@ -195,9 +105,9 @@ export default function MainPage() {
           smallContainerImage={"/images/22.jpg"}
           bigContainerImage={"/images/21.jpg"}
         />
-        <ArticleListFree Articles={articles}></ArticleListFree>
+        <ArticleListFree Articles={articles} />
       </Box>
-      <Footer></Footer>
+      <Footer />
     </Box>
   );
 }

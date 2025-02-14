@@ -14,6 +14,7 @@ class ArticleModel extends Model {
   rating!: number;
   created_at?: string;
   updated_at?: string;
+  description?: string;
   photos?: ArticlePhotoModel[];
   seller?: SellerModel; 
   category?: CategoryModel; 

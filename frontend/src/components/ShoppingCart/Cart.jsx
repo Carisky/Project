@@ -1,48 +1,53 @@
 import { Box, ButtonBase, Modal, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LogoCart } from "../../icons/icons";
 import useTheme from "../../hooks/useTheme";
 import CheckBox from "../Selectors/CheckBox";
 import ArticleList from "./ArticleList";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
-import OrderProcessing from "../ForOrderProcessing/OrderProcessing.jsx";
+import { getCartItems, addItemToCart, removeItemFromCart } from "../../API/services/cartService.js";
 
-export default function Cart({ Articles }) {
+export default function Cart() {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width: 500px)");
   const isDesktop = useMediaQuery("(min-width: 500.01px)");
-  
+
   const [openCart, setOpenCart] = useState(false);
+  const [Articles, setArticles] = useState([]); // State to hold the articles
+
+  useEffect(() => {
+    if (openCart) { // Only fetch when the cart is open
+      const fetchCartItems = async () => {
+        try {
+          const items = await getCartItems();
+          setArticles(items);
+        } catch (error) {
+          console.error("Ошибка при загрузке корзины", error);
+        }
+      };
+      fetchCartItems();
+    }
+  }, [openCart]); // Will trigger on openCart state change
 
   const toggleCart = () => setOpenCart(!openCart);
 
   const ArticlesCount = Articles.length;
-  const CheckedArticlesCount = ArticlesCount - 2; 
 
   const calculateTotalPrice = (articles) => {
-    let total = 0; 
-    articles.forEach((article) => {
-      total += article.price; 
-    });
-    return total.toFixed(0); 
+    return articles.reduce((total, article) => total + article.article.price, 0).toFixed(0); 
   };
 
   const calculatePriceToPay = (articles) => {
-    let total = 0; 
-    articles.forEach((article) => {
-      total += article.price; 
-    });
-    return total.toFixed(0) - calculateTotalDiscounts(articles); 
+    let total = calculateTotalPrice(articles);
+    const totalDiscount = calculateTotalDiscounts(articles);
+    return (total - totalDiscount).toFixed(0);
   };
 
   const calculateTotalDiscounts = (articles) => {
-    let total = 0; 
-    articles.forEach((article) => {
-      const discountPercentage = parseFloat(article.discount) / 100;
-      let discount = article.price * discountPercentage
-      total += discount; 
-    });
-    return total.toFixed(0); 
+    return articles.reduce((total, article) => {
+      const discountPercentage = 25 / 100;
+      return total + (article.article.price * discountPercentage);
+    }, 0).toFixed(0);
   };
 
   const renderTypography = (text, styles = {}) => (
@@ -112,7 +117,7 @@ export default function Cart({ Articles }) {
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <CheckBox text="Обрати Все" />
                     {renderTypography(
-                      `обрано ${CheckedArticlesCount} з ${ArticlesCount} `,
+                      `обрано ${ArticlesCount} з ${ArticlesCount} `,
                       { color: "#808080" }
                     )}
                     {renderTypography("Видалити обране", {
@@ -137,7 +142,7 @@ export default function Cart({ Articles }) {
                   padding: "10px",
                 }}
                 >
-                  <ArticleList Articles={Articles} />
+                  <ArticleList setArticles={setArticles} Articles={Articles} />
                 </Box>
                 <Box sx={{ marginRight:"20px",height: "80%", width: "35%" }}>
                   <Box
@@ -155,11 +160,10 @@ export default function Cart({ Articles }) {
                     })}
                     <Box>
                       {renderPriceItem(
-                        `Товари (${Articles.length})`,
+                        `Товари (${ArticlesCount})`,
                         `${calculateTotalPrice(Articles)}₴`
                       )}
                       {renderPriceItem("Знижка", `-${calculateTotalDiscounts(Articles)} ₴`)}
-                      {renderPriceItem("Знижка з промокодом", "-100 ₴")}
                       <Box sx={{ marginTop: "25px" }}>
                         {renderTypography("Промокод", {
                           fontSize: "17px",
@@ -200,7 +204,21 @@ export default function Cart({ Articles }) {
                             fontWeight: "600",
                           })}
                         </Box>
-                        <OrderProcessing/>
+                        <ButtonBase
+                        sx={{
+                          backgroundColor: "#9283FF",
+                          height: "42px",
+                          borderRadius: "13px",
+                          fontFamily: "Montserrat",
+                          fontSize: "16px",
+                          fontWeight: "600",
+                          color: "#FFFFFF",
+                          marginTop: "25px",
+                          width: "100%",
+                        }}
+                        >
+                          ПЕРЕЙТИ ДО ОФОРМЛЕННЯ
+                        </ButtonBase>
                       </Box>
                     </Box>
                   </Box>
@@ -234,7 +252,7 @@ export default function Cart({ Articles }) {
               left: "50%",
               transform: "translate(-50%, -50%)",
               bgcolor: "background.paper",
-              overflow: "scroll",//"hidden"
+              overflow: "scroll",
             }}
             >
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -258,7 +276,7 @@ export default function Cart({ Articles }) {
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <CheckBox text="Обрати Все" />
                     {renderTypography(
-                      `обрано ${CheckedArticlesCount} з ${ArticlesCount} `,
+                      `обрано ${ArticlesCount} з ${ArticlesCount} `,
                       { color: "#808080" }
                     )}
                     {renderTypography("Видалити обране", {
@@ -282,7 +300,7 @@ export default function Cart({ Articles }) {
                   flexDirection: "column",
                 }}
                 >
-                  <ArticleList Articles={Articles} />
+                  <ArticleList setArticles={setArticles} Articles={Articles} />
                 </Box>
               </Box>
               <Box sx={{ marginRight:"0px",height: "80%", width: "100%" }}>
@@ -301,11 +319,10 @@ export default function Cart({ Articles }) {
                     })}
                     <Box>
                       {renderPriceItem(
-                        `Товари (${Articles.length})`,
+                        `Товари (${ArticlesCount})`,
                         `${calculateTotalPrice(Articles)}₴`
                       )}
                       {renderPriceItem("Знижка", `-${calculateTotalDiscounts(Articles)} ₴`)}
-                      {renderPriceItem("Знижка з промокодом", "-100 ₴")}
                       <Box sx={{ marginTop: "25px" }}>
                         {renderTypography("Промокод", {
                           fontSize: "17px",
@@ -346,7 +363,21 @@ export default function Cart({ Articles }) {
                             fontWeight: "600",
                           })}
                         </Box>
-                        <OrderProcessing/>
+                        <ButtonBase
+                        sx={{
+                          backgroundColor: "#9283FF",
+                          height: "42px",
+                          borderRadius: "13px",
+                          fontFamily: "Montserrat",
+                          fontSize: "16px",
+                          fontWeight: "600",
+                          color: "#FFFFFF",
+                          marginTop: "25px",
+                          width: "100%",
+                        }}
+                        >
+                          ПЕРЕЙТИ ДО ОФОРМЛЕННЯ
+                        </ButtonBase>
                       </Box>
                     </Box>
                   </Box>

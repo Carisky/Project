@@ -1,5 +1,6 @@
 import stringSimilarity from "string-similarity";
 import ArticleModel from "../models/ArticleModel";
+import { getSellerByIdService } from "./sellerService";
 
 export const getArticlesByNameService = async (name: string) => {
   const articles = await ArticleModel.query().select("id", "name");
@@ -108,7 +109,7 @@ export const getArticleByIdService = async (id: number) => {
   if (!article) {
     return null;
   }
-
+  const seller =  await getSellerByIdService(article.seller_id);
   return {
     id: article.id,
     name: article.name,
@@ -120,8 +121,11 @@ export const getArticleByIdService = async (id: number) => {
     rating: article.rating,
     created_at: article.created_at,
     updated_at: article.updated_at,
+    description:article.description,
     photos: article.photos?.map((photo) => photo.url),
     tags: article.tags?.map((tag) => tag.name), // Теги как массив строк
+    seller: seller?.name,
+    
   };
 };
 

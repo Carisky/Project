@@ -1,13 +1,13 @@
 import { Box, ButtonBase, Typography } from "@mui/material";
 import React from "react";
 import CheckBox from "../Selectors/CheckBox";
+import { removeItemFromCart,getCartItems } from "../../API/services/cartService";
 
-export default function Article({ Article }) {
+export default function Article({setArticles, Article }) {
   const inStockText = "В наявності";
   const outOfStockText = "Немає в наявності";
-  const discountPercentage = parseFloat(Article.discount) / 100;
-  const discountedPrice =
-    (Article.price - Article.price * discountPercentage).toFixed(0) + "₴";
+  const discountPercentage = 25 / 100;
+  const discountedPrice = (Article.article.price - Article.article.price * discountPercentage).toFixed(0) + "₴";
 
   return (
     <Box
@@ -59,9 +59,15 @@ export default function Article({ Article }) {
             <Box>
               <img src="./images/icon_heart.svg" alt="" />
             </Box>
-            <Box
+            <Box 
+            onClick={async()=>{
+              await removeItemFromCart(Article.article.id)
+              const items = await getCartItems();
+              setArticles(items)
+            }}
               sx={{
                 marginLeft: "18px",
+                cursor:"pointer"
               }}
             >
               <img src="./images/icon_delete.svg" alt="" />
@@ -128,13 +134,13 @@ export default function Article({ Article }) {
                 textDecoration: "line-through",
               }}
             >
-              {Article.price.toFixed(0) + "₴"}
+              {Article.article.price.toFixed(0) + "₴"}
             </Typography>
             <Typography
               sx={{
                 color: "#FF2A2A",
               }}
-            >{`-${Article.discount}`}</Typography>
+            >{`-25%`}</Typography>
           </Box>
         </Box>
       </Box>

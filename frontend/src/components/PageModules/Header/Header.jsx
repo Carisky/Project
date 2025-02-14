@@ -5,7 +5,6 @@ import AuthPage from "../../../pages/AuthPage.jsx";
 import {
   LogoFlox,
   LogoProfil,
-  LogoCart,
   LogoHeart,
   LogoBurger,
 } from "../../../icons/icons.jsx";
@@ -138,12 +137,13 @@ export default function Header({ ShowCategories = true }) {
   );
 
   const renderDesktopHeader = () => (
-    <Box>
+    <>
       <Box
         sx={{
           marginLeft: "9%",
           marginRight: "9%",
           marginTop: "10px",
+          marginBottom: "10px",
           width: "82%",
           display: "flex",
           alignItems: "center",
@@ -231,7 +231,7 @@ export default function Header({ ShowCategories = true }) {
         </Box>
       </Box>
       {ShowCategories ? <HeaderCategories /> : <></>}
-    </Box>
+    </>
   );
 
   const renderMobileHeader = () => (

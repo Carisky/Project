@@ -9,6 +9,8 @@ export default function TwoBanerGroup({
   smallContainerContent,
   smallContainerTitle,
   bigContainerTitle,
+  smallContainerImage,
+  bigContainerImage,
 }) {
   const theme = useTheme();
 
@@ -81,6 +83,7 @@ export default function TwoBanerGroup({
               marginLeft: "10px",
             }}
           >
+            <img src={smallContainerImage} alt='foto.jpg' style={{ width: '100%', height: '100%', borderRadius: "10px", zIndex: 0}} />
             <Typography
               alignItems="end"
               sx={{
@@ -91,9 +94,7 @@ export default function TwoBanerGroup({
                 fontSize: "20px",
                 fontFamily: "Montserrat",
               }}
-            >
-              {smallContainerTitle}
-            </Typography>
+            ></Typography>
             {smallContainerContent}
           </Box>
           <Box
@@ -107,24 +108,10 @@ export default function TwoBanerGroup({
               backgroundColor: theme.secondaryColor,
             }}
           >
-            
-            <Box display="flex">
-              <Typography
-                alignItems="end"
-                sx={{
-                  marginLeft: "20px",
-                  marginTop: "10px",
-                  color: "white",
-                  fontWeight: "bold",
-                  fontSize: "20px",
-                  fontFamily: "Montserrat",
-                }}
-              >
-                {bigContainerTitle}
-              </Typography>
-              
+            <Box position="relative" width='100%'>
+              <img src={bigContainerImage} alt='foto.jpg' style={{ width: '100%', height: '100%', borderRadius: "10px", zIndex: 0}} />
+              <Box position="absolute" top="0" right="0" zIndex={2}>{bigContainerContent}</Box>
             </Box>
-            {bigContainerContent}
           </Box>
         </Box>
       )}

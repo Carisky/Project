@@ -24,7 +24,7 @@ export default function ProductCardPage() {
         rating: 4.5,
         discount: "20%",
         reviews_count: 120,
-        image: "./images/pexels1.jpg",
+        image: "/images/pexels1.jpg",
     };
   
     const AlignSvg = ({ children }) => (
@@ -112,18 +112,18 @@ export default function ProductCardPage() {
         justifyContent: "space-between",
     };
 
-    const mainImage = './images/pexels1.jpg';
+    const mainImage = '/images/pexels1.jpg';
 
     const similarImages = [
-        './images/pexels1.jpg',
-        './images/pexels2.jpg',
-        './images/pexels3.jpg',
-        './images/pexels4.jpg',
-        './images/pexels5.jpg',
-        './images/pexels6.jpg',
-        './images/pexels7.jpg',
-        './images/pexels8.jpg',
-        './images/pexels9.jpg'
+        '/images/pexels1.jpg',
+        '/images/pexels2.jpg',
+        '/images/pexels3.jpg',
+        '/images/pexels4.jpg',
+        '/images/pexels5.jpg',
+        '/images/pexels6.jpg',
+        '/images/pexels7.jpg',
+        '/images/pexels8.jpg',
+        '/images/pexels9.jpg'
     ];
 
     const responsive = {

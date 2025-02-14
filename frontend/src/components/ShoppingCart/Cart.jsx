@@ -5,6 +5,7 @@ import useTheme from "../../hooks/useTheme";
 import CheckBox from "../Selectors/CheckBox";
 import ArticleList from "./ArticleList";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
+import OrderProcessing from "../ForOrderProcessing/OrderProcessing.jsx";
 
 export default function Cart({ Articles }) {
   const theme = useTheme();
@@ -199,21 +200,7 @@ export default function Cart({ Articles }) {
                             fontWeight: "600",
                           })}
                         </Box>
-                        <ButtonBase
-                        sx={{
-                          backgroundColor: "#9283FF",
-                          height: "42px",
-                          borderRadius: "13px",
-                          fontFamily: "Montserrat",
-                          fontSize: "16px",
-                          fontWeight: "600",
-                          color: "#FFFFFF",
-                          marginTop: "25px",
-                          width: "100%",
-                        }}
-                        >
-                          ПЕРЕЙТИ ДО ОФОРМЛЕННЯ
-                        </ButtonBase>
+                        <OrderProcessing/>
                       </Box>
                     </Box>
                   </Box>
@@ -359,21 +346,7 @@ export default function Cart({ Articles }) {
                             fontWeight: "600",
                           })}
                         </Box>
-                        <ButtonBase
-                        sx={{
-                          backgroundColor: "#9283FF",
-                          height: "42px",
-                          borderRadius: "13px",
-                          fontFamily: "Montserrat",
-                          fontSize: "16px",
-                          fontWeight: "600",
-                          color: "#FFFFFF",
-                          marginTop: "25px",
-                          width: "100%",
-                        }}
-                        >
-                          ПЕРЕЙТИ ДО ОФОРМЛЕННЯ
-                        </ButtonBase>
+                        <OrderProcessing/>
                       </Box>
                     </Box>
                   </Box>

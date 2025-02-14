@@ -8,6 +8,8 @@ import CatalogWithFilters from './pages/CatalogWithFilters';
 import UserPage from './pages/UserPage';
 import ProductPage from './pages/ProductPage';
 import SellerPage from './pages/SellerPage';
+import FaqPage from './pages/FaqPage';
+import AboutUsPage from './pages/AboutUsPage';
 
 function App() {
 
@@ -24,6 +26,8 @@ function App() {
         <Route path="/user" element={<UserPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/seller" element={<SellerPage />} />
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/aboutus" element={<AboutUsPage />} />
       </Routes>
     </Router>
   );

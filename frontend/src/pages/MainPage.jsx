@@ -116,7 +116,8 @@ export default function MainPage() {
 
   const ViewTimeAndDate = () => {
     const locale = "uk";
-    const today = new Date();
+    var today = new Date();
+    today.setDate(today.getDate()+1);
 
     const day = today.toLocaleDateString(locale, { weekday: "long" });
     const hour = today.getHours();
@@ -168,7 +169,10 @@ export default function MainPage() {
           bigContainerContent={renderTopBannerBigContainerContent()}
           smallContainerTitle={"РОЗПРОДАЖ"}
           bigContainerTitle={"ОСТАННІ ЗНИЖКИ%"}
+          smallContainerImage={"/images/11.jpg"}
+          bigContainerImage={"/images/12.jpg"}
         />
+        
         <Box
           sx={{
             backgroundColor: theme.mainColor,
@@ -188,6 +192,8 @@ export default function MainPage() {
           align="right"
           smallContainerTitle={"ПОПУЛЯРНІ ТОВАРИ"}
           bigContainerTitle={"НОВИНКИ"}
+          smallContainerImage={"/images/22.jpg"}
+          bigContainerImage={"/images/21.jpg"}
         />
         <ArticleListFree Articles={articles}></ArticleListFree>
       </Box>

@@ -18,8 +18,7 @@ export default function ArticlePackAdvice({ Title, articles }) {
           sx={{
             marginTop: "10px",
             marginBottom: "10px",
-            width: "95%",
-            margin: "auto",
+            width: "100%",
           }}
         >
           <Box
@@ -93,11 +92,11 @@ export default function ArticlePackAdvice({ Title, articles }) {
               </Typography>
             </Box>
           </Box>
-          <Box display="flex" justifyContent="space-between">
+          <Box marginBottom="10px" width="100%" display="flex" justifyContent="space-evenly">
             <ArticleCard article={articles[0]} />
             <ArticleCard article={articles[1]} />
           </Box>
-          <Box display="flex" justifyContent="space-between">
+          <Box marginTop="10px" marginBottom="5px" width="100%" display="flex" justifyContent="space-evenly">
             <ArticleCard article={articles[2]} />
             <ArticleCard article={articles[3]} />
           </Box>

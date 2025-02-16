@@ -20,15 +20,21 @@ export default function ArticleCardChosen({ article }) {
   };
   
   return (
-    <Box display="flex" alignItems="center" marginTop="15px">
+    <Box sx={{
+        display: "flex",
+        alignItems: "center",
+        margin: "0px 0px 20px 0px",
+    }}>
         <img
         src={article.image}
         alt={article.image}
         style={{
-            width: '160px',
-            height: '160px',
+            maxHeight: "140px",
+            maxWidth: "120px",
+            minHeight: "140px",
+            minWidth: "120px",
             borderRadius: "10px",
-            border: '2px solid',
+            border: '1px solid',
         }}/>
         <Box sx={{ marginLeft: "15px", }}>
             <Box sx={{ display: "flex", alignItems: "end" }}>

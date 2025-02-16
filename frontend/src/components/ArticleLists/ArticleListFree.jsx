@@ -18,11 +18,11 @@ export default function ArticleListFree({ showMore = true, Title, Articles }) {
             marginBottom: "10px",
           }}
         >
-          <Box display="flex" justifyContent="space-between">
+          <Box marginTop="5px" marginBottom="5px" display="flex" justifyContent="space-evenly">
             <ArticleCard article={Articles[0]} />
             <ArticleCard article={Articles[1]} />
           </Box>
-          <Box display="flex" justifyContent="space-between">
+          <Box marginTop="5px" marginBottom="5px" display="flex" justifyContent="space-evenly">
             <ArticleCard article={Articles[2]} />
             <ArticleCard article={Articles[3]} />
           </Box>

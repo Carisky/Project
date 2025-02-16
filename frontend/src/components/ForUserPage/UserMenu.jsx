@@ -257,7 +257,7 @@ export default function UserMenu() {
             <Typography sx={textOneStyles} textAlign="center">Обрані товари</Typography>
             <Box sx={{
               height: "90%",
-              overflow: "auto"
+              overflow: "auto",
             }}>
               <ViewChosens articles={articles}/>
               <ViewChosens articles={articles}/>
@@ -271,6 +271,121 @@ export default function UserMenu() {
             <Box sx={{
               height: "90%",
               overflow: "auto"
+            }}>
+              {userOrders.map((order) => {
+                return <><ViewOrders order={order}></ViewOrders></>;
+              })}
+            </Box>
+          </>);
+      break;
+    }
+  };
+
+  const changeUser2 = () => {
+    switch(swap) {
+      case "personalData":
+        return (
+          <>
+            <Typography sx={{
+              margin: "5px 0px 0px 15px",
+              color: theme.mainText,
+              fontSize: "24px",
+              fontWeight: "bold",
+              fontFamily: "Montserrat",
+            }}>ЗМІНА ОСОБИСТИХ ДАНИХ</Typography>
+            <FormControl sx={{
+              margin: "0px 0px 5px 15px",
+            }}>
+              <Typography sx={{
+                margin: "10px 0px 0px 0px",
+                color: theme.mainText,
+                fontSize: "24px",
+                fontWeight: "bold",
+                fontFamily: "Montserrat",
+              }}>Вкажіть нове ім'я</Typography>
+              <FormNewDataUser
+              label={nameUser}
+              error={errors.nameuser}
+              value={formData.nameuser}
+              onChange={(e) => handleInputChange("nameuser", e.target.value)}
+              fullWidth
+              margin="normal"
+              />
+              <Typography sx={{
+                margin: "20px 0px 0px 0px",
+                color: theme.mainText,
+                fontSize: "24px",
+                fontWeight: "bold",
+                fontFamily: "Montserrat",
+              }}>Вкажіть новий номер телефону</Typography>
+              <FormNewDataUser
+              label="Ваш новий номер"
+              error={errors.tel}
+              value={formData.tel}
+              onChange={(e) => handleInputChange("tel", e.target.value)}
+              fullWidth
+              margin="normal"
+              />
+              <Typography sx={{
+                margin: "20px 0px 0px 0px",
+                color: theme.mainText,
+                fontSize: "24px",
+                fontWeight: "bold",
+                fontFamily: "Montserrat",
+              }}>Вкажіть нову адресу електронної пошти</Typography>
+              <FormNewDataUser
+              label="Ваша нова пошта"
+              error={errors.email}
+              value={formData.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
+              fullWidth
+              margin="normal"
+              />
+              <Button onClick={handleNewDataUser} sx={{
+                margin: "20px 15px 10px 0px",
+                backgroundColor: theme.mainColor,
+                borderRadius: "11px",
+                height: "36px",
+              }}>
+                <Typography sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                }}>Підтвердити зміни</Typography>
+              </Button>
+            </FormControl>
+          </>);
+      break;
+      case "chosen":
+        return (
+          <>
+            <Typography sx={{
+              margin: "10px 0px 0px 0px",
+              color: theme.mainText,
+              fontSize: "24px",
+              fontWeight: "bold",
+              fontFamily: "Montserrat",
+              textAlign: "center",
+            }}>Обрані товари</Typography>
+            <Box sx={{ margin: "5px 5px 10px 10px", }}>
+              <ViewChosens articles={articles}/>
+              <ViewChosens articles={articles}/>
+            </Box>
+          </>);
+      break;
+      case "shopping":
+        return (
+          <>
+            <Typography sx={{
+              color: theme.mainText,
+              fontSize: "24px",
+              fontWeight: "bold",
+              fontFamily: "Montserrat",
+              textAlign: "center",
+              margin: "10px 0px 5px 0px",
+            }}>Мої покупки</Typography>
+            <Box sx={{
+              width: "100%",
+              //overflow: "auto"
             }}>
               {userOrders.map((order) => {
                 return <><ViewOrders order={order}></ViewOrders></>;
@@ -409,8 +524,70 @@ export default function UserMenu() {
         }
         {isMobile &&
             <>
-                <span>HELLO WORLD!!!</span>
-                <span>HELLO WORLD!!!HELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLO</span>
+              
+                <Box sx={{
+                    //height: "100%",
+                    width: "100%",
+                    borderRadius: "20px",
+                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                }}>
+                    <Box onClick={()=>{setSwap("personalData")}} sx={{
+                        marginLeft: "20px",
+                        marginRight: "10px",
+                        marginTop: "10px",
+                        marginBottom: "20px",
+                        display: "flex",
+                        cursor: "pointer",
+                    }}>
+                        <AlignSvg><LogoUser/></AlignSvg>
+                        <Box sx={{
+                            alignContent: "center",
+                            marginLeft: "10px",
+                        }}>
+                            <Typography sx={textOneStyles}>{nameUser}</Typography>
+                            <Typography sx={textTwoStyles}>Змінити особисті дані</Typography>
+                        </Box>
+                    </Box>
+                    <Box onClick={()=>{setSwap("chosen")}} sx={blockStyles}>
+                        <Box>
+                            <Typography sx={textOneStyles}>Обране</Typography>
+                            <Typography sx={textTwoStyles}>Кількість товарів</Typography>
+                        </Box>
+                        <AlignSvg><LogoObrane/></AlignSvg>
+                    </Box>
+                    <Box onClick={()=>{setSwap("shopping")}} sx={blockStyles}>
+                        <Box>
+                            <Typography sx={textOneStyles}>Мої покупки</Typography>
+                            <Typography sx={textTwoStyles}>Дивитись</Typography>
+                        </Box>
+                        <AlignSvg><LogoMyShop/></AlignSvg>
+                    </Box>
+                    <Box sx={{
+                        borderRadius: "20px",
+                        padding: "10px",
+                        marginTop: "10px",
+                        marginLeft: "20px",
+                        marginRight: "20px",
+                        marginBottom: "10px",
+                    }}>
+                        <Typography sx={textOneStyles}>Сервіси та допомога</Typography>
+                        <Typography sx={textTwoStyles}>Написати в підтримку</Typography>
+                        <Typography sx={textTwoStyles}>Повернення товару</Typography>
+                        <Typography sx={textTwoStyles}>Вийти з акаунту</Typography>
+                    </Box>
+                </Box>
+                <Box sx={{
+                    width: "100%",
+                    margin: "15px 0px 20px 0px",
+                    borderRadius: "20px",
+                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                    overflow: "hidden",
+                }}>
+                  {changeUser2()}
+                </Box>
+                
+            <Typography sx={textOneStyles} textAlign="center">Нещодавно дивилися</Typography>
+            <ArticleListFree Articles={articles}></ArticleListFree>
             </>
         }
     </>

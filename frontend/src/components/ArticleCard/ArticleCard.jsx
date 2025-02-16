@@ -89,7 +89,7 @@ export default function ArticleCard({ article, isCarousel }) {
   }
 
   return (
-    <Box sx={{ margin: "10px" }}>
+    <Box sx={{ margin: "0px" }}>
       <Card onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} sx={isMobile? cardMobileStyles : cardStyles }>
         <ArticleCardContent article={article} theme={theme} />
       </Card>

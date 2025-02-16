@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { Box, ButtonBase, Modal, TextField, Typography, Checkbox, Radio, RadioGroup, FormControl, FormControlLabel } from "@mui/material";
+import {
+  Box, Button,
+  ButtonBase, Modal,
+  TextField, Typography,
+  Checkbox, Radio,
+  RadioGroup, FormControl,
+  FormControlLabel, Dialog,
+  DialogActions, DialogContent,
+  DialogContentText, DialogTitle
+} from "@mui/material";
 import useTheme from "../../hooks/useTheme";
-import CheckBox from "../Selectors/CheckBox";
 import InputMask from 'react-input-mask';
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 import { LogoNovaPosta, LogoMastercard, LogoVisa, LogoGooglePay } from "../../icons/icons.jsx";
@@ -48,6 +56,17 @@ export default function OrderProcessing() {
   var delivery = "60 ₴";
   var sumAll = "2 539 ₴";
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    toggleOpenProcessing();
+  };
+
   return (
     <>
       {isDesktop &&
@@ -86,7 +105,7 @@ export default function OrderProcessing() {
                         fontWeight: "600",
                         //margin: "20px 30px 20px 30px",
                     })}
-                    <Box onClick={toggleOpenProcessing}>
+                    <Box onClick={toggleOpenProcessing} sx={{ cursor: "pointer", }}>
                       <img src="./images/CloseBtn.svg" alt="Close" />
                     </Box>
                 </Box>
@@ -226,7 +245,7 @@ export default function OrderProcessing() {
                                 fontWeight: "bold",
                               })}
                             </Box>
-                            <ButtonBase sx={{
+                            <ButtonBase onClick={handleClickOpen} sx={{
                               backgroundColor: "#9283FF",
                               height: "42px",
                               borderRadius: "13px",
@@ -237,9 +256,27 @@ export default function OrderProcessing() {
                               margin: "10px 0px 10px 0px",
                               width: "100%",
                             }}>
-                              ПЕРЕЙТИ ДО ОФОРМЛЕННЯ
+                              ПІДТВЕРДИТИ ЗАМОВЛЕННЯ
                             </ButtonBase>
-                            <ButtonBase sx={{
+                            <Dialog
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                            >
+                              <DialogTitle id="alert-dialog-title">{"Підтвердження замовлення"}</DialogTitle>
+                              <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                  Ваше замовлення успішно взято в обробку.
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
+                                <Button onClick={handleClose} color="primary">
+                                  ЗРОЗУМІЛО
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
+                            <ButtonBase onClick={toggleOpenProcessing} sx={{
                               backgroundColor: "lightgrey",
                               height: "42px",
                               borderRadius: "13px",
@@ -261,141 +298,222 @@ export default function OrderProcessing() {
       }
       {isMobile &&
         <>
-            <ButtonBase onClick={toggleOpenProcessing} sx={{
-                backgroundColor: "#9283FF",
-                height: "42px",
-                borderRadius: "13px",
-                fontFamily: "Montserrat",
-                fontSize: "16px",
-                fontWeight: "600",
-                color: "#FFFFFF",
-                marginTop: "25px",
-                width: "100%",
+          <ButtonBase onClick={toggleOpenProcessing} sx={{
+            backgroundColor: "#9283FF",
+            height: "42px",
+            borderRadius: "13px",
+            fontFamily: "Montserrat",
+            fontSize: "16px",
+            fontWeight: "600",
+            color: "#FFFFFF",
+            marginTop: "25px",
+            width: "100%",
+        }}>
+            ПЕРЕЙТИ ДО ОФОРМЛЕННЯ
+        </ButtonBase>
+        
+        <Modal open={openProcessing} onClose={toggleOpenProcessing}>
+            <Box sx={{
+                width: "100vw",
+                height: "95vh",
+                display: "flex",
+                flexDirection: "column",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                bgcolor: "background.paper",
+                overflow: "scroll",
+                borderRadius: "20px",
             }}>
-                ПЕРЕЙТИ ДО ОФОРМЛЕННЯ
-            </ButtonBase>
-            
-            <Modal open={openProcessing} onClose={toggleOpenProcessing}>
-            <Box
-            sx={{
-              width: "100vw",
-              height: "95vh",
-              display: "flex",
-              flexDirection: "column",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              bgcolor: "background.paper",
-              overflow: "scroll",//"hidden"
-            }}
-            >
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Box
-                sx={{
-                  height: "108px",
-                  padding: "25px 0 0 30px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                }}
-                >
-                  {renderTypography("КОШИК", {
-                    fontSize: "20px",
-                    fontWeight: "600",
-                  })}
-                  
-                    {renderTypography("Видалити обране", {
-                      fontWeight: "500",
-                      marginLeft: "30px",
-                      color: "#FF2A2A",
+                <Box sx={{
+                  width: "100%", display: "flex", justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop : "5px",
+                }}>
+                    {renderTypography("ОФОРМЛЕННЯ ЗАМОВЛЕННЯ", {
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        margin: "0px 0px 0px 15px",
                     })}
-                  </Box>
-                </Box>
-                
-              </Box>
-              
-              <Box sx={{ display: "flex", maxHeight: "50%" }}>
-                <Box
-                sx={{
-                  height: "90%",
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-                >
-                  
-                </Box>
-              </Box>
-              <Box sx={{ marginRight:"0px",height: "80%", width: "100%" }}>
-                  <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    borderRadius: "20px",
-                    boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.35)",
-                    padding: "25px 20px",
-                  }}
-                  >
-                    {renderTypography("ЗАМОВЛЕННЯ", {
-                      fontSize: "30px",
-                      fontWeight: "600",
-                    })}
-                    <Box>
-                      
-                      
-                      <Box sx={{ marginTop: "25px" }}>
-                        {renderTypography("Промокод", {
-                          fontSize: "17px",
-                          color: "#808080",
-                        })}
-                        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                          
-                          <ButtonBase
-                          sx={{
-                            backgroundColor: "#F1F1F5",
-                            borderRadius: "10px",
-                            padding: "0 20px",
-                            fontFamily: "Montserrat",
-                            fontSize: "14px",
-                            fontWeight: "600",
-                          }}
-                          >
-                            Застосувати
-                          </ButtonBase>
-                        </Box>
-                        <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          marginTop: "25px",
-                        }}
-                        >
-                          {renderTypography("До оплати без доставки:", {
-                            fontSize: "17px",
-                            fontWeight: "600",
-                          })}
-                          
-                        <ButtonBase
-                        sx={{
-                          backgroundColor: "#9283FF",
-                          height: "42px",
-                          borderRadius: "13px",
-                          fontFamily: "Montserrat",
-                          fontSize: "16px",
-                          fontWeight: "600",
-                          color: "#FFFFFF",
-                          marginTop: "25px",
-                          width: "100%",
-                        }}
-                        >
-                          ПЕРЕЙТИ ДО ОФОРМЛЕННЯ
-                        </ButtonBase>
-                      </Box>
+                    <Box onClick={toggleOpenProcessing} sx={{ margin: "0px 15px 0px 0px", }}>
+                      <img src="./images/CloseBtn.svg" alt="Close" />
                     </Box>
+                </Box>
+                <Box sx={{
+                  width: "100%",
+                  boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  borderRadius: "20px",
+                  marginTop: "5px",
+                }}>
+                  {renderTypography("Дані одержувача*", {
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    margin: "5px 0px 0px 10px",
+                  })}
+                  <TextField id="recipient"
+                  label="Прізвище та Ім'я одержувача"
+                  variant="standard" sx={{
+                    width: "94%",
+                    margin: "0px 0px 0px 10px",
+                  }}/>
+                  <InputMask
+                  mask="+38 (099) 999-99-99"
+                  maskChar=" ">
+                    {() => (
+                      <TextField
+                      id="phone"
+                      label="Номер телефону"
+                      variant="standard"
+                      required sx={{
+                        width: "94%",
+                        margin: "5px 0px 10px 10px",
+                      }}/>
+                    )}
+                  </InputMask>
+                </Box>
+                <Box sx={{
+                  width: "100%",
+                  boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  borderRadius: "20px",
+                  marginTop: "15px",
+                }}>
+                  {renderTypography("Доставка*", {
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    margin: "5px 0px 0px 10px",
+                  })}
+                  <Box display="flex" alignItems="center" margin="0 0 0 0px">
+                    <Checkbox defaultChecked disabled/>
+                    <LogoNovaPosta/>
+                    {renderTypography("Нова пошта, 85₴", {
+                      marginLeft: "10px",
+                      fontSize: "20px",
+                      fontWeight: "500",
+                    })}
+                  </Box>
+                  <Box sx={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", }}>
+                    <FormControl component="postment" sx={{ width: "100%", margin: "0px 0px 0px 10px", }}>
+                      <RadioGroup defaultValue="postoffice">
+                        <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                          <FormControlLabel value="postoffice" control={<Radio color="default" />} label="У відділення" />
+                          <FormControlLabel value="postmachine" control={<Radio color="default" />} label="У поштомат" />
+                          <FormControlLabel value="courier" control={<Radio color="default" />} label="Кур'єром" />
+                        </Box>
+                      </RadioGroup>
+                    </FormControl>
                   </Box>
                 </Box>
-            </Box>
+                <Box sx={{
+                  width: "100%",
+                  boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  borderRadius: "20px",
+                  marginTop: "15px",
+                }}>
+                  {renderTypography("Спосіб оплати*", {
+                    margin: "5px 0px 0px 10px",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  })}
+                  <FormControl component="payment" sx={{marginLeft: "10px"}}>
+                    <RadioGroup defaultValue="cardpay" >
+                      <FormControlLabel value="cardpay" control={<Radio color="default" />} label={renderLabel("Безпечна оплата карткою", logoCard(<LogoMastercard/>, <LogoVisa />), {marginRight: "10px",})} />
+                      <FormControlLabel value="googlpay" control={<Radio color="default" />} label={renderLabel("Google Pay", <LogoGooglePay />, {marginRight: "10px",})} />
+                      <FormControlLabel value="other" control={<Radio color="default" />} label="Оплата при отриманні" />
+                    </RadioGroup>
+                  </FormControl>
+                </Box>
+                <Box sx={{
+                  //height: "100%",
+                  width: "100%",
+                  boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  borderRadius: "20px",
+                  margin: "15px 0px 0px 0px",
+                }}>
+                  {renderTypography("Замовлення", {
+                    margin: "5px 0px 0px 10px",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  })}
+                  <Box sx={{
+                    backgroundColor: "orange",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "start",
+                    margin: "20px 30px 20px 30px",
+                    overflow: "auto",
+                  }}>
+                    {tmpArticles.map((article) => (
+                      <Box sx={{width: "160px", height: "160px"}}>
+                        {viewImgProduct(article)}
+                      </Box>
+                    ))}
+                  </Box>
+                  <Box sx={{
+                    width: "88%",
+                    margin: "20px 0px 20px 30px",
+                  }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "10px 0px 10px 0px",}}>
+                      {renderTypography("Товари"+" (" + tmpArticles.length + ")", { fontSize: "20px", })}
+                      {renderTypography(sumPrice, { fontSize: "20px", })}
+                    </Box>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "10px 0px 10px 0px", }}>
+                      {renderTypography("Знижка", { fontSize: "20px", })}
+                      {renderTypography(discount, { fontSize: "20px", })}
+                    </Box>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "10px 0px 10px 0px", }}>
+                      {renderTypography("Доставка", { fontSize: "20px", })}
+                      {renderTypography(delivery, { fontSize: "20px", })}
+                    </Box>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "20px 0px 10px 0px", }}>
+                      {renderTypography("РАЗОМ", { fontSize: "28px", fontWeight: "bold", })}
+                      {renderTypography(sumAll, { fontSize: "28px", fontWeight: "bold", })}
+                    </Box>
+                    <ButtonBase onClick={handleClickOpen} sx={{
+                      backgroundColor: "#9283FF",
+                      height: "42px",
+                      borderRadius: "13px",
+                      fontFamily: "Montserrat",
+                      fontSize: "16px",
+                      fontWeight: "600",
+                      color: "#FFFFFF",
+                      margin: "10px 0px 10px 0px",
+                      width: "100%",
+                    }}>
+                      ПІДТВЕРДИТИ ЗАМОВЛЕННЯ
+                    </ButtonBase>
+                    <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    >
+                      <DialogTitle id="alert-dialog-title">{"Підтвердження замовлення"}</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                          Ваше замовлення успішно взято в обробку.
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose} color="primary">ЗРОЗУМІЛО</Button>
+                      </DialogActions>
+                    </Dialog>
+                    <ButtonBase onClick={toggleOpenProcessing} sx={{
+                      backgroundColor: "lightgrey",
+                      height: "42px",
+                      borderRadius: "13px",
+                      fontFamily: "Montserrat",
+                      fontSize: "16px",
+                      fontWeight: "600",
+                      color: "black",
+                      margin: "10px 0px 10px 0px",
+                      width: "100%",
+                    }}>
+                      ПОВЕРНУТИСЯ ДО КОШИКА
+                    </ButtonBase>
+                  </Box>
+                </Box>
+              </Box>
           </Modal>
         </>
       }

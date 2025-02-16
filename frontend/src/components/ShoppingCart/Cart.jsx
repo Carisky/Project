@@ -6,6 +6,7 @@ import CheckBox from "../Selectors/CheckBox";
 import ArticleList from "./ArticleList";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 import { getCartItems, addItemToCart, removeItemFromCart } from "../../API/services/cartService.js";
+import OrderProcessing from "../ForOrderProcessing/OrderProcessing.jsx";
 
 export default function Cart() {
   const theme = useTheme();
@@ -93,6 +94,7 @@ export default function Cart() {
               left: "50%",
               transform: "translate(-50%, -50%)",
               bgcolor: "background.paper",
+              borderRadius: "40px",
               overflow: "hidden",
             }}
             >
@@ -127,7 +129,7 @@ export default function Cart() {
                     })}
                   </Box>
                 </Box>
-                <Box sx={{ padding: "25px 30px 0 0" }}>
+                <Box onClick={toggleCart} sx={{ padding: "25px 30px 0 0", cursor: "pointer", }}>
                   <img src="./images/CloseBtn.svg" alt="Close" />
                 </Box>
               </Box>
@@ -204,21 +206,7 @@ export default function Cart() {
                             fontWeight: "600",
                           })}
                         </Box>
-                        <ButtonBase
-                        sx={{
-                          backgroundColor: "#9283FF",
-                          height: "42px",
-                          borderRadius: "13px",
-                          fontFamily: "Montserrat",
-                          fontSize: "16px",
-                          fontWeight: "600",
-                          color: "#FFFFFF",
-                          marginTop: "25px",
-                          width: "100%",
-                        }}
-                        >
-                          ПЕРЕЙТИ ДО ОФОРМЛЕННЯ
-                        </ButtonBase>
+                        <OrderProcessing/>
                       </Box>
                     </Box>
                   </Box>
@@ -252,6 +240,7 @@ export default function Cart() {
               left: "50%",
               transform: "translate(-50%, -50%)",
               bgcolor: "background.paper",
+              borderRadius: "20px",
               overflow: "scroll",
             }}
             >
@@ -286,7 +275,7 @@ export default function Cart() {
                     })}
                   </Box>
                 </Box>
-                <Box sx={{ padding: "25px 30px 0 0" }}>
+                <Box onClick={toggleCart} sx={{ padding: "25px 30px 0 0" }}>
                   <img src="./images/CloseBtn.svg" alt="Close" />
                 </Box>
               </Box>
@@ -363,21 +352,7 @@ export default function Cart() {
                             fontWeight: "600",
                           })}
                         </Box>
-                        <ButtonBase
-                        sx={{
-                          backgroundColor: "#9283FF",
-                          height: "42px",
-                          borderRadius: "13px",
-                          fontFamily: "Montserrat",
-                          fontSize: "16px",
-                          fontWeight: "600",
-                          color: "#FFFFFF",
-                          marginTop: "25px",
-                          width: "100%",
-                        }}
-                        >
-                          ПЕРЕЙТИ ДО ОФОРМЛЕННЯ
-                        </ButtonBase>
+                        <OrderProcessing/>
                       </Box>
                     </Box>
                   </Box>

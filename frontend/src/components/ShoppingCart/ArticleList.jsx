@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import Article from "./Article";
 
-export default function ArticleList({ Articles }) {
+export default function ArticleList({ Articles,setArticles }) {
   return (
     <Box
     sx={{
@@ -28,7 +28,7 @@ export default function ArticleList({ Articles }) {
       }}
     >
       {Articles.map((article) => {
-        return <Article Article={article} />;
+        return <Article setArticles={setArticles} Article={article} />;
       })}
     </Box>
   );

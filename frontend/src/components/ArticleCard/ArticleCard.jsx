@@ -9,9 +9,21 @@ import useTheme from "../../hooks/useTheme";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 
 const ArticleCardContent = ({ article, theme }) => {
+
   return (
     <>
-      <Box sx={{ position: "relative", display: "flex", borderRadius: "13px", height: "250px", width: "100%", backgroundColor: theme.background }}>
+      <Box sx={{ position: "relative", display: "flex", borderRadius: "13px", height: "250px", width: "100%" }}>
+        <img
+          src={`http://localhost:5000${article.photos[0]}`}
+          alt={article.name}
+          loading="lazy"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            borderRadius: "13px",
+          }}
+        />
         <FavoriteBorderIcon sx={{ position: "absolute", top: "16px", right: "16px", cursor: "pointer", zIndex: 2 }} />
       </Box>
       <Box sx={{ display: "flex" }}>
@@ -86,11 +98,11 @@ export default function ArticleCard({ article, isCarousel }) {
     boxShadow: "none",
     borderRadius: "14px",
     backgroundColor: theme.mainColor,
-  }
+  };
 
   return (
-    <Box sx={{ margin: "10px" }}>
-      <Card onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} sx={isMobile? cardMobileStyles : cardStyles }>
+    <Box sx={{ margin: "0px" }}>
+      <Card onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} sx={isMobile ? cardMobileStyles : cardStyles}>
         <ArticleCardContent article={article} theme={theme} />
       </Card>
       <Button />

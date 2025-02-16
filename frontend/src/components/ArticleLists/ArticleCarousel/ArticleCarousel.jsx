@@ -6,7 +6,7 @@ import style from "./style.module.css";
 export default function ArticleCarousel({ articles }) {
   const responsive = {
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+      breakpoint: { max: 3000, min: 501 },
       items: 5,
     },
     mobile: {
@@ -17,7 +17,7 @@ export default function ArticleCarousel({ articles }) {
 
   return (
     <Carousel
-      partialVisible={false}
+      partialVisible={true}
       containerClass={style.custom_carousel_container}
       showDots={false}
       arrows={false}

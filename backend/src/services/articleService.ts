@@ -1,6 +1,8 @@
 import stringSimilarity from "string-similarity";
 import ArticleModel from "../models/ArticleModel";
-
+import { getSellerByIdService } from "./sellerService";
+import TagModel from "../models/TagModel";
+import ArticleTagModel from "../models/ArticleTagModel";
 export const getArticlesByNameService = async (name: string) => {
   const articles = await ArticleModel.query().select("id", "name");
 
@@ -108,19 +110,23 @@ export const getArticleByIdService = async (id: number) => {
   if (!article) {
     return null;
   }
-
+  const seller =  await getSellerByIdService(article.seller_id);
   return {
     id: article.id,
     name: article.name,
     seller_id: article.seller_id,
     category_id: article.category_id,
+    category_name: article.category?.name,
     amount: article.amount,
     price: article.price,
     rating: article.rating,
     created_at: article.created_at,
     updated_at: article.updated_at,
+    description:article.description,
     photos: article.photos?.map((photo) => photo.url),
     tags: article.tags?.map((tag) => tag.name), // Теги как массив строк
+    seller: seller?.name,
+    
   };
 };
 
@@ -143,3 +149,28 @@ export const getAllArticlesService = async () => {
     tags: article.tags?.map((tag) => tag.name), // Теги как массив строк
   }));
 };
+
+
+
+export const assignTagsToArticle = async (articleId: number, tags: string[]) => {
+  // Получаем существующие теги из базы
+  const existingTags = await TagModel.query().whereIn("name", tags);
+
+  // Определяем, какие теги новые
+  const existingTagNames = existingTags.map(tag => tag.name);
+  const newTagNames = tags.filter(tag => !existingTagNames.includes(tag));
+
+  // Создаем новые теги, если их нет в базе
+  const newTags = await Promise.all(
+    newTagNames.map(tagName => TagModel.query().insert({ name: tagName }).returning("*"))
+  );
+
+  // Получаем все теги (старые + новые)
+  const allTags = [...existingTags, ...newTags.flat()];
+
+  // Добавляем связи тегов со статьей
+  await Promise.all(
+    allTags.map(tag => ArticleTagModel.query().insert({ article_id: articleId, tag_id: tag.id }))
+  );
+};
+

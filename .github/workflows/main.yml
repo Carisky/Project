@@ -1,0 +1,122 @@
+name: CI/CD Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Шаг 1: Клонирование репозитория
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Шаг 2: Установка Docker Compose
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
+      # Шаг 3: Логин в DockerHub
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: "${{ vars.DOCKER_USERNAME }}"
+          password: "${{ vars.DOCKER_PASSWORD }}"
+
+      # Шаг 4: Создание docker-compose.yml на сервере
+      - name: Create docker-compose.yml on server
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ vars.SERVER_HOST }}
+          port: ${{ vars.SERVER_PORT }}
+          username: ${{ vars.SERVER_USER }}
+          key: ${{ vars.SERVER_SSH_KEY }}
+          script: |
+            mkdir -p /home/${{ vars.SERVER_USER }}/project
+            cat <<EOF > /home/${{ vars.SERVER_USER }}/project/docker-compose.yml
+            version: "3"
+
+            services:
+              db:
+                image: mysql:8
+                container_name: mysql-db
+                environment:
+                  MYSQL_ROOT_PASSWORD: rootpassword
+                  MYSQL_DATABASE: mydb
+                  MYSQL_USER: user
+                  MYSQL_PASSWORD: userpassword
+                volumes:
+                  - db-data:/var/lib/mysql
+                ports:
+                  - "3306:3306"
+                networks:
+                  - app-network
+            
+              backend:
+                image: ${{ vars.DOCKER_USERNAME }}/node-backend:latest
+                container_name: node-backend
+                environment:
+                  DB_HOST: db
+                  DB_USER: user
+                  DB_PASSWORD: userpassword
+                  DB_NAME: mydb
+                ports:
+                  - "5000:5000"
+                depends_on:
+                  - db
+                networks:
+                  - app-network
+            
+              frontend:
+                image: ${{ vars.DOCKER_USERNAME }}/react-frontend:latest
+                container_name: react-frontend
+                ports:
+                  - "3000:3000"
+                networks:
+                  - app-network
+            
+            networks:
+              app-network:
+                driver: bridge
+            
+            volumes:
+              db-data:
+            EOF
+
+      # Шаг 5: Удаление старых сборок
+      - name: Remove old Docker containers and images
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ vars.SERVER_HOST }}
+          port: ${{ vars.SERVER_PORT }}
+          username: ${{ vars.SERVER_USER }}
+          key: ${{ vars.SERVER_SSH_KEY }}
+          script: |
+            cd /home/${{ vars.SERVER_USER }}/project
+            sudo docker-compose down
+            sudo docker container prune -f
+            sudo docker image prune -a -f
+
+      # Шаг 6: Сборка и публикация Docker образов
+      - name: Build and push Docker images
+        run: |
+          docker-compose build
+          docker-compose push
+
+      # Шаг 7: Деплой на сервер
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ vars.SERVER_HOST }}
+          port: ${{ vars.SERVER_PORT }}
+          username: ${{ vars.SERVER_USER }}
+          key: ${{ vars.SERVER_SSH_KEY }}
+          script: |
+            cd /home/${{ vars.SERVER_USER }}/project
+            sudo docker-compose up -d
+            sudo docker exec node-backend npm run migrate:latest

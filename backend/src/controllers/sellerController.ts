@@ -1,6 +1,100 @@
 import { Request, Response } from 'express';
-import { createSellerService, authenticateSellerService, getSellerByIdService, updateSellerService, deleteSellerService, addArticleService, getSellerArticlesService } from '../services/sellerService';
+import { 
+  createSellerService, 
+  authenticateSellerService, 
+  getSellerByIdService, 
+  updateSellerService, 
+  deleteSellerService, 
+  addArticleService, 
+  getSellerArticlesService 
+} from '../services/sellerService';
 import { uploadPhotos } from '../services/photoService';
+import { assignTagsToArticle } from '../services/articleService';
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Seller:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: "John's Store"
+ *         email:
+ *           type: string
+ *           example: "john@example.com"
+ *         billing_info:
+ *           type: string
+ *           example: "123 Main St, City, Country"
+ *         role:
+ *           type: string
+ *           example: "seller"
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *           example: "2023-01-01T12:00:00Z"
+ *         updated_at:
+ *           type: string
+ *           format: date-time
+ *           example: "2023-01-02T12:00:00Z"
+ *
+ *     Article:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 10
+ *         seller_id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: "iPhone 14"
+ *         amount:
+ *           type: integer
+ *           example: 5
+ *         price:
+ *           type: number
+ *           format: float
+ *           example: 999.99
+ *         description:
+ *           type: string
+ *           example: "Latest Apple iPhone"
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *           example: "2023-01-03T12:00:00Z"
+ *         updated_at:
+ *           type: string
+ *           format: date-time
+ *           example: "2023-01-04T12:00:00Z"
+ *
+ *     ArticleCreationResponse:
+ *       type: object
+ *       properties:
+ *         article:
+ *           $ref: '#/components/schemas/Article'
+ *         photoUrls:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["/storage/photos/1_10/photo1.jpg", "/storage/photos/1_10/photo2.jpg"]
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["electronics", "mobile"]
+ *
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
 
 /**
  * @swagger
@@ -32,6 +126,10 @@ import { uploadPhotos } from '../services/photoService';
  *     responses:
  *       201:
  *         description: Seller registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Seller'
  *       500:
  *         description: Error registering seller
  */
@@ -70,6 +168,16 @@ export const registerSeller = async (req: Request, res: Response) => {
  *     responses:
  *       200:
  *         description: Seller logged in successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   example: "jwt-token-string"
+ *                 user:
+ *                   $ref: '#/components/schemas/Seller'
  *       401:
  *         description: Invalid credentials
  *       500:
@@ -100,6 +208,10 @@ export const loginSeller = async (req: Request, res: Response) => {
  *     responses:
  *       200:
  *         description: Seller profile retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Seller'
  *       401:
  *         description: Unauthorized
  *       404:
@@ -154,6 +266,10 @@ export const getSellerProfile = async (req: Request, res: Response) => {
  *     responses:
  *       200:
  *         description: Seller profile updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Seller'
  *       401:
  *         description: Unauthorized
  *       404:
@@ -218,42 +334,18 @@ export const deleteSellerAccount = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     Article:
- *       type: object
- *       properties:
- *         id:
- *           type: integer
- *         seller_id:
- *           type: integer
- *         name:
- *           type: string
- *         amount:
- *           type: integer
- *         price:
- *           type: number
- *           format: float
- *         created_at:
- *           type: string
- *           format: date-time
- *         updated_at:
- *           type: string
- *           format: date-time
- */
-
-/**
- * @swagger
  * /api/sellers/articles:
  *   post:
  *     summary: Add a new article for the seller
- *     description: Creates a new article associated with the authenticated seller and allows uploading photos.
+ *     description: Creates a new article associated with the authenticated seller, allows uploading photos, and adding tags and a description.
  *     tags:
  *       - Articles
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:  # Changed to 'multipart/form-data' to support file uploads
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
@@ -271,6 +363,12 @@ export const deleteSellerAccount = async (req: Request, res: Response) => {
  *               price:
  *                 type: number
  *                 format: float
+ *               description:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *               photos:
  *                 type: array
  *                 items:
@@ -278,26 +376,18 @@ export const deleteSellerAccount = async (req: Request, res: Response) => {
  *                   format: binary
  *     responses:
  *       201:
- *         description: Article created successfully along with photos
+ *         description: Article created successfully along with photos and tags
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 article:
- *                   $ref: '#/components/schemas/Article'
- *                 photoUrls:
- *                   type: array
- *                   items:
- *                     type: string
+ *               $ref: '#/components/schemas/ArticleCreationResponse'
  *       401:
  *         description: Unauthorized
+ *       400:
+ *         description: Missing required fields (name, amount, price, photos)
  *       500:
  *         description: Error adding article
- *     security:
- *       - bearerAuth: []
  */
-
 export const addArticle = async (req: Request, res: Response) => {
   const sellerId = req.user?.id;
 
@@ -305,73 +395,75 @@ export const addArticle = async (req: Request, res: Response) => {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  // Получаем файлы из запроса
   const photos = req.files as Express.Multer.File[];
+  const { name, amount, category_id, price, description, tags } = req.body;
 
-  if (!photos || photos.length === 0) {
-    return res.status(400).json({ message: 'Photos are required' });
+  if (!name || !amount || !price || !photos || photos.length === 0) {
+    return res.status(400).json({ message: 'Name, amount, price, and photos are required' });
   }
 
   try {
     // Шаг 1: Добавляем статью в базу данных
     const article = await addArticleService(+sellerId, {
-      name: req.body.name,
-      amount: Number(req.body.amount),
-      price: parseFloat(req.body.price),
-      category_id: Number(req.body.category_id),
+      name,
+      amount: Number(amount),
+      price: parseFloat(price),
+      category_id: category_id ? Number(category_id) : null,
+      description: description || null,
     });
 
-    // Шаг 2: Отправляем фотографии в микросервис и получаем URL
+    // Шаг 2: Обрабатываем теги
+    let tagList: string[] = [];
+    if (tags) {
+      tagList = Array.isArray(tags) ? tags : tags.split(',').map((t: string) => t.trim());
+      await assignTagsToArticle(article.id, tagList);
+    }
+
+    // Шаг 3: Загружаем фотографии и получаем URL
     const photoUrls = await uploadPhotos(article.id, +sellerId, photos);
 
-    // Возвращаем результат
-    res.status(201).json({ article, photoUrls });
+    res.status(201).json({ article, photoUrls, tags: tagList });
   } catch (error) {
-    console.error(error);  // Логируем ошибку для отладки
+    console.error(error);
     res.status(500).json({ message: 'Error adding article', error });
   }
 };
 
+/**
+ * @swagger
+ * /api/sellers/articles:
+ *   get:
+ *     summary: Get all articles for the authenticated seller
+ *     description: Retrieves all articles associated with the authenticated seller.
+ *     tags:
+ *       - Articles
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of articles
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Article'
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Error fetching articles
+ */
+export const getSellerArticles = async (req: Request, res: Response) => {
+  const sellerId = req.user?.id;
 
-  
-  /**
-   * @swagger
-   * /api/sellers/articles:
-   *   get:
-   *     summary: Get all articles for the authenticated seller
-   *     description: Retrieves all articles associated with the authenticated seller.
-   *     tags:
-   *       - Articles
-   *     responses:
-   *       200:
-   *         description: A list of articles
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: array
-   *               items:
-   *                 $ref: '#/components/schemas/Article'
-   *       401:
-   *         description: Unauthorized
-   *       500:
-   *         description: Error fetching articles
-   *     security:
-   *       - bearerAuth: []
-   */
-  export const getSellerArticles = async (req: Request, res: Response) => {
-    const sellerId = req.user?.id;
-  
-    if (!sellerId) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-  
-    try {
-      const articles = await getSellerArticlesService(+sellerId);
-      res.json(articles);
-    } catch (error) {
-      res.status(500).json({ message: 'Error fetching articles', error });
-    }
-  };
-  
+  if (!sellerId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
 
-
+  try {
+    const articles = await getSellerArticlesService(+sellerId);
+    res.json(articles);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching articles', error });
+  }
+};

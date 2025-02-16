@@ -7,8 +7,9 @@ export default function TwoBanerGroup({
   align = "left",
   bigContainerContent,
   smallContainerContent,
-  smallContainerTitle,
   bigContainerTitle,
+  smallContainerImage,
+  bigContainerImage,
 }) {
   const theme = useTheme();
 
@@ -18,44 +19,37 @@ export default function TwoBanerGroup({
   return (
     <>
       {isMobile && (
-        <Box
-          height="260px"
-          display="flex"
-          sx={{
-            marginTop: "10px",
-            marginBottom: "10px",
+        <Box sx={{
+          height: "520px",
+          width: "100%",
+        }}>
+          <Box sx={{
+            height: "49%",
             width: "100%",
-            margin: "auto",
-          }}
-        >
-          <Box
-            height="100%"
-            width="100%"
-            display="flex"
-            justifyContent="space-between"
-            sx={{
-              borderRadius: "13px",
-              marginLeft: "10px",
-              marginRight: "10px",
-              backgroundColor: theme.secondaryColor,
-            }}
-          >
-            <Box display="flex">
-              <Typography
-                alignItems="end"
-                sx={{
-                  marginLeft: "20px",
-                  marginTop: "10px",
-                  color: "white",
-                  fontWeight: "bold",
-                  fontSize: "20px",
-                  fontFamily: "Montserrat",
-                }}
-              >
-                {bigContainerTitle}
-              </Typography>
+            marginTop: "5px",
+            marginBottom: "5px",
+            borderRadius: "13px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}>
+            <Box position="relative" width='100%'>
+              <img src={bigContainerImage} alt='foto.jpg' style={{ width: '100%', height: '100%', borderRadius: "10px", zIndex: 0}} />
+              <Box position="absolute" top="0" right="0" zIndex={2}>{bigContainerContent}</Box>
             </Box>
-            {bigContainerContent}
+          </Box>
+          <Box sx={{
+            height: "49%",
+            width: "100%",
+            marginTop: "5px",
+            marginBottom: "5px",
+            borderRadius: "13px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}>
+            <Box position="relative" width='100%'>
+              <img src={smallContainerImage} alt='foto.jpg' style={{ width: '100%', height: '100%', borderRadius: "10px", zIndex: 0}} />
+              <Box position="absolute" top="0" right="0" zIndex={2}>{smallContainerContent}</Box>
+            </Box>
           </Box>
         </Box>
       )}
@@ -81,6 +75,7 @@ export default function TwoBanerGroup({
               marginLeft: "10px",
             }}
           >
+            <img src={smallContainerImage} alt='foto.jpg' style={{ width: '100%', height: '100%', borderRadius: "10px", zIndex: 0}} />
             <Typography
               alignItems="end"
               sx={{
@@ -91,9 +86,7 @@ export default function TwoBanerGroup({
                 fontSize: "20px",
                 fontFamily: "Montserrat",
               }}
-            >
-              {smallContainerTitle}
-            </Typography>
+            ></Typography>
             {smallContainerContent}
           </Box>
           <Box
@@ -107,24 +100,10 @@ export default function TwoBanerGroup({
               backgroundColor: theme.secondaryColor,
             }}
           >
-            
-            <Box display="flex">
-              <Typography
-                alignItems="end"
-                sx={{
-                  marginLeft: "20px",
-                  marginTop: "10px",
-                  color: "white",
-                  fontWeight: "bold",
-                  fontSize: "20px",
-                  fontFamily: "Montserrat",
-                }}
-              >
-                {bigContainerTitle}
-              </Typography>
-              
+            <Box position="relative" width='100%'>
+              <img src={bigContainerImage} alt='foto.jpg' style={{ width: '100%', height: '100%', borderRadius: "10px", zIndex: 0}} />
+              <Box position="absolute" top="0" right="0" zIndex={2}>{bigContainerContent}</Box>
             </Box>
-            {bigContainerContent}
           </Box>
         </Box>
       )}

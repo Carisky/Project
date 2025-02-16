@@ -11,6 +11,7 @@ const palete = {
     secondaryText: "#808080",
     accentText: "#FF2A2A",
     cartNotificationFillColor:"#886FFB",
+    backgroundText: "lightgray",
     loginForm:{
       loginFormButton:{
         mainColor:"#9283FF",
@@ -31,6 +32,7 @@ const palete = {
     secondaryText: "#808080",
     accentText: "#FF2A2A",
     cartNotificationFillColor:"#886FFB",
+    backgroundText: "#2E2A6E",
     loginForm:{
       loginFormButton:{
         mainColor:"#9283FF",

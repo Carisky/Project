@@ -3,17 +3,19 @@ import SellerModel from "./SellerModel";
 import CategoryModel from "./CategoryModel";
 import ArticlePhotoModel from "./ArticlePhotoModel";
 import TagModel from "./TagModel";
+import ArticleTagModel from "./ArticleTagModel";
 
 class ArticleModel extends Model {
   id!: number;
   seller_id!: number;
-  category_id!: number;
+  category_id!: number | null;
   name!: string;
   amount!: number;
   price!: number;
   rating!: number;
   created_at?: string;
   updated_at?: string;
+  description?: string;
   photos?: ArticlePhotoModel[];
   seller?: SellerModel; 
   category?: CategoryModel; 
@@ -63,6 +65,8 @@ class ArticleModel extends Model {
       },
     };
   }
+
+
 
   static async findById(id: number): Promise<ArticleModel | undefined> {
     return await ArticleModel.query().findById(id);

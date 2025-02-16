@@ -3,6 +3,41 @@ import UserModel from '../models/UserModel';
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: "Alice"
+ *         email:
+ *           type: string
+ *           example: "alice@example.com"
+ *         role:
+ *           type: string
+ *           example: "user"
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *           example: "2023-01-01T12:00:00Z"
+ *         updated_at:
+ *           type: string
+ *           format: date-time
+ *           example: "2023-01-02T12:00:00Z"
+ *
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
  * /api/users/register:
  *   post:
  *     summary: Register a new user
@@ -16,11 +51,14 @@ import UserModel from '../models/UserModel';
  *             properties:
  *               name:
  *                 type: string
+ *                 example: "Alice"
  *               email:
  *                 type: string
  *                 format: email
+ *                 example: "alice@example.com"
  *               password:
  *                 type: string
+ *                 example: "password123"
  *             required:
  *               - name
  *               - email
@@ -28,6 +66,10 @@ import UserModel from '../models/UserModel';
  *     responses:
  *       201:
  *         description: User registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  *       500:
  *         description: Error registering user
  */
@@ -65,14 +107,26 @@ export const registerUser = async (req: Request, res: Response) => {
  *               email:
  *                 type: string
  *                 format: email
+ *                 example: "alice@example.com"
  *               password:
  *                 type: string
+ *                 example: "password123"
  *             required:
  *               - email
  *               - password
  *     responses:
  *       200:
  *         description: User logged in successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   example: "jwt-token-string"
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
  *       401:
  *         description: Invalid credentials
  *       500:
@@ -99,10 +153,14 @@ export const loginUser = async (req: Request, res: Response) => {
  *     summary: Get user profile
  *     tags: [Users]
  *     security:
- *       - bearerAuth: [] # JWT required
+ *       - bearerAuth: []  # JWT required
  *     responses:
  *       200:
  *         description: User profile retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  *       401:
  *         description: Unauthorized
  *       404:
@@ -145,15 +203,21 @@ export const getUserProfile = async (req: Request, res: Response) => {
  *             properties:
  *               name:
  *                 type: string
+ *                 example: "Alice Updated"
  *               email:
  *                 type: string
  *                 format: email
+ *                 example: "alice.updated@example.com"
  *             required:
  *               - name
  *               - email
  *     responses:
  *       200:
  *         description: User profile updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  *       401:
  *         description: Unauthorized
  *       404:

@@ -28,13 +28,13 @@ jobs:
           username: "${{ vars.DOCKER_USERNAME }}"
           password: "${{ vars.DOCKER_PASSWORD }}"
 
-      # Шаг 4: Сборка и публикация Docker образов
+      # Шаг 5: Сборка и публикация Docker образов
       - name: Build and push Docker images
         run: |
           docker-compose build
           docker-compose push
 
-      # Шаг 5: Деплой на сервер через SSH
+      # Шаг 6: Деплой на сервер через SSH
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.5
         with:
@@ -45,6 +45,6 @@ jobs:
           script: |
             cd /var/www/project
             git pull origin main
-            docker-compose down
             docker-compose up -d
             docker exec node-backend npm run migrate:latest
+

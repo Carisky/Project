@@ -4,6 +4,7 @@ import corsMiddleware from './middlewares/corsMiddleware';
 import userRoutes from './routes/userRoutes';
 import sellerRoutes from './routes/sellerRoutes';
 import articleRoutes from './routes/articleRoutes';
+import cartRoutes from './routes/cartRoutes'
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
 import path from 'path';
@@ -51,6 +52,7 @@ app.use('/storage/photos', express.static(photosDirectory));
 app.use('/api/users', userRoutes);
 app.use('/api/sellers', sellerRoutes);
 app.use('/api/articles', articleRoutes);
+app.use('/api/carts', cartRoutes);
 
 app.get('/api/', (req, res) => {
   res.send('Hello, TypeScript with Express!');

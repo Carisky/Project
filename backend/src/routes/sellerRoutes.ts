@@ -25,7 +25,15 @@ router.put('/profile', jwtMiddleware, updateSellerProfile);
 router.delete('/profile', jwtMiddleware, deleteSellerAccount);
 
 // Article routes for a specific seller
-router.post('/articles', jwtMiddleware, authorizeRoles(["seller"]), upload.array('photos'), addArticle);  // Use `upload.array` for multiple files
+// В routes/sellerRoutes.js
+router.post(
+  '/articles',
+  jwtMiddleware,
+  authorizeRoles(["seller"]),
+  upload.fields([{ name: 'photos' }, { name: 'photos[]' }]),
+  addArticle
+);
+ // Use `upload.array` for multiple files
 
 router.get('/articles', jwtMiddleware, authorizeRoles(["seller"]), getSellerArticles);
 

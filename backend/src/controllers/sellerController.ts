@@ -389,21 +389,25 @@ export const deleteSellerAccount = async (req: Request, res: Response) => {
  *         description: Error adding article
  */
 export const addArticle = async (req: Request, res: Response) => {
+  // Получаем идентификатор продавца из req.user
   const sellerId = req.user?.id;
-
   if (!sellerId) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
+  // Извлекаем файлы и поля из тела запроса
   const photos = req.files as Express.Multer.File[];
   const { name, amount, category_id, price, description, tags } = req.body;
 
+  // Проверяем, что обязательные поля заполнены
   if (!name || !amount || !price || !photos || photos.length === 0) {
-    return res.status(400).json({ message: 'Name, amount, price, and photos are required' });
+    return res.status(400).json({
+      message: "Name, amount, price, and photos are required",
+    });
   }
 
   try {
-    // Шаг 1: Добавляем статью в базу данных
+    // Шаг 1: Создаем статью (товар) в базе данных
     const article = await addArticleService(+sellerId, {
       name,
       amount: Number(amount),
@@ -412,20 +416,23 @@ export const addArticle = async (req: Request, res: Response) => {
       description: description || null,
     });
 
-    // Шаг 2: Обрабатываем теги
+    // Шаг 2: Обработка тегов (если они переданы)
     let tagList: string[] = [];
     if (tags) {
-      tagList = Array.isArray(tags) ? tags : tags.split(',').map((t: string) => t.trim());
+      // Если теги переданы как строка через запятую или массив, приводим к массиву строк
+      tagList = Array.isArray(tags)
+        ? tags
+        : tags.split(",").map((t: string) => t.trim());
       await assignTagsToArticle(article.id, tagList);
     }
 
-    // Шаг 3: Загружаем фотографии и получаем URL
+    // Шаг 3: Загрузка фотографий и получение URL
     const photoUrls = await uploadPhotos(article.id, +sellerId, photos);
 
-    res.status(201).json({ article, photoUrls, tags: tagList });
+    return res.status(201).json({ article, photoUrls, tags: tagList });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error adding article', error });
+    console.error("Error adding article:", error);
+    return res.status(500).json({ message: "Error adding article", error });
   }
 };
 

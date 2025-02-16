@@ -16,7 +16,11 @@ const storagePath = process.env.PHOTOS_STORAGE_PATH || './storage/photos';
  * @param sellerId Идентификатор продавца
  * @param files Загруженные файлы
  */
-export const uploadPhotos = async (articleId: number, sellerId: number, files: Express.Multer.File[]): Promise<string[]> => {
+export const uploadPhotos = async (
+  articleId: number,
+  sellerId: number,
+  files: any // Можно уточнить тип, если требуется
+): Promise<string[]> => {
   const folderName = `${sellerId}_${articleId}`;
   const articleFolder = path.join(storagePath, folderName);
 
@@ -27,19 +31,32 @@ export const uploadPhotos = async (articleId: number, sellerId: number, files: E
 
   const urls: string[] = [];
 
-  // Сохраняем файлы на диск и сохраняем URL
+  // Если files не переданы или не являются массивом, пытаемся обернуть в массив
+  if (!files) {
+    console.error("No files provided");
+    return urls;
+  }
+  if (!Array.isArray(files)) {
+    files = [files];
+  }
+
+  // Сохраняем файлы на диск и формируем URL
   for (const file of files) {
-    const filePath = path.join(articleFolder, file.originalname);
-
-    // Записываем файл в папку
-    await writeFileAsync(filePath, file.buffer);
-
-    // Формируем URL для доступа к фотографии
-    const url = `/storage/photos/${folderName}/${file.originalname}`;
-    urls.push(url);
-
-    // Сохраняем информацию о фотографии в базе данных
-    await ArticlePhotoModel.addPhoto({ article_id: articleId, seller_id: sellerId, url });
+    try {
+      const filePath = path.join(articleFolder, file.originalname);
+      await writeFileAsync(filePath, file.buffer);
+      const url = `/storage/photos/${folderName}/${file.originalname}`;
+      urls.push(url);
+      // Сохраняем информацию о фотографии в базе данных
+      await ArticlePhotoModel.addPhoto({
+        article_id: articleId,
+        seller_id: sellerId,
+        url,
+      });
+    } catch (err) {
+      console.error("Error processing file:", err);
+      // Можно пропустить файл или выбросить ошибку, если требуется
+    }
   }
 
   return urls;

@@ -1,18 +1,22 @@
-import React from 'react'
+import React, { useState } from "react";
 import useTheme from "../hooks/useTheme";
-import { useState } from "react";
 import FormHeader from "../components/LoginForm/Helpers/FormHeader";
 import LoginFormField from "../components/LoginForm/LoginFormField/LoginFormField";
-import { Box, Typography, Link } from "@mui/material";
+import { Box, Typography, Link, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import LoginFormButton from "../components/LoginForm/LoginFormButton/LoginFormButton";
 import GoogleAuthButton from "../components/LoginForm/GoogleAuthButton/GoogleAuthButton";
 import palete from "../palete";
 import PasswordRecoveryField from "../components/LoginForm/PasswordRecovery/PasswordRecoveryField";
 
+// Импортируем сервисы для пользователей и продавцов
 import { loginUser, registerUser, recoverPassword } from "../API/services/userService";
+import { loginSeller, registerSeller } from "../API/services/sellerService";
 
 export default function AuthPage() {
+  const theme = useTheme();
 
+  // accountType: "user" или "seller"
+  const [accountType, setAccountType] = useState("user");
   const [formType, setFormType] = useState("login");
   const [headerText, setHeaderText] = useState("Вхід");
   const [errors, setErrors] = useState({
@@ -21,7 +25,6 @@ export default function AuthPage() {
     name: "",
     code: "",
   });
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -31,21 +34,38 @@ export default function AuthPage() {
 
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
-    setErrors({ ...errors, [field]: "" }); // Убираем ошибку
+    setErrors({ ...errors, [field]: "" });
+  };
+
+  // Обработчик переключения типа аккаунта
+  const handleAccountTypeChange = (event, newAccountType) => {
+    if (newAccountType !== null) {
+      setAccountType(newAccountType);
+      // Можно сбросить форму при переключении
+      setFormData({ email: "", password: "", name: "", code: "" });
+      setErrors({ email: "", password: "", name: "", code: "" });
+    }
   };
 
   const handleLogin = async () => {
     try {
-      const result = await loginUser({
-        email: formData.email,
-        password: formData.password,
-      });
-  
-      const token = result.token; // Получаем токен из ответа бэка
-      localStorage.setItem("authToken", token); // Сохраняем в localStorage
-  
+      let result;
+      if (accountType === "user") {
+        result = await loginUser({
+          email: formData.email,
+          password: formData.password,
+        });
+      } else if (accountType === "seller") {
+        result = await loginSeller({
+          email: formData.email,
+          password: formData.password,
+        });
+      }
+      const token = result.token; // Получаем токен из ответа
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("accountType", accountType);
       console.log("Logged in:", result);
-      // Можно сделать редирект или обновление состояния
+      // Например, можно сделать редирект или обновление состояния
     } catch (error) {
       const errorData = error.response?.data || {};
       setErrors({
@@ -55,15 +75,26 @@ export default function AuthPage() {
       console.error("Login failed:", errorData);
     }
   };
-  
 
   const handleRegister = async () => {
     try {
-      const result = await registerUser({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      });
+      let result;
+      if (accountType === "user") {
+        result = await registerUser({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        });
+      } else if (accountType === "seller") {
+        // Для продавца также необходимо поле billing_info.
+        // Вы можете добавить его в форму, здесь используется значение по умолчанию.
+        result = await registerSeller({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          billing_info: "Default Billing Info",
+        });
+      }
       console.log("Registered:", result);
       // Дальнейшие действия: редирект или уведомление об успехе
     } catch (error) {
@@ -94,7 +125,11 @@ export default function AuthPage() {
   const handleFormSwitch = (type) => {
     setFormType(type);
     setHeaderText(
-      type === "login" ? "Вхід" : type === "register" ? "Реєстрація" : "Відновлення паролю"
+      type === "login"
+        ? "Вхід"
+        : type === "register"
+        ? "Реєстрація"
+        : "Відновлення паролю"
     );
     setErrors({ email: "", password: "", name: "", code: "" });
   };
@@ -159,7 +194,9 @@ export default function AuthPage() {
               value={formData.password}
               onChange={(e) => handleInputChange("password", e.target.value)}
             />
-            <LoginFormButton onClick={handleRegister}>Register</LoginFormButton>
+            <LoginFormButton onClick={handleRegister}>
+              Register
+            </LoginFormButton>
             <Typography>
               <Link
                 href="#"
@@ -206,17 +243,15 @@ export default function AuthPage() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
         width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
+        bgcolor: "background.paper",
+        border: "2px solid #000",
         boxShadow: 24,
         p: 4,
-
       }}
     >
       <Box
@@ -231,6 +266,22 @@ export default function AuthPage() {
           alignItems: "center",
         }}
       >
+        {/* Переключение между User и Seller */}
+        <Box sx={{ marginBottom: "10px" }}>
+          <ToggleButtonGroup
+            value={accountType}
+            exclusive
+            onChange={handleAccountTypeChange}
+            aria-label="Account type"
+          >
+            <ToggleButton value="user" aria-label="user">
+              User
+            </ToggleButton>
+            <ToggleButton value="seller" aria-label="seller">
+              Seller
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
         <FormHeader
           text={headerText}
           onClose={() => console.log("Close clicked")}

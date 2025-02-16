@@ -88,7 +88,7 @@ export default function OrderProcessing() {
         <Modal open={openProcessing} onClose={toggleOpenProcessing}>
             <Box sx={{
                 width: "86vw",
-                height: "84vh",
+                height: "100vh",
                 display: "flex",
                 flexDirection: "column",
                 position: "absolute",

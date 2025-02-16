@@ -1,22 +1,26 @@
+# Використовуємо офіційний образ Node.js
 FROM node:20
 
-# Устанавливаем рабочую директорию
+# Встановлюємо робочу директорію
 WORKDIR /app
 
-# Копируем файлы с зависимостями
+# Копіюємо package.json та package-lock.json
 COPY package*.json ./
 
-# Устанавливаем зависимости
+# Встановлюємо залежності
 RUN npm install
 
-# Копируем весь исходный код
+# Копіюємо всі файли з локальної директорії в контейнер
 COPY . .
 
-# Компилируем TypeScript в JavaScript
+# Компилюємо TypeScript в JavaScript
 RUN npx tsc
 
-# Открываем порт для сервера
+# Встановлюємо nodemon та ts-node як dev-залежності
+RUN npm install --save-dev nodemon ts-node
+
+# Відкриваємо порт для сервера
 EXPOSE 5000
 
-# Используем nodemon для отслеживания изменений и запуска ts-node для TypeScript
-CMD ["npx", "nodemon"]
+# Запускаємо додаток за допомогою nodemon для автоматичного перезапуску при зміні файлів
+CMD ["npx", "nodemon", "dist/index.js"]

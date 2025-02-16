@@ -448,7 +448,37 @@ export default function SellerMenu() {
                                 }}>Додати новий товар</Typography>
                             </Button>
                             <Modal open={addArticle} onClose={addArticleModal}>
-                                <AddArticle onClose={addArticle}/>
+                                <Box sx={{
+                                    backgroundColor: theme.secondaryText,
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    height: "75%",
+                                    width: "30%",
+                                    bgcolor: 'background.paper',
+                                    borderRadius: "15px",
+                                    border: '2px solid #000',
+                                    boxShadow: 24,
+                                }}>
+                                    <Box sx={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        margin: "10px 10px 10px 10px",
+                                    }}>
+                                        <Typography sx={{}}>Новий товар</Typography>
+                                        <Box onClick={addArticleModal} sx={{
+                                            cursor: "pointer",
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}>
+                                            <img src="./images/CloseBtn.svg" alt="Close" />
+                                        </Box>
+                                    </Box>
+                                    <AddArticle />
+                                </Box>
                             </Modal>
                         </Box>
                     </>
@@ -658,8 +688,8 @@ export default function SellerMenu() {
         }
         {isMobile &&
             <>
-                <span>HELLO WORLD!!!</span>
-                <span>HELLO WORLD!!!HELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLO</span>
+                <span></span>
+                <span></span>
             </>
         }
     </>

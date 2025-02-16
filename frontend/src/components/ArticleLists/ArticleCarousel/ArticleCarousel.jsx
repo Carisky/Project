@@ -6,7 +6,7 @@ import style from "./style.module.css";
 export default function ArticleCarousel({ articles }) {
   const responsive = {
     desktop: {
-      breakpoint: { max: 1820, min: 1024 },
+      breakpoint: { max: 3000, min: 501 },
       items: 5,
     },
     mobile: {

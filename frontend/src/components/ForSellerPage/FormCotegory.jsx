@@ -18,6 +18,7 @@ import {
   } from "../../icons/icons.jsx";
 import { Box, Typography } from '@mui/material';
 import useTheme from "../../hooks/useTheme";
+
 import Grid from '@mui/material/Grid'
   
   const categories = [
@@ -33,7 +34,7 @@ import Grid from '@mui/material/Grid'
     { icon: IconFoods, label: "Продукти харчування" },
   ];
 
-export default function FormCotegory() {
+export default function FormCotegory(error, OnChange) {
 
   const theme = useTheme();
 
@@ -43,9 +44,14 @@ export default function FormCotegory() {
     fontWeight: "bold",
     fontFamily: "Montserrat",
   };
+
+  const [value, setValue] = React.useState('female');
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
   
-  const renderCategory = ({ icon: Icon, label }) => (
-    <FormControlLabel value={label} control={<Radio />} label={<Box display="flex" alignItems="center"><Icon /><Typography>{label}</Typography></Box>} />
+  const renderCategory = ({ icon: Icon, label1 }) => (
+    <FormControlLabel value={label1} control={<Radio />} label={<Box display="flex" alignItems="center"><Icon /><Typography>{label1}</Typography></Box>} />
   );
 
   return (
@@ -55,14 +61,21 @@ export default function FormCotegory() {
         aria-labelledby="demo-radio-buttons-group-label"
         defaultValue=""
         name="radio-buttons-group"
+        value={value}
+        error={Boolean(error)}
+        onChange={handleChange}
       >
-        <Grid container spacing={2}>
-          {categories.map((category, index) => (
-            <Grid item xs={6}>
-              {renderCategory(category)}
-            </Grid>
-          ))}
-        </Grid>
+        <FormControlLabel value="Акції" control={<Radio />} label={<Box display="flex" alignItems="center"><IconShares /><Typography>Акції</Typography></Box>} />
+        <FormControlLabel value="Одяг" control={<Radio />} label={<Box display="flex" alignItems="center"><IconClothing /><Typography>Одяг</Typography></Box>} />
+        <FormControlLabel value="Взуття" control={<Radio />} label={<Box display="flex" alignItems="center"><IconShoes /><Typography>Взуття</Typography></Box>} />
+        <FormControlLabel value="Косметика" control={<Radio />} label={<Box display="flex" alignItems="center"><IconCosmetics /><Typography>Косметика</Typography></Box>} />
+        <FormControlLabel value="Для дому" control={<Radio />} label={<Box display="flex" alignItems="center"><IconForHome /><Typography>Для дому</Typography></Box>} />
+        <FormControlLabel value="Електроніка" control={<Radio />} label={<Box display="flex" alignItems="center"><IconElectronics /><Typography>Електроніка</Typography></Box>} />
+        <FormControlLabel value="Спорт" control={<Radio />} label={<Box display="flex" alignItems="center"><IconSportingGoods /><Typography>Спорт</Typography></Box>} />
+        <FormControlLabel value="Дитячі товари" control={<Radio />} label={<Box display="flex" alignItems="center"><IconBabyProducts /><Typography>Дитячі товари</Typography></Box>} />
+        <FormControlLabel value="Для тварин" control={<Radio />} label={<Box display="flex" alignItems="center"><IconForAnimals /><Typography>Для тварин</Typography></Box>} />
+        <FormControlLabel value="Продукти харчування" control={<Radio />} label={<Box display="flex" alignItems="center"><IconFoods /><Typography>Продукти харчування</Typography></Box>} />
+        
       </RadioGroup>
     </FormControl>
   );

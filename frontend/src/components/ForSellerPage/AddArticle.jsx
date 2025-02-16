@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -59,9 +60,7 @@ export default function AddArticle() {
   
     const handleSkip = () => {
         if (!isStepOptional(activeStep)) {
-            // You probably want to guard against something like this,
-            // it should never occur unless someone's actively trying to break something.
-            throw new Error("You can't skip a step that isn't optional.");
+            throw new Error("Ви не можете пропустити крок, який є обов'язковим.");
         }
     
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -78,22 +77,26 @@ export default function AddArticle() {
 
     const [errors, setErrors] = useState({
         name: "",
+        category: "",
         price: "",
         weight: "",
         size: "",
         color: "",
         material: "",
         description: "",
+        foto: "",
     });
     
     const [formData, setFormData] = useState({
         name: "",
+        category: "",
         price: "",
         weight: "",
         size: "",
         color: "",
         material: "",
         description: "",
+        foto: "",
     });
     
     const handleInputChange = (field, value) => {
@@ -101,233 +104,213 @@ export default function AddArticle() {
         setErrors({ ...errors, [field]: "" }); // Убираем ошибку
     };
 
-    const registerUser = async (data) => {
+    const registerProduct = async (data) => {
         const response = await apiHandler.post('/users/register', data);
         return response.data;
     };
 
     const handleRegister = async () => {
+        console.log("name:", formData.name);
+        console.log("category:", formData.category);
+        console.log("price:", formData.price);
+        console.log("weight:", formData.weight);
+        console.log("size:", formData.size);
+        console.log("color:", formData.color);
+        console.log("material:", formData.material);
+        console.log("description:", formData.description);
+        console.log("foto:", formData.foto);
+
         try {
-            const result = await registerUser({
+            const result = await registerProduct({
                 name: formData.name,
-                email: formData.email,
-                password: formData.password,
+                category: formData.category,
+                price: formData.price,
+                weight: formData.weight,
+                size: formData.size,
+                color: formData.color,
+                material: formData.material,
+                description: formData.description,
+                foto: formData.foto,
             });
             console.log("Registered:", result);
             // Дальнейшие действия: редирект или уведомление об успехе
         } catch (error) {
             const errorData = error.response?.data || {};
             setErrors({
-                email: errorData.email || "Invalid email",
-                password: errorData.password || "Invalid password",
                 name: errorData.name || "Invalid name",
+                category: formData.category || "Invalid category",
+                price: formData.price || "Invalid price",
+                weight: formData.weight || "Invalid weight",
+                size: formData.size || "Invalid size",
+                color: formData.color || "Invalid color",
+                material: formData.material || "Invalid material",
+                description: formData.description || "Invalid description",
+                foto: formData.foto || "Invalid foto",
             });
             console.error("Registration failed:", errorData);
         }
     };
-    
   
     return (
         <>
             {isDesktop &&
                 <>
-                    <Box sx={{
-                        backgroundColor: theme.secondaryText,
-                        //display: "flex",
-                        //justifyContent: "center",
-                        //alignItems: "center",
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        height: "75%",
-                        width: "35%",
-                        bgcolor: 'background.paper',
-                        borderRadius: "15px",
-                        border: '2px solid #000',
-                        boxShadow: 24,
-                    }}>
-                        <Box sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            margin: "10px 10px 10px 10px",
-                        }}>
-                            <Typography sx={textOneStyles}>Новий товар</Typography>
-                            <Box //onClick={onClose}
-                            sx={{
-                                cursor: "pointer",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}>
-                                <img src="./images/CloseBtn.svg" alt="Close" />
-                            </Box>
-                        </Box>
-                        <Box sx={{ width: '95%', margin: "10px 10px 10px 10px", }}>
-                            <Stepper activeStep={activeStep}>
-                                {steps.map((label, index) => {
-                                    const stepProps = {};
-                                    const labelProps = {};
-                                    
-                                    if (isStepSkipped(index)) {
-                                        stepProps.completed = false;
-                                    }
-                                    return (
-                                        <Step key={label} {...stepProps}>
-                                            <StepLabel {...labelProps}>{label}</StepLabel>
-                                        </Step>
-                                        );
-                                    })}
-                            </Stepper>
-                        </Box>
-                        <Box sx={{
-                            height: "80%",
-                            width: "90%",
-                            margin: "10px 10px 10px 10px",
-                        }}>
-                            { activeStep === steps.length - 3 ? (
-                                <React.Fragment>
-                                    <Box sx={{
-                                        height: "100%",
-                                        width: "90%",
-                                        display: "flex",
-                                        flexWrap: "wrap",
-                                        alignContent: "space-around",
-                                    }}>
-                                        <Box>
-                                            <Typography sx={textOneStyles}>Введіть назву товару</Typography>
-                                            <FormNewArticle
-                                            label="NameProduct"
-                                            error={errors.name}
-                                            value={formData.name}
-                                            onChange={(e) => handleInputChange("name", e.target.value)}
-                                            />
-                                        </Box>
-                                        <Box>
-                                            <FormCotegory />
-                                        </Box>
-                                    </Box>
-                                </React.Fragment>
-                            ) : (
-                                <React.Fragment></React.Fragment>
-                            ) }
-                            { activeStep === steps.length - 2 ? (
-                                    <React.Fragment>
-                                        <Box sx={{
-                                            height: "100%",
-                                            width: "90%",
-                                            display: "flex",
-                                            flexWrap: "wrap",
-                                            alignContent: "space-around",
-                                        }}>
-                                            <Box>
-                                                <Typography sx={textOneStyles}>Характеристики</Typography>
-                                                <FormNewArticle
-                                                label="Ціна, ₴"
-                                                error={errors.price}
-                                                value={formData.price}
-                                                onChange={(e) => handleInputChange("price", e.target.value)}
-                                                />
-                                                <FormNewArticle
-                                                label="Вага, кг"
-                                                error={errors.weight}
-                                                value={formData.weight}
-                                                onChange={(e) => handleInputChange("weight", e.target.value)}
-                                                />
-                                                <FormNewArticle
-                                                label="Розмір, см"
-                                                error={errors.size}
-                                                value={formData.size}
-                                                onChange={(e) => handleInputChange("size", e.target.value)}
-                                                />
-                                                <FormNewArticle
-                                                label="Колір"
-                                                error={errors.color}
-                                                value={formData.color}
-                                                onChange={(e) => handleInputChange("color", e.target.value)}
-                                                />
-                                                <FormNewArticle
-                                                label="Матеріал"
-                                                error={errors.material}
-                                                value={formData.material}
-                                                onChange={(e) => handleInputChange("material", e.target.value)}
-                                                />
-                                            </Box>
-                                            <Box>
-                                                <Typography sx={textOneStyles}>Опишіть товар</Typography>
-                                                <FormNewArticle
-                                                label="Опишіть основні особливості товару у кількох реченнях"
-                                                error={errors.description}
-                                                value={formData.description}
-                                                onChange={(e) => handleInputChange("description", e.target.value)}
-                                                />
-                                            </Box>
-                                        </Box>
-                                    </React.Fragment>
-                                ) : (
-                                    <React.Fragment></React.Fragment>
-                                )
+                <Box sx={{ width: '95%', margin: "10px 10px 10px 10px", }}>
+                    <Stepper activeStep={activeStep}>
+                        {steps.map((label, index) => {
+                            const stepProps = {};
+                            const labelProps = {};
+                            if (isStepSkipped(index)) {
+                                stepProps.completed = false;
                             }
-                            { activeStep === steps.length - 1 ? (
-                                    <React.Fragment>
-                                        <Box sx={{
-                                            height: "100%",
-                                            width: "90%",
-                                        }}>
-                                            <Typography sx={textOneStyles}>Додайте до 10 фотографій</Typography>
-                                                <FormNewArticle
-                                                label="Опишіть основні особливості товару у кількох реченнях"
-                                                error={errors.description}
-                                                value={formData.description}
-                                                onChange={(e) => handleInputChange("description", e.target.value)}
-                                                />
-                                        </Box>
-                                    </React.Fragment>
-                                ) : (
-                                    <React.Fragment></React.Fragment>
-                                )
-                            }
-                            </Box>
+                            return (
+                                <Step key={label} {...stepProps}>
+                                    <StepLabel {...labelProps}>{label}</StepLabel>
+                                </Step>
+                                );
+                            })
+                        }
+                    </Stepper>
+                </Box>
+                <Box sx={{
+                    height: "80%",
+                    width: "90%",
+                    margin: "10px 10px 10px 10px",
+                }}>
+                    { activeStep === steps.length - 3 ? (
+                        <React.Fragment>
                             <Box sx={{
+                                height: "100%",
                                 width: "90%",
+                                display: "flex",
+                                flexWrap: "wrap",
+                                alignContent: "space-around",
                             }}>
-                            {activeStep === steps.length ? (
-                                <React.Fragment>
-                                    <Typography sx={{ mt: 2, mb: 1 }}>
-                                        Товар успішно додано!
-                                    </Typography>
-                                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                                        <Box sx={{ flex: '1 1 auto' }} />
-                                        <Button onClick={handleReset}><Typography sx={textTwoStyles}>Повторити</Typography></Button>
-                                    </Box>
-                                </React.Fragment>
-                            ) : (
-                                <React.Fragment>
-                                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, }}>
-                                        <Button
-                                        color="inherit"
-                                        disabled={activeStep === 0}
-                                        onClick={handleBack}
-                                        sx={{ mr: 1 }}
-                                        >
-                                            <Typography sx={textTwoStyles}>Назад</Typography>
-                                        </Button>
-                                        <Box sx={{ flex: '1 1 auto' }} />
-                                        {isStepOptional(activeStep) && (
-                                            <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                                                <Typography sx={textTwoStyles}>Пропустити крок</Typography>
-                                            </Button>
-                                        )}
-                                        {activeStep === steps.length - 1 ?
-                                        ( <Button onClick={handleRegister}>Готово</Button> ) : ( <Button onClick={handleNext}>Далі</Button> )
-                                        }
-                                    </Box>
-                                </React.Fragment>
-                            )}
-                        </Box>
-                    </Box>
-                </>
+                                <Box>
+                                    <Typography sx={textOneStyles}>Введіть назву товару</Typography>
+                                    <FormNewArticle
+                                    label="NameProduct"
+                                    error={errors.name}
+                                    value={formData.name}
+                                    onChange={(e) => handleInputChange("name", e.target.value)}
+                                    />
+                                </Box>
+                                <Box>
+                                    <FormCotegory error={errors.category} onChange={(e) => handleInputChange("category", e.target.value)}/>
+                                </Box>
+                            </Box>
+                        </React.Fragment>
+                        ) : (<React.Fragment></React.Fragment>)
+                    }
+                    { activeStep === steps.length - 2 ? (
+                        <React.Fragment>
+                            <Box sx={{
+                                height: "100%",
+                                width: "90%",
+                                display: "flex",
+                                flexWrap: "wrap",
+                                alignContent: "space-around",
+                            }}>
+                                <Box>
+                                    <Typography sx={textOneStyles}>Характеристики</Typography>
+                                    <FormNewArticle
+                                    label="Ціна, ₴"
+                                    error={errors.price}
+                                    value={formData.price}
+                                    onChange={(e) => handleInputChange("price", e.target.value)}
+                                    />
+                                    <FormNewArticle
+                                    label="Вага, кг"
+                                    error={errors.weight}
+                                    value={formData.weight}
+                                    onChange={(e) => handleInputChange("weight", e.target.value)}
+                                    />
+                                    <FormNewArticle
+                                    label="Розмір, см"
+                                    error={errors.size}
+                                    value={formData.size}
+                                    onChange={(e) => handleInputChange("size", e.target.value)}
+                                    />
+                                    <FormNewArticle
+                                    label="Колір"
+                                    error={errors.color}
+                                    value={formData.color}
+                                    onChange={(e) => handleInputChange("color", e.target.value)}
+                                    />
+                                    <FormNewArticle
+                                    label="Матеріал"
+                                    error={errors.material}
+                                    value={formData.material}
+                                    onChange={(e) => handleInputChange("material", e.target.value)}
+                                    />
+                                </Box>
+                                <Box>
+                                    <Typography sx={textOneStyles}>Опишіть товар</Typography>
+                                    <TextField
+                                    id="outlined-multiline-static"
+                                    label="Multiline"
+                                    error={errors.description}
+                                    value={formData.description}
+                                    multiline
+                                    rows={4}
+                                    variant="outlined"
+                                    onChange={(e) => handleInputChange("description", e.target.value)}
+                                    />
+                                </Box>
+                            </Box>
+                        </React.Fragment>
+                        ) : ( <React.Fragment></React.Fragment> )
+                    }
+                    { activeStep === steps.length - 1 ? (
+                        <React.Fragment>
+                            <Box sx={{
+                                height: "100%",
+                                width: "90%"
+                            }}>
+                                <Typography sx={textOneStyles}>Додайте фото</Typography>
+                                
+                                <input type='file' value={formData.foto}
+                                onChange={(e) => handleInputChange("foto", e.target.value)}/>
+                            </Box>
+                        </React.Fragment>
+                        ) : ( <React.Fragment></React.Fragment> )
+                    }
+                </Box>
+                <Box sx={{
+                    width: "90%",
+                }}>
+                    {activeStep === steps.length ? (
+                        <React.Fragment>
+                            <Typography sx={{ mt: 2, mb: 1 }}> Товар успішно додано! </Typography>
+                            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                                <Box sx={{ flex: '1 1 auto' }} />
+                                <Button onClick={handleReset}><Typography sx={textTwoStyles}>Повторити</Typography></Button>
+                            </Box>
+                        </React.Fragment>
+                        ) : (
+                        <React.Fragment>
+                            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, }}>
+                                <Button
+                                color="inherit"
+                                disabled={activeStep === 0}
+                                onClick={handleBack}
+                                sx={{ mr: 1 }}
+                                >
+                                    <Typography sx={textTwoStyles}>Назад</Typography>
+                                </Button>
+                                <Box sx={{ flex: '1 1 auto' }} />
+                                {isStepOptional(activeStep) && (
+                                    <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+                                        <Typography sx={textTwoStyles}>Пропустити крок</Typography>
+                                    </Button> )
+                                }
+                                {activeStep === steps.length - 1 ?
+                                    ( <Button onClick={handleRegister}>Готово</Button> ) : ( <Button onClick={handleNext}>Далі</Button> )
+                                }
+                            </Box>
+                        </React.Fragment> )}
+                </Box>
+            </>
             }
             {isMobile &&
                 <></>

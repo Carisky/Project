@@ -9,6 +9,140 @@ import ArticlePhotoModel from "../models/ArticlePhotoModel";
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Article:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           example: 1
+ *         seller_id:
+ *           type: number
+ *           example: 1
+ *         seller_name:
+ *           type: string
+ *           example: "John's Store"
+ *         category_id:
+ *           type: number
+ *           example: 2
+ *         category_name:
+ *           type: string
+ *           example: "Electronics"
+ *         name:
+ *           type: string
+ *           example: "iPhone 14"
+ *         amount:
+ *           type: number
+ *           example: 10
+ *         price:
+ *           type: number
+ *           example: 799.99
+ *         rating:
+ *           type: number
+ *           example: 4.5
+ *         created_at:
+ *           type: string
+ *           example: "2023-02-15T12:00:00Z"
+ *         updated_at:
+ *           type: string
+ *           example: "2023-02-16T12:00:00Z"
+ *         description:
+ *           type: string
+ *           example: "Latest model of iPhone"
+ *         photos:
+ *           type: array
+ *           items:
+ *             type: string
+ *             example: "/storage/photos/1_1/photo.jpg"
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: string
+ *             example: "electronics"
+ *
+ *     ArticlePhoto:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           example: 1
+ *         article_id:
+ *           type: number
+ *           example: 1
+ *         seller_id:
+ *           type: number
+ *           example: 1
+ *         url:
+ *           type: string
+ *           example: "/storage/photos/1_1/photo.jpg"
+ *         created_at:
+ *           type: string
+ *           example: "2023-02-15T12:00:00Z"
+ *         updated_at:
+ *           type: string
+ *           example: "2023-02-16T12:00:00Z"
+ *
+ *     Seller:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: "John's Store"
+ *         email:
+ *           type: string
+ *           example: "john@example.com"
+ *         billing_info:
+ *           type: string
+ *           example: "123 Main St, City, Country"
+ *         role:
+ *           type: string
+ *           example: "seller"
+ *         created_at:
+ *           type: string
+ *           example: "2023-02-15T12:00:00Z"
+ *         updated_at:
+ *           type: string
+ *           example: "2023-02-16T12:00:00Z"
+ *
+ *     Category:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           example: 2
+ *         name:
+ *           type: string
+ *           example: "Electronics"
+ *         created_at:
+ *           type: string
+ *           example: "2023-02-15T12:00:00Z"
+ *         updated_at:
+ *           type: string
+ *           example: "2023-02-16T12:00:00Z"
+ *
+ *     Tag:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *           example: 1
+ *         name:
+ *           type: string
+ *           example: "electronics"
+ *         created_at:
+ *           type: string
+ *           example: "2023-02-15T12:00:00Z"
+ *         updated_at:
+ *           type: string
+ *           example: "2023-02-16T12:00:00Z"
+ */
+
+/**
+ * @swagger
  * /api/articles/{id}:
  *   get:
  *     summary: Get article by ID
@@ -18,11 +152,15 @@ import ArticlePhotoModel from "../models/ArticlePhotoModel";
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: number
  *         description: Article ID
  *     responses:
  *       200:
  *         description: Article found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Article'
  *       404:
  *         description: Article not found
  *       500:
@@ -52,6 +190,12 @@ export const getArticleById = async (req: Request, res: Response) => {
  *     responses:
  *       200:
  *         description: List of all articles
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Article'
  *       500:
  *         description: Error retrieving articles
  */
@@ -80,6 +224,12 @@ export const getAllArticles = async (_req: Request, res: Response) => {
  *     responses:
  *       200:
  *         description: Articles found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Article'
  *       500:
  *         description: Error searching articles
  */
@@ -94,7 +244,6 @@ export const getArticlesByName = async (req: Request, res: Response) => {
 
   try {
     const articles = await getArticlesByNameService(name);
-
     res.json(articles);
   } catch (error) {
     res.status(500).json({ message: "Error searching articles", error });
@@ -102,92 +251,72 @@ export const getArticlesByName = async (req: Request, res: Response) => {
 };
 
 /**
-* @swagger
-* paths:
-*  /api/articles/filter:
-*    post:
-*      summary: Filter articles based on name, price range, and categories
-*      description: Returns a list of articles filtered by the specified criteria.
-*      tags:
-*        - Articles
-*      requestBody:
-*        required: true
-*        content:
-*          application/json:
-*            schema:
-*              type: object
-*              properties:
-*                name:
-*                  type: string
-*                  description: The name or partial name of the article to search for.
-*                  example: "Smartphone"
-*                priceRange:
-*                  type: array
-*                  items:
-*                    type: number
-*                  minItems: 2
-*                  maxItems: 2
-*                  description: An array containing the minimum and maximum price range.
-*                  example: [100, 500]
-*                categories:
-*                  type: array
-*                  items:
-*                    type: string
-*                  description: An array of category IDs or names to filter the articles.
-*                  example: ["electronics", "mobile-phones"]
-*              required:
-*                - priceRange
-*                - categories
-*      responses:
-*        '200':
-*          description: Successfully filtered articles.
-*          content:
-*            application/json:
-*              schema:
-*                type: array
-*                items:
-*                  type: object
-*                  properties:
-*                    id:
-*                      type: string
-*                      description: The unique ID of the article.
-*                      example: "12345"
-*                    name:
-*                      type: string
-*                      description: The name of the article.
-*                      example: "iPhone 14"
-*                    price:
-*                      type: number
-*                      description: The price of the article.
-*                      example: 799.99
-*                    category:
-*                      type: string
-*                      description: The category of the article.
-*                      example: "electronics"
-*        '400':
-*          description: Invalid input data.
-*          content:
-*            application/json:
-*              schema:
-*                type: object
-*                properties:
-*                  message:
-*                    type: string
-*                    example: "Invalid price range"
-*        '500':
-*          description: Server error occurred while filtering articles.
-*          content:
-*            application/json:
-*              schema:
-*                type: object
-*                properties:
-*                  message:
-*                    type: string
-*                    example: "Error filtering articles"
-*                  error:
-*                    type: string
-*                    example: "Internal server error"
-*/
+ * @swagger
+ * /api/articles/filter:
+ *   post:
+ *     summary: Filter articles based on name, price range, and categories
+ *     tags: [Articles]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The name or partial name of the article to search for.
+ *                 example: "Smartphone"
+ *               priceRange:
+ *                 type: array
+ *                 items:
+ *                   type: number
+ *                 minItems: 2
+ *                 maxItems: 2
+ *                 description: An array containing the minimum and maximum price range.
+ *                 example: [100, 500]
+ *               categories:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: An array of category IDs or names to filter the articles.
+ *                 example: ["electronics", "mobile-phones"]
+ *             required:
+ *               - priceRange
+ *               - categories
+ *     responses:
+ *       200:
+ *         description: Successfully filtered articles.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Article'
+ *       400:
+ *         description: Invalid input data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Invalid price range"
+ *       500:
+ *         description: Server error occurred while filtering articles.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error filtering articles"
+ *                 error:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
 export const filterArticles = async (req: Request, res: Response) => {
   const { name = "", priceRange = [], categories = [] } = req.body;
   
@@ -231,11 +360,17 @@ export const filterArticles = async (req: Request, res: Response) => {
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: number
  *         description: Article ID
  *     responses:
  *       200:
- *         description: List of photo URLs for the article
+ *         description: List of photo objects for the article
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ArticlePhoto'
  *       404:
  *         description: No photos found for the article
  *       500:

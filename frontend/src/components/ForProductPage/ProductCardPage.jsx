@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Typography, Modal } from "@mui/material";
 import useTheme from "../../hooks/useTheme";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
@@ -8,8 +8,27 @@ import "react-multi-carousel/lib/styles.css";
 import style from "../ArticleLists/ArticleCarousel/style.module.css";
 import AllCharacter from "./AllCharacter.jsx";
 import AllDescription from "./AllDescription.jsx";
-
+import { useParams } from "react-router-dom";
+import axios from "axios";
 export default function ProductCardPage() {
+    const { id } = useParams(); // Получаем id из URL
+    const [article, setArticle] = useState(null);
+
+    useEffect(() => {
+        if (!id) return;
+        
+        const fetchArticle = async () => {
+          try {
+            const response = await axios.get(`http://localhost:5000/api/articles/${id}`);
+            setArticle(response.data);
+          } catch (err) {
+            console.log(err)
+          }
+        };
+    
+        fetchArticle();
+      }, [id]);
+
     const theme = useTheme();
   
     const isMobile = useMediaQuery("(max-width: 500px)");
@@ -24,7 +43,7 @@ export default function ProductCardPage() {
         rating: 4.5,
         discount: "20%",
         reviews_count: 120,
-        image: "/images/pexels1.jpg",
+        image: "./images/pexels1.jpg",
     };
   
     const AlignSvg = ({ children }) => (
@@ -112,18 +131,10 @@ export default function ProductCardPage() {
         justifyContent: "space-between",
     };
 
-    const mainImage = '/images/pexels1.jpg';
+    const mainImage = "http://localhost:5000"+article?.photos[0];
 
     const similarImages = [
-        '/images/pexels1.jpg',
-        '/images/pexels2.jpg',
-        '/images/pexels3.jpg',
-        '/images/pexels4.jpg',
-        '/images/pexels5.jpg',
-        '/images/pexels6.jpg',
-        '/images/pexels7.jpg',
-        '/images/pexels8.jpg',
-        '/images/pexels9.jpg'
+        "http://localhost:5000"+article?.photos[0],
     ];
 
     const responsive = {
@@ -243,7 +254,7 @@ export default function ProductCardPage() {
                                     fontSize: "28px",
                                     fontWeight: "bold",
                                     fontFamily: "Montserrat",
-                                }}>Кава в зернах Tuskani 100% арабіка 1 кг</Typography>
+                                }}>{article?.name}</Typography>
                             </Box>
                             <AlignSvg><LogoMyHeart/></AlignSvg>
                         </Box>
@@ -254,14 +265,14 @@ export default function ProductCardPage() {
                                 fontFamily: "Montserrat",
                                 marginLeft: "20px",
                                 fontWeight: "bold",
-                            }}>Продавець:</Typography>
+                            }}>Продавець: </Typography>
                             <Typography sx={{
                                 fontWeight: "bold",
                                 marginLeft: "10px",
                                 color: theme.secondaryColor,
                                 fontSize: "16px",
                                 fontFamily: "Montserrat",
-                            }}>Coffee Original</Typography>
+                            }}>{article?.seller}</Typography>
                         </Box>
                         <Box sx={blockStyles} padding = "20px" alignItems="center" boxShadow = "rgba(0, 0, 0, 0.35) 0px 5px 15px">
                             <Box>
@@ -297,14 +308,14 @@ export default function ProductCardPage() {
                                 fontSize: "54px",
                                 fontWeight: "bold",
                                 fontFamily: "Montserrat",
-                            }}>377₴</Typography>
+                            }}>{(article?.price-(article?.price*25/100)).toFixed(2)}₴</Typography>
                             <Typography sx={{
                                 color: theme.secondaryText,
                                 fontSize: "24px",
                                 fontFamily: "Montserrat",
                                 textDecorationLine: "line-through",
                                 marginLeft: "20px",
-                            }}>560₴</Typography>
+                            }}>{article?.price}₴</Typography>
                         </Box>
                         <Box sx={{
                             width: "90%",
@@ -459,32 +470,7 @@ export default function ProductCardPage() {
                         marginLeft: "30px",
                         marginBottom: "10px",
                         marginRight: "30px",
-                    }}>{textDescription[0]}</Typography>
-                    <Typography sx={{
-                        color: theme.mainText,
-                        fontSize: "24px",
-                        fontWeight: "medium",
-                        fontFamily: "Montserrat",
-                        marginTop: "10px",
-                        marginLeft: "30px",
-                        marginBottom: "10px",
-                        marginRight: "30px",
-                    }}>{textDescription[1]}</Typography>
-                    <Typography onClick={allDescriptionModal} sx={{
-                        color: theme.secondaryColor,
-                        fontSize: "32px",
-                        fontWeight: "medium",
-                        fontFamily: "Montserrat",
-                        marginTop: "10px",
-                        marginLeft: "30px",
-                        marginBottom: "10px",
-                        marginRight: "30px",
-                        textDecorationLine: "underline",
-                        cursor: "pointer",
-                    }}>Дивитись повністю</Typography>
-                    <Modal open={allDescription} onClose={allDescriptionModal}>
-                        <AllDescription description={textDescription} product={articl} onClose={allDescription}/>
-                    </Modal>
+                    }}>{article?.description}</Typography>
                 </Box>
                 <Box sx={{
                     height: "100%",
@@ -506,7 +492,6 @@ export default function ProductCardPage() {
                     {Characteristick(characteristics[1])}
                     {Characteristick(characteristics[2])}
                     {Characteristick(characteristics[3])}
-                                        
                     <Typography onClick={allCharacterModal} sx={{
                         color: theme.secondaryColor,
                         fontSize: "32px",

@@ -10,6 +10,16 @@ export const getAllArticles = async () => {
   const response = await apiHandler.get(`/articles/`)
   return response.data;
 };
+export const getArticleById = async (id) => {
+  try {
+    const response = await apiHandler.get(`/articles/${id}`);
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при получении товара:", error);
+    throw error;
+  }
+};
 export const filterArticles = async (filters) => {
   const { searchQuery, priceRange, selectedCategories } = filters;
   const payload = {

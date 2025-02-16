@@ -85,7 +85,7 @@ export default function ProductPage() {
       <ProductCardPage />
       <Box marginTop="40px">
         <Typography sx={textOneStyles} textAlign="center">Також Вас можуть зацікавити</Typography>
-        <ArticleListFree Articles={articles}></ArticleListFree>
+
       </Box>
       <Footer/>
     </Box>

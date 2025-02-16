@@ -1,13 +1,20 @@
 import { Box, ButtonBase, Typography } from "@mui/material";
 import React from "react";
 import CheckBox from "../Selectors/CheckBox";
-import { removeItemFromCart,getCartItems } from "../../API/services/cartService";
+import {
+  removeItemFromCart,
+  getCartItems,
+} from "../../API/services/cartService";
 
-export default function Article({setArticles, Article }) {
+export default function Article({ setArticles, Article }) {
   const inStockText = "В наявності";
   const outOfStockText = "Немає в наявності";
   const discountPercentage = 25 / 100;
-  const discountedPrice = (Article.article.price - Article.article.price * discountPercentage).toFixed(0) + "₴";
+  const discountedPrice =
+    (
+      Article.article.price -
+      Article.article.price * discountPercentage
+    ).toFixed(0) + "₴";
 
   return (
     <Box
@@ -19,13 +26,11 @@ export default function Article({setArticles, Article }) {
       <Box>
         <CheckBox />
       </Box>
-      <Box
-        sx={{
-          height: "90%",
-          width: "150px",
-          backgroundColor: "#F5F0ED",
-        }}
-      ></Box>
+      <img
+        src={`http://localhost:5000${Article.article.photos[0].url}` || Article.article.photos[0]}
+        alt={Article.article.name}
+        style={{ height: "90%", width: "150px", objectFit: "cover" }}
+      />
       <Box
         sx={{ display: "flex", justifyContent: "space-between", width: "70%" }}
       >
@@ -39,13 +44,13 @@ export default function Article({setArticles, Article }) {
           }}
         >
           <Box>
-            <Typography>{Article.name}</Typography>
+            <Typography>{Article.article.name}</Typography>
             <Typography
               sx={{
                 color: "#808080",
               }}
             >
-              {Article.seller_name}
+              {Article.article.seller_name}
             </Typography>
           </Box>
           <Typography
@@ -59,15 +64,15 @@ export default function Article({setArticles, Article }) {
             <Box>
               <img src="./images/icon_heart.svg" alt="" />
             </Box>
-            <Box 
-            onClick={async()=>{
-              await removeItemFromCart(Article.article.id)
-              const items = await getCartItems();
-              setArticles(items)
-            }}
+            <Box
+              onClick={async () => {
+                await removeItemFromCart(Article.article.id);
+                const items = await getCartItems();
+                setArticles(items);
+              }}
               sx={{
                 marginLeft: "18px",
-                cursor:"pointer"
+                cursor: "pointer",
               }}
             >
               <img src="./images/icon_delete.svg" alt="" />

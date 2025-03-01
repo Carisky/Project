@@ -6,12 +6,17 @@ const palete = {
     mainColor: "#9283FF",
     secondaryColor: "#FE7411",
     background: "#F5F0ED",
-    plainText:"#000000",
+    plainText:"#FFFFF",
     mainText: "#2B2B2B",
     secondaryText: "#808080",
     accentText: "#FF2A2A",
-    cartNotificationFillColor:"#886FFB",
     backgroundText: "lightgray",
+    orangeColor: "#FF8C3A",
+    deepOrangeColor: "#E55F00",
+    usualMainColor: "#7061EA",
+    deepMainColor: "#5446C6",
+    darkMainColor: "#2E2166",
+    iconColor: "black",
     loginForm:{
       loginFormButton:{
         mainColor:"#9283FF",
@@ -21,18 +26,25 @@ const palete = {
       loginGoogleFormButton:{
         mainColor:"#F4F3F3",
       }
-    }
+    },
+    cartNotificationFillColor:"#886FFB",
+    buttonColor: "#F1F1F5",
   },
   dark: {
     mainColor: "#3A2987",
     secondaryColor: "#FE7411",
+    background: "#050046",
     plainText:"#000000",
-    background: "#F5F0ED",
-    mainText: "#2B2B2B",
-    secondaryText: "#808080",
+    mainText: "#FFFFFF",
+    secondaryText: "#F5F0ED",
     accentText: "#FF2A2A",
-    cartNotificationFillColor:"#886FFB",
     backgroundText: "#2E2A6E",
+    orangeColor: "#FF8C3A",
+    deepOrangeColor: "#E55F00",
+    usualMainColor: "#7061EA",
+    deepMainColor: "#5446C6",
+    darkMainColor: "#2E2166",
+    iconColor: "white",
     loginForm:{
       loginFormButton:{
         mainColor:"#9283FF",
@@ -42,7 +54,9 @@ const palete = {
       loginGoogleFormButton:{
         mainColor:"#F4F3F3",
       }
-    }
+    },
+    cartNotificationFillColor:"#886FFB",
+    buttonColor: "#6863A9",
   }
 };
 

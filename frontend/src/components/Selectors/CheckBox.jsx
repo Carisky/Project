@@ -1,5 +1,5 @@
-import { Checkbox, FormControlLabel } from "@mui/material";
 import React from "react";
+import { Checkbox, FormControlLabel, Typography, } from "@mui/material";
 import useTheme from "../../hooks/useTheme";
 
 export default function CheckBox({ text }) {
@@ -22,7 +22,7 @@ export default function CheckBox({ text }) {
           }}
         />
       }
-      label={text}
+      label={<Typography color={theme.mainText} fontWeight="500">{text}</Typography>}
       sx={{
         "& .MuiFormControlLabel-label": {
             fontSize: "13px",

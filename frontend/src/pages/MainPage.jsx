@@ -35,15 +35,15 @@ export default function MainPage() {
 
     const time = today.toLocaleTimeString(locale, {
       hour: "numeric",
-      hour12: true,
+      hour12: false,
       minute: "numeric",
     });
 
     return (
       <Box>
-        <span>
-          {day} : {hour} : {time}
-        </span>
+        <Typography sx={{color: "whiet", fontSize: "22px", fontFamily: "Montserrat", fontWeight: "700",}}>
+          {day} : {time}
+        </Typography>
       </Box>
     );
   };
@@ -70,7 +70,7 @@ export default function MainPage() {
   return (
     <Box
       sx={{
-        backgroundColor: theme.backgroundColor,
+        backgroundColor: theme.background,
         width: "100%",
       }}
     >

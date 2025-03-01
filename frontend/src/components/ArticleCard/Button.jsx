@@ -21,17 +21,21 @@ export default function Button({ productId }) {
       onClick={handleAddToCart} // Handle the click event
       sx={{
         backgroundColor: theme.secondaryColor,
-        width: "100%",
+        width: "92%",
         borderRadius: "11px",
         height: "36px",
         marginBottom: "10px",
         marginTop: "8px",
+	marginLeft: "4%",
+	marginRight: "4%",
       }}
     >
       <Typography
         sx={{
           color: "white",
           fontWeight: "bold",
+	  marginTop: "8px",
+          fontFamily: "Ubuntu",
         }}
       >
         У кошик

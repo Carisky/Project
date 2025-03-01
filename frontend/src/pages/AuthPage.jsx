@@ -157,18 +157,21 @@ export default function AuthPage() {
                 href="#"
                 onClick={() => handleFormSwitch("passwordRecover")}
                 underline="hover"
+		sx={{color: theme.mainText}}
               >
                 Забули пароль?
               </Link>
             </Typography>
             <GoogleAuthButton />
-            <Typography>
+            <Typography sx={{color: theme.mainText}}>
+		Не маєте акаунту?
               <Link
                 href="#"
                 onClick={() => handleFormSwitch("register")}
                 underline="hover"
+		sx={{margin: "0px 0px 0px 10px", color: theme.mainText}}
               >
-                Не маєте акаунту? Зареєструватися
+                Зареєструватися
               </Link>
             </Typography>
           </>
@@ -197,13 +200,15 @@ export default function AuthPage() {
             <LoginFormButton onClick={handleRegister}>
               Register
             </LoginFormButton>
-            <Typography>
+            <Typography sx={{margin: "0px 0px 0px 10px", color: theme.mainText}} >
+		Вже маєте акаунт?
               <Link
                 href="#"
                 onClick={() => handleFormSwitch("login")}
                 underline="hover"
+		sx={{margin: "0px 0px 0px 10px", color: theme.mainText}}
               >
-                Вже маєте акаунт? Вхід
+                Вхід
               </Link>
             </Typography>
             <GoogleAuthButton />
@@ -225,6 +230,7 @@ export default function AuthPage() {
                 href="#"
                 onClick={() => handleFormSwitch("login")}
                 underline="hover"
+		sx={{margin: "0px 0px 0px 10px", color: theme.mainText}}
               >
                 Назад
               </Link>
@@ -284,9 +290,18 @@ export default function AuthPage() {
         </Box>
         <FormHeader
           text={headerText}
-          onClose={() => console.log("Close clicked")}
+          onClose={props.onClose}
         />
+	<Box sx={{
+        width: "380px",
+        backgroundColor: theme.background,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}>
         {renderFields()}
+	</Box>
       </Box>
     </Box>
   );

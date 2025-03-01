@@ -8,32 +8,33 @@ export default function ArticleList({ Title, articles }) {
   const theme = useTheme();
 
   const isMobile = useMediaQuery("(max-width: 500px)");
-  const isDesktop = useMediaQuery("(min-width: 500.01px)");
+  const isDesktop = useMediaQuery("(min-width: 501px)");
 
   return (
     <>
       {isMobile &&
         <Box
         sx={{
-          height: "630px",
-          width:"95%",
-          margin:"auto",
+          minHeight: "600px",
+          width:"100%",
           backgroundColor: theme.mainColor,
           marginTop: "10px",
           marginBottom: "10px",
+          paddingTop: "30px",
         }}
       >
         <Box
           sx={{
-            width: "95%",
+            width: "100%",
           }}
         >
           <Typography
             sx={{
               color: "white",
               fontFamily: "Ubuntu",
-              fontSize: "52px",
+              fontSize: "36px",
               fontWeight: "500",
+              margin: "0px 10px 10px 15px",
             }}
           >
             {Title}

@@ -9,7 +9,7 @@ export default function ArticlePackAdvice({ Title, articles }) {
   const theme = useTheme();
 
   const isMobile = useMediaQuery("(max-width: 500px)");
-  const isDesktop = useMediaQuery("(min-width: 500.01px)");
+  const isDesktop = useMediaQuery("(min-width: 501px)");
 
   return (
     <>
@@ -56,8 +56,8 @@ export default function ArticlePackAdvice({ Title, articles }) {
             <Box
               sx={{
                 backgroundColor: "white",
-                borderRadius: "20px",
-                height: "94px",
+                borderRadius: "16px",
+                height: "84px",
                 width: "70%",
                 margin: "auto",
                 justifyContent: "center",
@@ -70,10 +70,10 @@ export default function ArticlePackAdvice({ Title, articles }) {
               <Typography
                 sx={{
                   fontFamily: "Ubuntu",
-                  fontSize: "28px",
+                  fontSize: "24px",
                   fontWeight: "700",
                   marginTop: "10px",
-                  marginLeft: "30px",
+                  textAlign: "center",
                 }}
               >
                 РЕКОМЕНДАЦІЇ
@@ -82,23 +82,25 @@ export default function ArticlePackAdvice({ Title, articles }) {
                 sx={{
                   color: theme.secondaryColor,
                   fontFamily: "Ubuntu",
-                  fontSize: "32px",
+                  fontSize: "24px",
                   fontWeight: "700",
-                  marginTop: "-15px",
-                  marginLeft: "60px",
+                  marginTop: "-5px",
+                  textAlign: "center",
                 }}
               >
                 ДЛЯ ТЕБЕ
               </Typography>
             </Box>
           </Box>
-          <Box marginBottom="10px" width="100%" display="flex" justifyContent="space-evenly">
-            <ArticleCard article={articles[0]} />
-            <ArticleCard article={articles[1]} />
+          <Box display="flex" justifyContent="space-between" width="100%" marginBottom="10px">
+            {articles.slice(0, 2).map((article) => {
+              return <ArticleCard article={article} key={article.id} />;
+            })}
           </Box>
-          <Box marginTop="10px" marginBottom="5px" width="100%" display="flex" justifyContent="space-evenly">
-            <ArticleCard article={articles[2]} />
-            <ArticleCard article={articles[3]} />
+          <Box display="flex" justifyContent="space-between" width="100%" marginBottom="10px">
+            {articles.slice(2, 4).map((article) => {
+              return <ArticleCard article={article} key={article.id} />;
+            })}
           </Box>
         </Box>
       )}

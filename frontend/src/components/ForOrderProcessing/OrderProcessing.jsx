@@ -12,12 +12,12 @@ import {
 import useTheme from "../../hooks/useTheme";
 import InputMask from 'react-input-mask';
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
-import { LogoNovaPosta, LogoMastercard, LogoVisa, LogoGooglePay } from "../../icons/icons.jsx";
+import { LogoNovaPosta, LogoMastercard, LogoVisa, LogoGooglePay, CloseBtn } from "../../icons/icons.jsx";
 
 export default function OrderProcessing() {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width: 500px)");
-  const isDesktop = useMediaQuery("(min-width: 500.01px)");
+  const isDesktop = useMediaQuery("(min-width: 501px)");
 
   const tmpArticles = [
     { id: 1, nameArticle: "Laptop", priceArticle: 999.99, fotoArticle: '/images/pexels1.jpg', amount: 10, ratingArticle: 4.5 },
@@ -33,7 +33,7 @@ export default function OrderProcessing() {
   };
 
   const renderTypography = (text, styles = {}) => (
-    <Typography sx={{ fontFamily: "Montserrat", ...styles }}>{text}</Typography>
+    <Typography sx={{ fontFamily: "Montserrat", color: theme.mainText, ...styles }}>{text}</Typography>
   );
 
   const renderLabel = (text, icon, styles = {}) => (
@@ -95,7 +95,7 @@ export default function OrderProcessing() {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                bgcolor: "background.paper",
+                bgcolor: theme.background,
                 overflow: "hidden",
                 borderRadius: "40px",
             }}>
@@ -103,10 +103,9 @@ export default function OrderProcessing() {
                     {renderTypography("ОФОРМЛЕННЯ ЗАМОВЛЕННЯ", {
                         fontSize: "30px",
                         fontWeight: "600",
-                        //margin: "20px 30px 20px 30px",
                     })}
                     <Box onClick={toggleOpenProcessing} sx={{ cursor: "pointer", }}>
-                      <img src="./images/CloseBtn.svg" alt="Close" />
+                      <CloseBtn/>
                     </Box>
                 </Box>
                 <Box sx={{width: "95%", display: "flex", justifyContent: "space-between", alignItems: "start", margin: "20px 30px 20px 30px",}}>
@@ -119,9 +118,11 @@ export default function OrderProcessing() {
                                 fontWeight: "bold",
                             })}
                             <TextField id="recipient"
-                            label="Прізвище та Ім'я одержувача"
+                            label={<Typography sx={{marginLeft: "10px", color: theme.mainText,}}>Прізвище та Ім'я одержувача</Typography>}
                             variant="standard"
-                            sx={{marginLeft: "30px", width: "90%"}}
+                            sx={{marginLeft: "30px", width: "90%", backgroundColor: theme.backgroundText,
+                              borderRadius: "10px",
+                            }}
                             />
                             <InputMask
                             mask="+38 (099) 999-99-99"
@@ -129,9 +130,10 @@ export default function OrderProcessing() {
                                 {() => (
                                     <TextField
                                     id="phone"
-                                    label="Номер телефону"
+                                    label={<Typography sx={{marginLeft: "10px", color: theme.mainText,}}>Номер телефону</Typography>}
                                     variant="standard"
-                                    sx={{ margin: "5px 0 20px 30px", width: "90%", }}
+                                    sx={{ margin: "5px 0 20px 30px", width: "90%", backgroundColor: theme.backgroundText,
+                                      borderRadius: "10px", }}
                                     required
                                     />
                                 )}
@@ -158,9 +160,9 @@ export default function OrderProcessing() {
                               <FormControl component="postment" sx={{marginLeft: "10px", width: "100%",}}>
                                 <RadioGroup defaultValue="postoffice">
                                   <Box sx={{width: "90%", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-                                    <FormControlLabel value="postoffice" control={<Radio color="default" />} label="У відділення" />
-                                    <FormControlLabel value="postmachine" control={<Radio color="default" />} label="У поштомат" />
-                                    <FormControlLabel value="courier" control={<Radio color="default" />} label="Кур'єром" />
+                                    <FormControlLabel value="postoffice" control={<Radio color="default" />} label={<Typography sx={{marginLeft: "10px", color: theme.mainText,}}>У відділення</Typography>} />
+                                    <FormControlLabel value="postmachine" control={<Radio color="default" />} label={<Typography sx={{marginLeft: "10px", color: theme.mainText,}}>У поштомат</Typography>} />
+                                    <FormControlLabel value="courier" control={<Radio color="default" />} label={<Typography sx={{marginLeft: "10px", color: theme.mainText,}}>Кур'єром</Typography>} />
                                   </Box>
                                 </RadioGroup>
                               </FormControl>
@@ -175,9 +177,9 @@ export default function OrderProcessing() {
                           })}
                           <FormControl component="payment" sx={{marginLeft: "10px"}}>
                             <RadioGroup defaultValue="cardpay" >
-                              <FormControlLabel value="cardpay" control={<Radio color="default" />} label={renderLabel("Безпечна оплата карткою", logoCard(<LogoMastercard/>, <LogoVisa />), {marginRight: "10px",})} />
-                              <FormControlLabel value="googlpay" control={<Radio color="default" />} label={renderLabel("Google Pay", <LogoGooglePay />, {marginRight: "10px",})} />
-                              <FormControlLabel value="other" control={<Radio color="default" />} label="Оплата при отриманні" />
+                              <FormControlLabel value="cardpay" control={<Radio color="default" />} label={renderLabel("Безпечна оплата карткою", logoCard(<LogoMastercard/>, <LogoVisa />), {marginRight: "10px", color: theme.mainText,})} />
+                              <FormControlLabel value="googlpay" control={<Radio color="default" />} label={renderLabel("Google Pay", <LogoGooglePay />, {marginRight: "10px", color: theme.mainText,})} />
+                              <FormControlLabel value="other" control={<Radio color="default" />} label={<Typography sx={{color: theme.mainText,}}>Оплата при отриманні</Typography>} />
                             </RadioGroup>
                           </FormControl>
                         </Box>

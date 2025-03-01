@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
 import React from "react";
+import { Button, Typography } from "@mui/material";
 import useTheme from "../../../hooks/useTheme";
 
 export default function LoginFormButton({onClick}) {
@@ -10,6 +10,7 @@ export default function LoginFormButton({onClick}) {
       sx={{
         fontFamily:"Montserrat",
         marginTop: "10px",
+        marginBottom: "10px",
         width: "380px",
         height: "48px",
         borderRadius: "10px",
@@ -23,7 +24,13 @@ export default function LoginFormButton({onClick}) {
       }}
       variant="contained"
     >
-      Увійти
+      <Typography sx={{
+        fontFamily: "Montserrat",
+        fontSize: "22px",
+        fontWeight: "500",
+      }}>
+        УВІЙТИ
+      </Typography>
     </Button>
   );
 }

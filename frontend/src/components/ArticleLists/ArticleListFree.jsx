@@ -7,7 +7,7 @@ import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 export default function ArticleListFree({ showMore = true, Title, Articles }) {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width: 500px)");
-  const isDesktop = useMediaQuery("(min-width: 500.01px)");
+  const isDesktop = useMediaQuery("(min-width: 501px)");
   return (
     <>
       {isMobile && (

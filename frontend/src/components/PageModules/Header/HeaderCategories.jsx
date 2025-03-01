@@ -20,20 +20,20 @@ import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
 
 const responsive = {
   superLargeDesktop: {
-    breakpoint: { max: 4000, min: 1801 },
-    items: 5,
+    breakpoint: { max: 4000, min: 1921 },
+    items: 10,
   },
   desktop: {
-    breakpoint: { max: 1800, min: 1025 },
-    items: 4,
+    breakpoint: { max: 1920, min: 1025 },
+    items: 8,
   },
   tablet: {
     breakpoint: { max: 1024, min: 501 },
-    items: 3,
+    items: 4,
   },
   mobile: {
     breakpoint: { max: 500, min: 0 },
-    items: 4,
+    items: 3,
   },
 };
 
@@ -54,8 +54,7 @@ export default function HeaderCategories() {
   const theme = useTheme();
 
   const isMobile = useMediaQuery("(max-width: 500px)");
-  const isTablet = useMediaQuery("(min-width: 500.01px)");
-  const isDesktop = useMediaQuery("(min-width: 1200px)");
+  const isDesktop = useMediaQuery("(min-width: 501px)");
 
   const renderCategory = ({ icon: Icon, label }) => (
     <Box
@@ -68,13 +67,13 @@ export default function HeaderCategories() {
       <Typography
         alignItems="end"
         sx={{
-            whiteSpace: "nowrap", // Prevent text from wrapping
-          overflow: "hidden",   // Hide overflowing text
-          textOverflow: "ellipsis", // Add ellipsis for overflowed text
-            width:"100%",
-          color: theme.secondaryText,
-          fontSize: "16px",
-          fontFamily: "Ubuntu",
+		whiteSpace: "nowrap", // Prevent text from wrapping
+		overflow: "hidden",   // Hide overflowing text
+		textOverflow: "ellipsis", // Add ellipsis for overflowed text
+		width:"100%",
+		color: theme.secondaryText,
+		fontSize: "16px",
+		fontFamily: "Ubuntu",
         }}
       >
         {label}
@@ -88,14 +87,13 @@ export default function HeaderCategories() {
       {isMobile && (
         <Box
           sx={{
-            width: "95%",
-            margin: "auto",
-            marginTop: "10px",
-            marginBottom: "10px",
-          }}
-          justifyContent="space-between"
-          alignItems="center"
-        >
+            	width: "95%",
+          	margin: "auto",
+          	marginTop: "5px",
+          	marginBottom: "5px",
+          	justifyContent: "space-between",
+          	alignItems: "center",
+          }}>
 <Carousel
             responsive={responsive}
             autoPlay={false} // Автоматическая прокрутка
@@ -117,19 +115,18 @@ export default function HeaderCategories() {
           </Carousel>
         </Box>
       )}
-      {(isTablet || isDesktop) && (
+      {isDesktop && (
         <Box
           sx={{
             width: "82%",
-            height: "5vh",
-            margin: "auto",
-            marginTop: "10px",
-            marginBottom: "10px",
-          }}
-          justifyContent="space-between"
-          alignItems="center"
-          display="flex"
-        >
+          height: "5vh",
+          margin: "auto",
+          marginTop: "10px",
+          marginBottom: "10px",
+          justifyContent: "space-between",
+          alignItems: "center",
+          display: "flex",
+        }}>
             {categories.map((category, index) => (
               <Box key={index} sx={{ padding: "10px" }}>
                 {renderCategory(category)}

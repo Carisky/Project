@@ -71,9 +71,8 @@ export default function Header({ ShowCategories = true }) {
   ];
   
   const theme = useTheme();
-  const isMobile = useMediaQuery("(max-width: 500px)");
-  const isTablet = useMediaQuery("(min-width: 500.01px) and (max-width: 1200px)");
-  const isDesktop = useMediaQuery("(min-width: 1200px)");
+  const isMobile = useMediaQuery("(max-width: 430px)");
+  const isDesktop = useMediaQuery("(min-width: 431px)");
 
   const [openAuth, setOpenAuth] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
@@ -99,14 +98,14 @@ export default function Header({ ShowCategories = true }) {
     <Box
       sx={{
         borderRadius: "13px",
-        backgroundColor: theme.background,
+        backgroundColor: theme.backgroundText,
         height: "58%",
         width: "100%",
         display: "flex",
         alignItems: "center",
       }}
     >
-      <SearchIcon sx={{ marginLeft:"10px",color: "action.active", mr: 1, my: 1.5 }} />
+      <SearchIcon sx={{ marginLeft:"10px",color: theme.mainText, mr: 1, my: 1.5 }} />
       <TextField
         fullWidth
 
@@ -115,6 +114,7 @@ export default function Header({ ShowCategories = true }) {
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyDown={handleSearch}
         sx={{
+          backgroundColor: theme.backgroundText,
           "& .MuiInput-underline:before": { borderBottom: "none" },
           "& .MuiInput-underline:after": { borderBottom: "none" },
           "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
@@ -140,10 +140,8 @@ export default function Header({ ShowCategories = true }) {
     <>
       <Box
         sx={{
-          marginLeft: "9%",
-          marginRight: "9%",
-          marginTop: "10px",
-          marginBottom: "10px",
+          margin: "0px 9% 10px 9%",
+          paddingTop: "20px",
           width: "82%",
           display: "flex",
           alignItems: "center",
@@ -201,7 +199,21 @@ export default function Header({ ShowCategories = true }) {
             {renderIconWithText(LogoProfil, "Увійти")}
           </Box>
           <Modal open={openAuth} onClose={handleAuthModal}>
-            <AuthPage />
+            <Box sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: "380px",
+              height: "410px",
+              bgcolor: theme.background,
+              border: '2px solid #000',
+              boxShadow: 24,
+              padding: "5px 15px 15px 15px",
+              borderRadius: "25px",
+            }}>
+              <AuthPage onClose={handleAuthModal} />
+            </Box>
           </Modal>
           <Box
             sx={{
@@ -237,10 +249,9 @@ export default function Header({ ShowCategories = true }) {
   const renderMobileHeader = () => (
     <Box
       sx={{
-        width: "95%",
-        margin: "auto",
-        marginTop: "10px",
-        marginBottom: "10px",
+        width: "100%",
+        paddingTop: "10px",
+        margin: "0px 0px 0px 0px",
       }}
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -252,7 +263,12 @@ export default function Header({ ShowCategories = true }) {
           <LogoBurger />
         </AlignSvg>
       </Box>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box sx={{
+        margin: "10px 0px 0px 0px",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}>
         {renderIconWithText(LogoHeart, "Обране")}
         <Box onClick={handleAuthModal} sx={{ cursor: "pointer" }}>
           {renderIconWithText(LogoProfil, "Увійти")}
@@ -293,7 +309,7 @@ export default function Header({ ShowCategories = true }) {
   return (
     <>
       {isDesktop && renderDesktopHeader()}
-      {(isTablet || isMobile) && renderMobileHeader()}
+      {isMobile && renderMobileHeader()}
     </>
   );
 }

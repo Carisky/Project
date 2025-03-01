@@ -1,6 +1,6 @@
 import { Box, ButtonBase, Modal, TextField, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { LogoCart } from "../../icons/icons";
+import { LogoCart, CloseBtn } from "../../icons/icons";
 import useTheme from "../../hooks/useTheme";
 import CheckBox from "../Selectors/CheckBox";
 import ArticleList from "./ArticleList";
@@ -11,7 +11,7 @@ import OrderProcessing from "../ForOrderProcessing/OrderProcessing.jsx";
 export default function Cart() {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width: 500px)");
-  const isDesktop = useMediaQuery("(min-width: 500.01px)");
+  const isDesktop = useMediaQuery("(min-width: 501px)");
 
   const [openCart, setOpenCart] = useState(false);
   const [Articles, setArticles] = useState([]); // State to hold the articles
@@ -78,7 +78,7 @@ export default function Cart() {
             </Box>
             {renderTypography("Кошик", {
               fontSize: "18px",
-              color: theme.secondaryText,
+              color: theme.mainText,
             })}
           </Box>
           
@@ -93,7 +93,7 @@ export default function Cart() {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              bgcolor: "background.paper",
+              bgcolor: theme.background,
               borderRadius: "40px",
               overflow: "hidden",
             }}
@@ -111,26 +111,28 @@ export default function Cart() {
                   {renderTypography("КОШИК", {
                     fontSize: "30px",
                     fontWeight: "600",
+                    color: theme.mainText,
                   })}
                   {renderTypography(`${ArticlesCount} товарів`, {
                     fontSize: "13px",
                     fontWeight: "400",
+                    color: theme.mainText,
                   })}
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <CheckBox text="Обрати Все" />
                     {renderTypography(
                       `обрано ${ArticlesCount} з ${ArticlesCount} `,
-                      { color: "#808080" }
+                      { color: theme.secondaryText }
                     )}
                     {renderTypography("Видалити обране", {
                       fontWeight: "500",
                       marginLeft: "30px",
-                      color: "#FF2A2A",
+                      color: theme.accentText,
                     })}
                   </Box>
                 </Box>
                 <Box onClick={toggleCart} sx={{ padding: "25px 30px 0 0", cursor: "pointer", }}>
-                  <img src="./images/CloseBtn.svg" alt="Close" />
+                  <CloseBtn/>
                 </Box>
               </Box>
               
@@ -159,6 +161,7 @@ export default function Cart() {
                     {renderTypography("ЗАМОВЛЕННЯ", {
                       fontSize: "30px",
                       fontWeight: "600",
+                      color: theme.mainText,
                     })}
                     <Box>
                       {renderPriceItem(
@@ -171,23 +174,28 @@ export default function Cart() {
                           fontSize: "17px",
                           color: "#808080",
                         })}
-                        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                        <Box sx={{ borderRadius: "10px", display: "flex", justifyContent: "space-between", backgroundColor: theme.backgroundText, }}>
                           <TextField
                           id="promo-code"
                           label="Введіть промокод"
                           variant="standard"
+                          sx={{color: theme.buttonColor, margin: "0px 0px 10px 10px", }}
                           />
                           <ButtonBase
                           sx={{
-                            backgroundColor: "#F1F1F5",
+                            backgroundColor: theme.buttonColor,
                             borderRadius: "10px",
-                            padding: "0 20px",
+                            width: "150px",
                             fontFamily: "Montserrat",
                             fontSize: "14px",
                             fontWeight: "600",
                           }}
                           >
-                            Застосувати
+                            {renderTypography("Застосувати", {
+                              fontSize: "17px",
+                              fontWeight: "500",
+                              color: theme.mainText,
+                            })}
                           </ButtonBase>
                         </Box>
                         <Box
@@ -199,11 +207,13 @@ export default function Cart() {
                         >
                           {renderTypography("До оплати без доставки:", {
                             fontSize: "17px",
-                            fontWeight: "600",
+                            fontWeight: "500",
+                            color: theme.mainText,
                           })}
                           {renderTypography(`${calculatePriceToPay(Articles)} ₴`, {
                             fontSize: "17px",
-                            fontWeight: "600",
+                            fontWeight: "500",
+                            color: theme.mainText,
                           })}
                         </Box>
                         <OrderProcessing/>
@@ -317,7 +327,7 @@ export default function Cart() {
                           fontSize: "17px",
                           color: "#808080",
                         })}
-                        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                        <Box sx={{ display: "flex", justifyContent: "space-between", }}>
                           <TextField
                           id="promo-code"
                           label="Введіть промокод"

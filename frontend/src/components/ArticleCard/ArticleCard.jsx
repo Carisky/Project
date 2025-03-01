@@ -9,6 +9,7 @@ import useTheme from "../../hooks/useTheme";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 
 const ArticleCardContent = ({ article, theme }) => {
+  const isMobile = useMediaQuery("(max-width: 430px)");
   return (
     <>
       <Box
@@ -34,6 +35,7 @@ const ArticleCardContent = ({ article, theme }) => {
         </a>
         <FavoriteBorderIcon
           sx={{
+            color: useTheme().mainText,
             position: "absolute",
             top: "16px",
             right: "16px",
@@ -45,10 +47,8 @@ const ArticleCardContent = ({ article, theme }) => {
       <Box sx={{ display: "flex" }}>
         <Typography
           sx={{
-            marginLeft: "15px",
-            marginRight: "15px",
-            marginTop: "8px",
-            fontFamily: "Libre Franklin",
+		margin: "8px 10px 0px 10px",
+          	fontFamily: "Ubuntu",
           }}
         >
           <Typography sx={{ color: theme.mainText, fontSize: "24px" }}>
@@ -62,10 +62,8 @@ const ArticleCardContent = ({ article, theme }) => {
       <Box
         sx={{
           display: "flex",
-          marginLeft: "15px",
-          marginRight: "15px",
-          marginTop: "7px",
-          fontFamily: "Libre Franklin",
+          margin: "7px 10px 0px 10px",
+          fontFamily: "Ubuntu",
         }}
       >
         <Typography
@@ -81,8 +79,7 @@ const ArticleCardContent = ({ article, theme }) => {
         <Typography
           sx={{
             fontSize: "17px",
-            marginTop: "6px",
-            marginRight: "7px",
+            margin: "6px 7px 0px 0px",
             fontWeight: 400,
             color: theme.secondaryText,
           }}
@@ -104,9 +101,7 @@ const ArticleCardContent = ({ article, theme }) => {
         <Box
           sx={{
             display: "flex",
-            marginLeft: "15px",
-            marginRight: "15px",
-            marginTop: "7px",
+	    margin: "7px 15px 0px 15px",
           }}
         >
           <StarIcon
@@ -158,6 +153,7 @@ export default function ArticleCard({ article, isCarousel }) {
     border: "none",
     height: "470px",
     width: isCarousel ? "95%" : "232px",
+    margin: "0px 5px 0px 5px",
     boxShadow: "none",
     borderRadius: "14px",
     backgroundColor: theme.mainColor,
@@ -167,15 +163,16 @@ export default function ArticleCard({ article, isCarousel }) {
     userSelect: "none",
     cursor: "pointer",
     border: "none",
-    height: "470px",
-    width: isCarousel ? "95%" : "200px",
+    height: "400px",
+    width: isCarousel ? "95%" : "auto",
+    margin: "0px 5px 0px 5px",
     boxShadow: "none",
     borderRadius: "14px",
     backgroundColor: theme.mainColor,
   };
 
   return (
-    <Box sx={{ margin: "0px" }}>
+    <Box sx={{ margin: "0px", width: "50%", justifyContent: "center", alignItems: "center", }}>
       <Card
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}

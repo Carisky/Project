@@ -72,16 +72,16 @@ export default function ProductPage() {
   };
 
   const isMobile = useMediaQuery("(max-width: 500px)");
-  const isDesktop = useMediaQuery("(min-width: 500.01px)");
+  const isDesktop = useMediaQuery("(min-width: 501px)");
 
   return (
     <Box
       sx={{
-        backgroundColor: theme.backgroundColor,
+        backgroundColor: theme.background,
         width: "100%",
       }}
     >
-      <Box marginBottom="10px"><Header></Header></Box>
+      <Box sx={{ marginBottom: "10px", backgroundColor: theme.background, }}><Header></Header></Box>
       <ProductCardPage />
       <Box marginTop="40px">
         <Typography sx={textOneStyles} textAlign="center">Також Вас можуть зацікавити</Typography>

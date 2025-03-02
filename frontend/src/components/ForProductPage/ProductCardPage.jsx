@@ -20,6 +20,7 @@ import AllCharacter from "./AllCharacter.jsx";
 import AllDescription from "./AllDescription.jsx";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+
 export default function ProductCardPage() {
   const { id } = useParams(); // Получаем id из URL
   const [article, setArticle] = useState(null);
@@ -87,29 +88,30 @@ export default function ProductCardPage() {
   const characteristics = article?.tags;
 
   const keyStyle = {
-    color: theme.mainText,
+    color: "black",//theme.mainText,
     fontSize: "24px",
     fontWeight: "bold",
     fontFamily: "Montserrat",
   };
   const valueStyle = {
-    marginLeft: "5px",
+    //marginLeft: "5px",
     color: theme.secondaryColor,
-    fontSize: "24px",
+    fontSize: "16px",
     fontWeight: "bold",
     fontFamily: "Montserrat",
   };
 
-  const Characteristick = ({ value }) => (
+  const Characteristick = ({ //key,
+    value }) => (
     <>
       <Box
         borderBottom={1}
         sx={{
           alignItems: "end",
-          width: "90%",
+          //width: "100%",
           display: "flex",
           justifyContent: "space-between",
-          margin: "20px 30px 10px 30px",
+          margin: "0px 10px 10px 10px",
         }}
       >
         <Typography sx={valueStyle}>{value}</Typography>
@@ -223,7 +225,7 @@ export default function ProductCardPage() {
               marginBottom: "40px",
               display: "flex",
               //overflowBlock: "scroll",
-              backgroundColor: theme.backgroundColor,
+              backgroundColor: theme.background,
             }}
           >
             <Box
@@ -232,7 +234,7 @@ export default function ProductCardPage() {
                 width: "50%",
                 marginRight: "1%",
                 justifyContent: "center",
-                backgroundColor: theme.backgroundColor,
+                backgroundColor: theme.background,
               }}
             >
               <ImageGallery
@@ -246,7 +248,7 @@ export default function ProductCardPage() {
                 width: "50%",
                 borderRadius: "20px",
                 //boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-                backgroundColor: theme.backgroundColor,
+                backgroundColor: theme.background,
                 position: "relative",
                 justifyContent: "space-between",
               }}
@@ -258,7 +260,7 @@ export default function ProductCardPage() {
                   //marginBottom: "5px",
                   borderRadius: "20px",
                   boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-                  backgroundColor: theme.backgroundColor,
+                  backgroundColor: theme.background,
                   position: "absolute",
                   top: "0px",
                 }}
@@ -293,7 +295,7 @@ export default function ProductCardPage() {
                 <Box display="flex">
                   <Typography
                     sx={{
-                      color: "black",
+                      color: theme.mainText,
                       fontSize: "16px",
                       fontFamily: "Montserrat",
                       marginLeft: "20px",
@@ -362,7 +364,7 @@ export default function ProductCardPage() {
                 <Box display="flex" alignItems="end" marginLeft="20px">
                   <Typography
                     sx={{
-                      color: "red",
+                      color: theme.accentText,
                       fontSize: "38px",
                       fontWeight: "bold",
                       fontFamily: "Montserrat",
@@ -417,7 +419,7 @@ export default function ProductCardPage() {
                   boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
                   position: "absolute",
                   bottom: "0px",
-                  backgroundColor: theme.backgroundColor,
+                  backgroundColor: theme.background,
                 }}
               >
                 <Box
@@ -557,7 +559,7 @@ export default function ProductCardPage() {
               marginTop: "40px",
               marginBottom: "10px",
               display: "flex",
-              backgroundColor: theme.backgroundColor,
+              backgroundColor: theme.background,
             }}
           >
             <Box
@@ -643,95 +645,375 @@ export default function ProductCardPage() {
       )}
       {isMobile && (
         <>
-          <span>HELLO WORLD!!!</span>
-          <span>
-            HELLO WORLD!!!HELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLO
-          </span>
           <Box
             sx={{
-              height: "100%",
-              width: "29%",
-              borderRadius: "20px",
-              boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+              width: "100%",
+              marginBottom: "10px",
+              backgroundColor: theme.background,
             }}
           >
             <Box
               sx={{
-                marginLeft: "20px",
-                marginRight: "10px",
-                marginTop: "10px",
+                width: "100%",
                 marginBottom: "20px",
-                display: "flex",
-                cursor: "pointer",
+                justifyContent: "center",
+                backgroundColor: theme.background,
               }}
             >
-              <AlignSvg>
-                <LogoUser />
-              </AlignSvg>
-              <Box
-                sx={{
-                  alignContent: "center",
-                  marginLeft: "10px",
-                }}
-              >
-                <Typography sx={textOneStyles}>{nameUser}</Typography>
-                <Typography sx={textTwoStyles}>
-                  Змінити особисті дані
-                </Typography>
-              </Box>
-            </Box>
-            <Box sx={blockStyles}>
-              <Box>
-                <Typography sx={textOneStyles}>Обране</Typography>
-                <Typography sx={textTwoStyles}>Кількість товарів</Typography>
-              </Box>
-              <AlignSvg>
-                <LogoObrane />
-              </AlignSvg>
-            </Box>
-            <Box sx={blockStyles}>
-              <Box>
-                <Typography sx={textOneStyles}>Мої покупки</Typography>
-                <Typography sx={textTwoStyles}>Дивитись</Typography>
-              </Box>
-              <AlignSvg>
-                <LogoMyShop />
-              </AlignSvg>
+              <ImageGallery
+                mainImage={mainImage}
+                similarImages={similarImages}
+              />
             </Box>
             <Box
               sx={{
-                borderRadius: "20px",
-                padding: "10px",
-                marginTop: "10px",
-                marginLeft: "20px",
-                marginRight: "20px",
-                marginBottom: "10px",
+                //height: "100%",
+                width: "100%",
+                borderRadius: "10px",
+                //boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                backgroundColor: theme.background,
+                justifyContent: "space-between",
               }}
             >
-              <Typography sx={textOneStyles}>Сервіси та допомога</Typography>
-              <Typography sx={textTwoStyles}>Написати в підтримку</Typography>
-              <Typography sx={textTwoStyles}>Повернення товару</Typography>
-              <Typography sx={textTwoStyles}>Вийти з акаунту</Typography>
+              <Box
+                sx={{
+                  //height: "40%",
+                  width: "100%",
+                  //marginBottom: "5px",
+                  borderRadius: "10px",
+                  boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  backgroundColor: theme.background,
+                }}
+              >
+                <Box
+                  sx={{
+                    borderRadius: "20px",
+                    marginLeft: "20px",
+                    marginRight: "20px",
+                    //marginBottom: "16px",
+                    paddingTop: "20px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography
+                      sx={{
+                        color: theme.mainText,
+                        fontSize: "28px",
+                        fontWeight: "bold",
+                        fontFamily: "Montserrat",
+                      }}
+                    >
+                      {article?.name}
+                    </Typography>
+                  <AlignSvg>
+                    <LogoMyHeart />
+                  </AlignSvg>
+                </Box>
+                <Box display="flex">
+                  <Typography
+                    sx={{
+                      color: theme.mainText,
+                      fontSize: "16px",
+                      fontFamily: "Montserrat",
+                      marginLeft: "20px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Продавець:{" "}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontWeight: "bold",
+                      marginLeft: "10px",
+                      color: theme.secondaryColor,
+                      fontSize: "16px",
+                      fontFamily: "Montserrat",
+                    }}
+                  >
+                    {article?.seller}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={blockStyles}
+                  padding="20px"
+                  alignItems="center"
+                  boxShadow="rgba(0, 0, 0, 0.35) 0px 5px 15px"
+                >
+                  <Box>
+                    <Box display="flex" alignItems="center">
+                      <RevieStar />
+                      <Typography
+                        sx={{
+                          fontWeight: "bold",
+                          marginLeft: "10px",
+                          color: theme.secondaryColor,
+                          fontSize: "16px",
+                          fontFamily: "Montserrat",
+                        }}
+                      >
+                        4.0
+                      </Typography>
+                    </Box>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        //marginLeft: "10px",
+                        color: theme.secondaryText,
+                        fontSize: "14px",
+                        fontFamily: "Montserrat",
+                      }}
+                    >
+                      (34 оцінки)
+                    </Typography>
+                  </Box>
+                  <RevieStarS />
+                  <Typography
+                    sx={{
+                      fontWeight: "bold",
+                      color: theme.secondaryColor,
+                      fontSize: "14px",
+                      fontFamily: "Montserrat",
+                    }}
+                  >
+                    Залишити відгук
+                  </Typography>
+                </Box>
+                <Box display="flex" alignItems="end" marginLeft="20px">
+                  <Typography
+                    sx={{
+                      color: theme.accentText,
+                      fontSize: "38px",
+                      fontWeight: "bold",
+                      fontFamily: "Montserrat",
+                    }}
+                  >
+                    {(article?.price - (article?.price * 25) / 100).toFixed(2)}₴
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: theme.secondaryText,
+                      fontSize: "22px",
+                      fontFamily: "Montserrat",
+                      textDecorationLine: "line-through",
+                      marginLeft: "20px",
+                    }}
+                  >
+                    {article?.price}₴
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  <Button
+                    sx={{
+                      width: "50%",
+                      borderRadius: "13px",
+                      backgroundColor: theme.mainColor,
+                      marginBottom: "15px",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "white",
+                        fontSize: "18px",
+                        fontFamily: "Montserrat",
+                      }}
+                    >
+                      Купити
+                    </Typography>
+                  </Button>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  marginTop: "5px",
+                  borderRadius: "20px",
+                  boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  backgroundColor: theme.background,
+                }}
+              >
+                <Box
+                  sx={{
+                    margin: "10px 10px 10px 20px",
+                    paddingTop: "10px",
+                    display: "flex",
+                  }}
+                >
+                  <AlignSvg><LogoGeoDot /></AlignSvg>
+                  <Box>
+                    <Typography
+                      sx={{
+                        color: theme.mainText,
+                        fontSize: "22px",
+                        fontWeight: "bold",
+                        fontFamily: "Montserrat",
+                        margin: "10px 0px 10px 20px",
+                      }}
+                    >
+                      Доставка м. Київ
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    margin: "10px 10px 10px 20px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <AlignSvg>
+                    <LogoKur />
+                  </AlignSvg>
+                  <Box>
+                    <Typography
+                      sx={{
+                        color: theme.mainText,
+                        fontSize: "16px",
+                        fontWeight: "medium",
+                        fontFamily: "Montserrat",
+                        marginLeft: "20px",
+                      }}
+                    >
+                      Доставка кур'єром Нової Пошти
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      sx={{
+                        color: theme.mainText,
+                        fontSize: "12px",
+                        fontWeight: "medium",
+                        fontFamily: "Montserrat",
+                        textAlign: "right",
+                      }}
+                    >
+                      Тариф перевізника
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    margin: "10px 10px 10px 20px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <AlignSvg>
+                    <LogoCar />
+                  </AlignSvg>
+                  <Box>
+                    <Typography
+                      sx={{
+                        color: theme.mainText,
+                        fontSize: "16px",
+                        fontWeight: "medium",
+                        fontFamily: "Montserrat",
+                        marginLeft: "20px",
+                      }}
+                    >
+                      Доставка у відділення Нової Пошти
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      sx={{
+                        color: theme.mainText,
+                        fontSize: "12px",
+                        fontWeight: "medium",
+                        fontFamily: "Montserrat",
+                        textAlign: "right",
+                      }}
+                    >
+                      99 - 119₴
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
             </Box>
           </Box>
           <Box
             sx={{
-              height: "100%",
-              width: "71%",
-              marginLeft: "20px",
-              borderRadius: "20px",
-              boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+              //height: "570px",
+              //width: "100%",
+              margin: "20px 10px 10px 10px",
+              //display: "flex",
+              backgroundColor: theme.background,
             }}
           >
-            {userData ? (
-              WindowUserData()
-            ) : favorData ? (
-              WindowFavorData()
-            ) : myShop ? (
-              WindowMyShop()
-            ) : (
-              <></>
-            )}
+            <Box
+              sx={{
+                width: "100%",
+                borderRadius: "20px",
+                backgroundColor: theme.backgroundText,
+                alignContent: "stretch",
+              }}
+            >
+              <Typography
+                sx={{
+                  color: theme.mainText,
+                  fontSize: "36px",
+                  fontWeight: "bold",
+                  fontFamily: "Montserrat",
+                  textAlign: "center",
+                  //margin: "0px 10px 10px 10px",
+                }}
+              >
+                Опис
+              </Typography>
+              <Typography
+                sx={{
+                  color: theme.mainText,
+                  fontSize: "18px",
+                  fontWeight: "medium",
+                  fontFamily: "Montserrat",
+                  margin: "10px 10px 10px 10px",
+                  textAlign: "justify",
+                }}
+              >
+                {article?.description}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                overflow: "scroll",
+                width: "100%",
+                borderRadius: "20px",
+                backgroundColor: theme.backgroundText,
+                marginTop: "20px",
+                "&::-webkit-scrollbar": { display: "none" }, // скрывает скроллбар в Chrome, Safari и Opera
+                msOverflowStyle: "none", // скрывает скроллбар в IE и Edge
+                scrollbarWidth: "none", // скрывает скроллбар в Firefox
+              }}
+            >
+              <Typography
+                sx={{
+                  color: theme.mainText,
+                  fontSize: "28px",
+                  fontWeight: "bold",
+                  fontFamily: "Montserrat",
+                  textAlign: "center",
+                }}
+              >
+                Характеристики
+              </Typography>
+              {article &&
+                article.tags &&
+                article.tags.map((tag) => (
+                  <Characteristick key={tag} value={tag} />
+                ))}
+              <Modal open={allCharacter} onClose={allCharacterModal}>
+                <AllCharacter
+                  characteristick={characteristics}
+                  product={articl}
+                  onClose={allCharacter}
+                />
+              </Modal>
+            </Box>
           </Box>
         </>
       )}

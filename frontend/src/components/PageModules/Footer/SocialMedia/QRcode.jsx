@@ -3,8 +3,6 @@ import React from 'react'
 
 export default function QRcode() {
   return (
-    <Box>
-      <img height={175} width={175} src="/images/qrcode.png"></img>
-    </Box>
+    <img height="75%" width="75%" src="/images/qrcode.png" />
   )
 }

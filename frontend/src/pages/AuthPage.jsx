@@ -12,7 +12,7 @@ import PasswordRecoveryField from "../components/LoginForm/PasswordRecovery/Pass
 import { loginUser, registerUser, recoverPassword } from "../API/services/userService";
 import { loginSeller, registerSeller } from "../API/services/sellerService";
 
-export default function AuthPage() {
+export default function AuthPage(props) {
   const theme = useTheme();
 
   // accountType: "user" или "seller"

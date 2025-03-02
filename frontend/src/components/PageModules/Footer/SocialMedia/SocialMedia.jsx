@@ -17,7 +17,7 @@ export default function SocialMedia() {
       sx={{
         borderRadius: "20px",
         backgroundColor: theme.secondaryColor,
-        width: "96%",
+        width: "100%",
         height: "221px",
         margin: "auto",
         display: "flex",

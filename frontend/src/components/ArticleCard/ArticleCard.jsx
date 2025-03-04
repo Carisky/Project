@@ -9,19 +9,17 @@ import useTheme from "../../hooks/useTheme";
 import { useMediaQuery } from "../../hooks/useMediaQuery.js";
 
 const ArticleCardContent = ({ article, theme }) => {
-  const isMobile = useMediaQuery("(max-width: 430px)");
+
   return (
     <>
-      <Box
-        sx={{
-          position: "relative",
-          borderRadius: "13px",
-          height: "250px",
-          width: "100%",
-        }}
-      >
-        <a href={`product/${article.id}`} >
-        <img
+      <Box sx={{
+        position: "relative",
+        borderRadius: "13px",
+        height: "250px",
+        width: "100%",
+      }}>
+        <a href={`product/${article.id}`}>
+          <img
           src={article.photos[0] ? `http://localhost:5000${article.photos[0]}` : ""}
           alt={article.name}
           loading="lazy"
@@ -30,27 +28,22 @@ const ArticleCardContent = ({ article, theme }) => {
             height: "100%",
             objectFit: "cover",
             borderRadius: "13px",
-          }}
-        />
+          }} />
         </a>
-        <FavoriteBorderIcon
-          sx={{
-            color: useTheme().mainText,
-            position: "absolute",
-            top: "16px",
-            right: "16px",
-            cursor: "pointer",
-            zIndex: 2,
-          }}
-        />
+        <FavoriteBorderIcon sx={{
+          color: useTheme().mainText,
+          position: "absolute",
+          top: "16px",
+          right: "16px",
+          cursor: "pointer",
+          zIndex: 2,
+        }} />
       </Box>
       <Box sx={{ display: "flex" }}>
-        <Typography
-          sx={{
-		margin: "8px 10px 0px 10px",
-          	fontFamily: "Ubuntu",
-          }}
-        >
+        <Typography sx={{
+          margin: "8px 10px 0px 10px",
+          fontFamily: "Ubuntu",
+        }}>
           <Typography sx={{ color: theme.mainText, fontSize: "24px" }}>
             {article?.name}
           </Typography>
@@ -59,67 +52,53 @@ const ArticleCardContent = ({ article, theme }) => {
           </Typography>
         </Typography>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          margin: "7px 10px 0px 10px",
-          fontFamily: "Ubuntu",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: "21px",
-            fontWeight: "bolder",
-            marginRight: "7px",
-            color: theme.mainText,
-          }}
-        >
+      <Box sx={{
+        display: "flex",
+        margin: "7px 10px 0px 10px",
+        fontFamily: "Ubuntu",
+      }}>
+        <Typography sx={{
+          fontSize: "21px",
+          fontWeight: "bolder",
+          marginRight: "7px",
+          color: theme.mainText,
+        }}>
           {article?.price}
         </Typography>
-        <Typography
-          sx={{
-            fontSize: "17px",
-            margin: "6px 7px 0px 0px",
-            fontWeight: 400,
-            color: theme.secondaryText,
-          }}
-        >
+        <Typography sx={{
+          fontSize: "17px",
+          margin: "6px 7px 0px 0px",
+          fontWeight: 400,
+          color: theme.secondaryText,
+        }}>
           000$
         </Typography>
-        <Typography
-          sx={{
-            marginTop: "6px",
-            fontSize: "17px",
-            fontWeight: 400,
-            color: theme.accentText,
-          }}
-        >
+        <Typography sx={{
+          marginTop: "6px",
+          fontSize: "17px",
+          fontWeight: 400,
+          color: theme.accentText,
+        }}>
           -34%
         </Typography>
       </Box>
       <Box sx={{ display: "flex" }}>
-        <Box
-          sx={{
-            display: "flex",
-	    margin: "7px 15px 0px 15px",
-          }}
-        >
-          <StarIcon
-            sx={{ marginRight: "3.5px", color: theme.secondaryColor }}
-          />
+        <Box sx={{
+          display: "flex",
+          margin: "7px 15px 0px 15px",
+        }}>
+          <StarIcon sx={{ marginRight: "3.5px", color: theme.secondaryColor }} />
           <Typography sx={{ color: theme.secondaryText, fontSize: "14px" }}>
             {article?.rating}
           </Typography>
         </Box>
         <Box sx={{ display: "flex", marginTop: "7px" }}>
-          <ReviewsIcon
-            sx={{
-              height: "20px",
-              width: "20px",
-              marginRight: "3.12px",
-              color: theme.secondaryColor,
-            }}
-          />
+          <ReviewsIcon sx={{
+            height: "20px",
+            width: "20px",
+            marginRight: "3.12px",
+            color: theme.secondaryColor,
+          }} />
           <Typography sx={{ fontSize: "14px", color: theme.secondaryText }}>
             23 відгуки
           </Typography>
@@ -164,7 +143,7 @@ export default function ArticleCard({ article, isCarousel }) {
     cursor: "pointer",
     border: "none",
     height: "400px",
-    width: isCarousel ? "95%" : "auto",
+    width: isCarousel ? "95%" : "150px",
     margin: "0px 5px 0px 5px",
     boxShadow: "none",
     borderRadius: "14px",
@@ -172,7 +151,7 @@ export default function ArticleCard({ article, isCarousel }) {
   };
 
   return (
-    <Box sx={{ margin: "0px", width: "50%", justifyContent: "center", alignItems: "center", }}>
+    <Box sx={{ width: "100%", justifyContent: "center", alignItems: "center", }}>
       <Card
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}

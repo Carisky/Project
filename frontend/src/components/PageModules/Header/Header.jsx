@@ -205,7 +205,7 @@ export default function Header({ ShowCategories = true }) {
               left: '50%',
               transform: 'translate(-50%, -50%)',
               width: "380px",
-              height: "410px",
+              height: "450px",
               bgcolor: theme.background,
               border: '2px solid #000',
               boxShadow: 24,
@@ -274,7 +274,21 @@ export default function Header({ ShowCategories = true }) {
           {renderIconWithText(LogoProfil, "Увійти")}
         </Box>
         <Modal open={openAuth} onClose={handleAuthModal}>
-          <AuthPage />
+          <Box sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: "100%",
+            height: "465px",
+            bgcolor: theme.background,
+            border: '1px solid white',
+            boxShadow: 24,
+            //padding: "10px 10px 10px 10px",
+            borderRadius: "25px",
+            }}>
+              <AuthPage onClose={handleAuthModal} />
+            </Box>
         </Modal>
         <Box
           sx={{

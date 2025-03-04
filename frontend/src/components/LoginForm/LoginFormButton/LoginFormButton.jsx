@@ -1,9 +1,11 @@
 import React from "react";
 import { Button, Typography } from "@mui/material";
 import useTheme from "../../../hooks/useTheme";
+import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
 
 export default function LoginFormButton({onClick}) {
   const theme = useTheme();
+  const isMobile = useMediaQuery("(max-width: 430px)");
 
   return (
     <Button onClick={onClick}
@@ -11,8 +13,8 @@ export default function LoginFormButton({onClick}) {
         fontFamily:"Montserrat",
         marginTop: "10px",
         marginBottom: "10px",
-        width: "380px",
-        height: "48px",
+        width: isMobile ? "90%" : "380px",
+        height: "39px",
         borderRadius: "10px",
         backgroundColor: theme.loginForm.loginFormButton.mainColor,
         "&:hover": {

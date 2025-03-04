@@ -2,15 +2,18 @@ import React from 'react';
 import { TextField, InputAdornment, Tooltip } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 import useTheme from "../../../hooks/useTheme";
+import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
 
 export default function LoginFormField({ label, value, error, onChange }) {
 	const theme = useTheme();
+  const isMobile = useMediaQuery("(max-width: 430px)");
 
   return (
     <TextField
       sx={{
         marginTop: '10px',
-        width: '380px',
+        width: isMobile ? "90%" : "380px",
+        borderRadius: isMobile ? "12px" : "",
         backgroundColor: theme.backgroundText,
       }}
       id={`outlined-${label.toLowerCase()}`}

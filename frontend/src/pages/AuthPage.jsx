@@ -7,13 +7,15 @@ import LoginFormButton from "../components/LoginForm/LoginFormButton/LoginFormBu
 import GoogleAuthButton from "../components/LoginForm/GoogleAuthButton/GoogleAuthButton";
 import palete from "../palete";
 import PasswordRecoveryField from "../components/LoginForm/PasswordRecovery/PasswordRecoveryField";
-
+import { useMediaQuery } from "../hooks/useMediaQuery.js";
 // Импортируем сервисы для пользователей и продавцов
 import { loginUser, registerUser, recoverPassword } from "../API/services/userService";
 import { loginSeller, registerSeller } from "../API/services/sellerService";
 
 export default function AuthPage(props) {
   const theme = useTheme();
+  const isMobile = useMediaQuery("(max-width: 430px)");
+  const isDesktop = useMediaQuery("(min-width: 431px)");
 
   // accountType: "user" или "seller"
   const [accountType, setAccountType] = useState("user");
@@ -157,7 +159,7 @@ export default function AuthPage(props) {
                 href="#"
                 onClick={() => handleFormSwitch("passwordRecover")}
                 underline="hover"
-		sx={{color: theme.mainText}}
+                sx={{color: theme.mainText}}
               >
                 Забули пароль?
               </Link>
@@ -243,66 +245,36 @@ export default function AuthPage(props) {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: palete.light.secondaryText,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: 400,
-        bgcolor: "background.paper",
-        border: "2px solid #000",
-        boxShadow: 24,
-        p: 4,
-      }}
-    >
-      <Box
-        sx={{
-          backgroundColor: "#FFFFFF",
-          borderRadius: "25px",
-          width: "430px",
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {/* Переключение между User и Seller */}
-        <Box sx={{ marginBottom: "10px" }}>
-          <ToggleButtonGroup
-            value={accountType}
-            exclusive
-            onChange={handleAccountTypeChange}
-            aria-label="Account type"
-          >
-            <ToggleButton value="user" aria-label="user">
-              User
-            </ToggleButton>
-            <ToggleButton value="seller" aria-label="seller">
-              Seller
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
-        <FormHeader
-          text={headerText}
-          onClose={props.onClose}
-        />
-	<Box sx={{
-        width: "380px",
+    <>
+      <FormHeader
+      title={headerText}
+      onClose={props.onClose}
+      />
+      <Box sx={{
+        width: isMobile ? "100%" : "380px",
         backgroundColor: theme.background,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}>
+        <Box backgroundColor={theme.backgroundText} sx={{borderRadius: "8px"}}>
+          <ToggleButtonGroup
+          value={accountType}
+          exclusive
+          onChange={handleAccountTypeChange}
+          aria-label="Account type"
+          >
+            <ToggleButton value="user" aria-label="user">
+              <Typography sx={{color: theme.mainText,}}>User</Typography>
+            </ToggleButton>
+            <ToggleButton value="seller" aria-label="seller">
+              <Typography sx={{color: theme.mainText,}}>Seller</Typography>
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
         {renderFields()}
-	</Box>
       </Box>
-    </Box>
+    </>
   );
 }

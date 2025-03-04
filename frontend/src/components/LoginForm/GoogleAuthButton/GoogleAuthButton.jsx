@@ -1,14 +1,17 @@
 import React from 'react';
 import useTheme from "../../../hooks/useTheme";
 import { Button, Typography,Box } from "@mui/material";
+import { useMediaQuery } from "../../../hooks/useMediaQuery.js";
+
 export default function GoogleAuthButton() {
     const theme = useTheme();
+    const isMobile = useMediaQuery("(max-width: 430px)");
   
     return (
       <Button
         sx={{
           marginTop: "10px",
-          width: "380px",
+          width: isMobile ? "90%" : "380px",
           height: "39px",
           borderRadius: "10px",
           backgroundColor: theme.loginForm.loginGoogleFormButton.mainColor,

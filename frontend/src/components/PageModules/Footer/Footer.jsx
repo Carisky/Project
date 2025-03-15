@@ -21,8 +21,8 @@ export default function Footer() {
       alignItems: "center",
       paddingBottom: "20px",
     }}>
-      <FAQ></FAQ>
-      <SocialMedia></SocialMedia>
+      <FAQ />
+      <SocialMedia />
     </Box>
     }
     {isDesktop &&
@@ -34,8 +34,8 @@ export default function Footer() {
       justifyContent: "center",
       alignItems: "center",
     }}>
-      <SocialMedia></SocialMedia>
-      <FAQ></FAQ>
+      <SocialMedia />
+      <FAQ />
     </Box>
     }
     </>

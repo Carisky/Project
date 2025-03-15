@@ -18,10 +18,10 @@ const ArticleCardContent = ({ article, theme }) => {
         height: "250px",
         width: "100%",
       }}>
-        <a href={`product/${article.id}`}>
+        <a href={`product/${article?.id}`}>
           <img
-          src={article.photos[0] ? `http://localhost:5000${article.photos[0]}` : ""}
-          alt={article.name}
+          src={article?.photos[0] ? `http://localhost:5000${article?.photos[0]}` : ""}
+          alt={article?.name}
           loading="lazy"
           style={{
             width: "100%",
@@ -159,7 +159,7 @@ export default function ArticleCard({ article, isCarousel }) {
       >
         <ArticleCardContent article={article} theme={theme} />
       </Card>
-      <Button productId={article.id}/>
+      <Button productId={article?.id}/>
     </Box>
   );
 }

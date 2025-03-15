@@ -13,19 +13,18 @@ export default function SocialMedia() {
   return (
     <>
     {isMobile &&
-      <Box
-      sx={{
+      <Box sx={{
         borderRadius: "20px",
         backgroundColor: theme.secondaryColor,
         width: "100%",
         height: "221px",
-        margin: "auto",
+        margin: "0px 0px 0px 0px",
         display: "flex",
         justifyContent: "space-around",
         alignItems: "center",
       }}>
-        <Box>
-          <QRcode></QRcode>
+        <Box sx={{ width: "50%", margin: "0px 0px 0px 10px",}}>
+          <QRcode />
         </Box>
         <Box sx={{ height: "181px", width: "173px" }}>
           <Typography sx={{color:"#FFFFFF",fontFamily:"Montserrat",fontSize:"12px"}}>
@@ -53,7 +52,7 @@ export default function SocialMedia() {
         justifyContent: "space-around",
         alignItems: "center",
       }}>
-        <Box>
+        <Box sx={{ width: "50%", }}>
           <QRcode></QRcode>
         </Box>
         <Box sx={{ height: "181px", width: "173px" }}>
